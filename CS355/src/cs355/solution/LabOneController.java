@@ -3,6 +3,9 @@ package cs355.solution;
 import cs355.CS355Controller;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 
@@ -13,12 +16,24 @@ import java.util.Iterator;
  * Time: 3:43 PM
  * To change this template use File | Settings | File Templates.
  */
-public class LabOneController implements CS355Controller
+public class LabOneController implements CS355Controller, MouseListener, MouseMotionListener
 {
+    /**
+     * Controls how shapes are built from mouse-click events.
+     */
+    MouseShapeBuilderStrategy _shapeBuilderStrategy;
+
+    /**
+     * Constructor
+     */
+    public LabOneController()
+    {
+        _shapeBuilderStrategy = new MouseLineBuilderStrategy();
+    }
+
     @Override
     public void colorButtonHit(Color c) {
-        //To change body of implemented methods use File | Settings | File Templates.
-        System.out.println("Hi from the color button");
+        cs355.model.Context.getInstance().setCurrentColor(c);
     }
 
     @Override
@@ -48,7 +63,7 @@ public class LabOneController implements CS355Controller
 
     @Override
     public void lineButtonHit() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        _shapeBuilderStrategy = new MouseLineBuilderStrategy();
     }
 
     @Override
@@ -124,5 +139,40 @@ public class LabOneController implements CS355Controller
     @Override
     public void toggleBackgroundDisplay() {
         //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent mouseEvent) {
+        _shapeBuilderStrategy.mouseClicked(mouseEvent);
+    }
+
+    @Override
+    public void mousePressed(MouseEvent mouseEvent) {
+        _shapeBuilderStrategy.mousePressed(mouseEvent);
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent mouseEvent) {
+        _shapeBuilderStrategy.mouseReleased(mouseEvent);
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent mouseEvent) {
+        _shapeBuilderStrategy.mouseEntered(mouseEvent);
+    }
+
+    @Override
+    public void mouseExited(MouseEvent mouseEvent) {
+        _shapeBuilderStrategy.mouseExited(mouseEvent);
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent mouseEvent) {
+        _shapeBuilderStrategy.mouseDragged(mouseEvent);
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent mouseEvent) {
+        _shapeBuilderStrategy.mouseMoved(mouseEvent);
     }
 }

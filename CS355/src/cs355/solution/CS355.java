@@ -23,9 +23,7 @@ public class CS355
     	//   mouse listener, and mouse motion listener
         LabOneController controller = new LabOneController();
         LabOneViewRefresher viewRefresher = new LabOneViewRefresher();
-        LabOneMouseListener mouseListener = new LabOneMouseListener();
-        LabOneMouseMotionListener mouseMotionListener = new LabOneMouseMotionListener();
-        GUIFunctions.createCS355Frame(controller,viewRefresher,mouseListener,mouseMotionListener);
+        GUIFunctions.createCS355Frame(controller, viewRefresher, controller, controller);
         
         GUIFunctions.refresh();        
     }

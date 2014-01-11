@@ -25,7 +25,7 @@ public class Context
     /**
      * Getter for the single instance
      */
-    Context getInstance()
+    public static Context getInstance()
     {
         if(_instance == null)
             _instance = new Context();
@@ -36,7 +36,7 @@ public class Context
     /**
      * Setter for the current color
      */
-    void setCurrentColor(Color color)
+    public static void setCurrentColor(Color color)
     {
         _currentColor = color;
     }
@@ -44,7 +44,7 @@ public class Context
     /**
      * Getter for the current color
      */
-    Color getCurrentColor()
+    public static Color getCurrentColor()
     {
         return _currentColor;
     }
