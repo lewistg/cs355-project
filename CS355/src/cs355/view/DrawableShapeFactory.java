@@ -35,6 +35,8 @@ public class DrawableShapeFactory
                 drawableShapes.add(getDrawableShape((Ellipse) shape));
             else if (shape instanceof Circle)
                 drawableShapes.add(getDrawableShape((Circle) shape));
+            else if(shape instanceof Triangle)
+                drawableShapes.add(getDrawableTriangle((Triangle) shape));
             else
                 assert(false);
         }
@@ -109,5 +111,24 @@ public class DrawableShapeFactory
         double diameter = circle.getRadius() * 2.0;
         DrawableCircle drawableCircle = new DrawableCircle(x, y, diameter, circle.getColor());
         return drawableCircle;
+    }
+
+    /**
+     * Builds a drawable triangle
+     */
+    private static DrawableTriangle getDrawableTriangle(Triangle triangle)
+    {
+        int[] xCoords = new int[3];
+        int[] yCoords = new int[3];
+
+        ArrayList<Point2D> vertices = triangle.getVertices();
+        for(int i = 0; i < 3; i++)
+        {
+            xCoords[i] = (int) vertices.get(i).getX();
+            yCoords[i] = (int) vertices.get(i).getY();
+        }
+
+        DrawableTriangle drawableTriangle = new DrawableTriangle(xCoords, yCoords, triangle.getColor());
+        return drawableTriangle;
     }
 }
