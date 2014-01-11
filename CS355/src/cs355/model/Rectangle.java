@@ -19,7 +19,7 @@ public class Rectangle extends Shape
     /**
      * Constructor
      */
-    public Rectangle(Point p1, Point p0, Color color)
+    public Rectangle(Point p0, Point p1, Color color)
     {
         super(color);
         _lowerLeft = new Point2D(Math.min(p0.getX(), p1.getX()), Math.min(p0.getY(), p1.getY()));
@@ -47,7 +47,7 @@ public class Rectangle extends Shape
      */
     public double getWidth()
     {
-        return _upperRight.getX() - _lowerLeft.getY();
+        return Math.abs(_upperRight.getX() - _lowerLeft.getX());
     }
 
     /**
@@ -55,6 +55,12 @@ public class Rectangle extends Shape
      */
     public double getHeight()
     {
-        return _upperRight.getY() - _lowerLeft.getY();
+        return Math.abs(_upperRight.getY() - _lowerLeft.getY());
+    }
+
+    public String toString()
+    {
+        String rect = "Lower lower left: " + _lowerLeft.toString() + ", Upper right: " + _upperRight.toString();
+        return rect;
     }
 }

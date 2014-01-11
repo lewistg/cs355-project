@@ -32,6 +32,6 @@ public class DrawableRectangle extends DrawableShape{
     public void draw(Graphics2D context)
     {
         context.setColor(getColor());
-        context.drawRect(_lowerLeftX, _lowerRightY, _w, _h);
+        context.fillRect(_lowerLeftX, _lowerRightY, _w, _h);
     }
 }
