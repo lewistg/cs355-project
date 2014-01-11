@@ -41,7 +41,6 @@ public class DrawableShapeFactory
      */
     private static DrawableShape getDrawableShape(cs355.model.Line line)
     {
-        System.out.println("Drawing drawable line: " + line.toString());
         Point p0 = line.getStartPoint();
         Point p1 = line.getEndPoint();
         int x0 = (int) p0.getX();

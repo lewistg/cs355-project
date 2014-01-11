@@ -62,12 +62,12 @@ public class ShapeBuffer extends Observable
     /**
      * Sets the very top shape in the buffer
      */
-    public static void setTopShape(Shape shape)
+    public static void setLastShapeAdded(Shape shape)
     {
         if(_shapes.isEmpty())
             addShape(shape);
         else
-            _shapes.set(0, shape);
+            _shapes.set(_shapes.size() - 1, shape);
 
         _instance.setChanged();
         _instance.notifyObservers();
