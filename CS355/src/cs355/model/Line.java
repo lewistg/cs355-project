@@ -58,4 +58,13 @@ public class Line extends Shape
     {
         _p1 = p1;
     }
+
+    /**
+     * To-string method
+     */
+    public String toString()
+    {
+        String lineStr = "Line from: " + _p0.toString() + " to " + _p1.toString();
+        return lineStr;
+    }
 }

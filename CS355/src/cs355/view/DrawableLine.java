@@ -21,7 +21,6 @@ public class DrawableLine extends DrawableShape
 
     /**
      * Constructor
-     * @param context
      */
     DrawableLine(int x0, int y0, int x1, int y1, Color color)
     {
@@ -35,6 +34,14 @@ public class DrawableLine extends DrawableShape
     @Override
     public void draw(Graphics2D context)
     {
+        context.setColor(getColor());
+        System.out.println("Drawing line from:");
+        System.out.println(_x0);
+        System.out.println(_y0);
+        System.out.print(" to ");
+        System.out.println(_x1);
+        System.out.println(_y1);
+
         context.drawLine(_x0, _y0, _x1, _y1);
     }
 }

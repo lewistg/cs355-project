@@ -55,6 +55,7 @@ public class ShapeBuffer extends Observable
     public static void addShape(Shape shape)
     {
         _shapes.add(shape);
+        _instance.setChanged();
         _instance.notifyObservers();
     }
 
@@ -68,6 +69,7 @@ public class ShapeBuffer extends Observable
         else
             _shapes.set(0, shape);
 
+        _instance.setChanged();
         _instance.notifyObservers();
     }
 }

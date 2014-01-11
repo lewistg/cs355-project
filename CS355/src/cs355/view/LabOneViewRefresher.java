@@ -1,5 +1,6 @@
 package cs355.view;
 
+import cs355.GUIFunctions;
 import cs355.ViewRefresher;
 import cs355.model.ShapeBuffer;
 
@@ -20,7 +21,10 @@ public class LabOneViewRefresher implements ViewRefresher, Observer
      * Constructor
      */
     public LabOneViewRefresher()
-    {}
+    {
+        cs355.model.ShapeBuffer shapeBuffer = cs355.model.ShapeBuffer.getInstance();
+        shapeBuffer.addObserver(this);
+    }
 
     @Override
     public void refreshView(Graphics2D g2d)
@@ -30,11 +34,10 @@ public class LabOneViewRefresher implements ViewRefresher, Observer
         List<DrawableShape> drawableShapeList = DrawableShapeFactory.getDrawableShapes(shapeBuffer.getAllShapes());
         for(DrawableShape drawableShape : drawableShapeList)
             drawableShape.draw(g2d);
-
-        g2d.drawLine(0, 0, 100, 100);
     }
 
     @Override
     public void update(Observable observable, Object o) {
+        GUIFunctions.refresh();
     }
 }

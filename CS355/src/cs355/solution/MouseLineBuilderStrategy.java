@@ -32,5 +32,7 @@ public class MouseLineBuilderStrategy extends MouseShapeBuilderStrategy {
         Point p1 = mouseEvent.getPoint();
         _line.setEndPoint(p1);
         cs355.model.ShapeBuffer.getInstance().setTopShape(_line);
+        //System.out.println(_line.toString());
+        //System.out.println("New end point: " + p1.toString());
     }
 }

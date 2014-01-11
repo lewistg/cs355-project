@@ -24,7 +24,12 @@ public class DrawableShapeFactory
     {
         ArrayList<DrawableShape> drawableShapes = new ArrayList<DrawableShape>();
         for(Shape shape : shapeList)
-            drawableShapes.add(getDrawableShape(shape));
+        {
+            if(shape instanceof Line)
+                drawableShapes.add(getDrawableShape((Line) shape));
+            else
+                assert(false);
+        }
 
         return drawableShapes;
     }
@@ -36,19 +41,14 @@ public class DrawableShapeFactory
      */
     private static DrawableShape getDrawableShape(cs355.model.Line line)
     {
+        System.out.println("Drawing drawable line: " + line.toString());
         Point p0 = line.getStartPoint();
-        Point p1 = line.getStartPoint();
+        Point p1 = line.getEndPoint();
         int x0 = (int) p0.getX();
         int y0 = (int) p0.getY();
         int x1 = (int) p1.getX();
         int y1 = (int) p1.getY();
         DrawableLine drawableLine = new DrawableLine(x0, y0, x1, y1, line.getColor());
         return drawableLine;
-    }
-
-    private static DrawableShape getDrawableShape(Shape shape)
-    {
-        assert(false);
-        return null;
     }
 }
