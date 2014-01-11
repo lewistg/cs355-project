@@ -33,6 +33,8 @@ public class DrawableShapeFactory
                 drawableShapes.add(getDrawableShape((Square) shape));
             else if(shape instanceof Ellipse)
                 drawableShapes.add(getDrawableShape((Ellipse) shape));
+            else if (shape instanceof Circle)
+                drawableShapes.add(getDrawableShape((Circle) shape));
             else
                 assert(false);
         }
@@ -94,5 +96,18 @@ public class DrawableShapeFactory
         double y = center.getY() - (ellipse.getHeight() / 2.0);
         DrawableEllipse drawableEllipse = new DrawableEllipse(x, y, ellipse.getWidth(), ellipse.getHeight(), ellipse.getColor());
         return drawableEllipse;
+    }
+
+    /**
+     * Builds a drawable circle shape
+     */
+    private static DrawableCircle getDrawableShape(Circle circle)
+    {
+        Point2D center = circle.getCenter();
+        double x = center.getX() - circle.getRadius();
+        double y = center.getY() - circle.getRadius();
+        double diameter = circle.getRadius() * 2.0;
+        DrawableCircle drawableCircle = new DrawableCircle(x, y, diameter, circle.getColor());
+        return drawableCircle;
     }
 }
