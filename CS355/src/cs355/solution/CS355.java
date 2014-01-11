@@ -5,8 +5,7 @@
 package cs355.solution;
 
 import cs355.GUIFunctions;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import cs355.view.LabOneViewRefresher;
 
 /**
  *

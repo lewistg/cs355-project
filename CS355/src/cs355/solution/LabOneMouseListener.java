@@ -15,6 +15,7 @@ public class LabOneMouseListener implements MouseListener
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         //To change body of implemented methods use File | Settings | File Templates.
+        System.out.println("Clicked on: " + mouseEvent.getPoint().toString());
     }
 
     @Override
