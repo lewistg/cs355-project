@@ -22,7 +22,7 @@ public class MouseLineBuilderStrategy extends MouseShapeBuilderStrategy {
     {
         Point p0 = mouseEvent.getPoint();
         Point p1 = p0;
-        _line = new Line(cs355.model.Context.getInstance().getCurrentColor(), p0, p1);
+        _line = new Line(p1, p0, cs355.model.Context.getInstance().getCurrentColor());
         cs355.model.ShapeBuffer.getInstance().addShape(_line);
     }
 

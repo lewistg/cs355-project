@@ -1,8 +1,8 @@
 package cs355.view;
 
-import cs355.model.Line;
+import cs355.model.*;
+import cs355.model.Rectangle;
 import cs355.model.Shape;
-import cs355.model.ShapeBuffer;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -27,6 +27,8 @@ public class DrawableShapeFactory
         {
             if(shape instanceof Line)
                 drawableShapes.add(getDrawableShape((Line) shape));
+            else if(shape instanceof Rectangle)
+                drawableShapes.add(getDrawableShape((Rectangle) shape));
             else
                 assert(false);
         }
@@ -41,13 +43,27 @@ public class DrawableShapeFactory
      */
     private static DrawableShape getDrawableShape(cs355.model.Line line)
     {
-        Point p0 = line.getStartPoint();
-        Point p1 = line.getEndPoint();
+        Point2D p0 = line.getStartPoint();
+        Point2D p1 = line.getEndPoint();
         int x0 = (int) p0.getX();
         int y0 = (int) p0.getY();
         int x1 = (int) p1.getX();
         int y1 = (int) p1.getY();
         DrawableLine drawableLine = new DrawableLine(x0, y0, x1, y1, line.getColor());
         return drawableLine;
+    }
+
+    /**
+     * Builds a drawable rectangle shape
+     */
+    private static DrawableShape getDrawableShape(cs355.model.Rectangle rectangle)
+    {
+        Point2D getLowerLeft = rectangle.getLowerLeft();
+        int x = (int) getLowerLeft.getX();
+        int y = (int) getLowerLeft.getY();
+        int w = (int) rectangle.getWidth();
+        int h = (int) rectangle.getHeight();
+        DrawableRectangle drawableRectangle = new DrawableRectangle(x, y, w, h, rectangle.getColor());
+        return drawableRectangle;
     }
 }

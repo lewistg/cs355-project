@@ -13,24 +13,24 @@ import java.util.ArrayList;
 public class Line extends Shape
 {
     /**The start point*/
-    private Point _p0;
+    private Point2D _p0;
     /**The end point*/
-    private Point _p1;
+    private Point2D _p1;
 
     /**
      * Constructor
      */
-    public Line(Color color, Point p0, Point p1)
+    public Line(Point p1, Point p0, Color color)
     {
         super(color);
-        _p0 = p0;
-        _p1 = p1;
+        _p0 = new Point2D(p0);
+        _p1 = new Point2D(p1);
     }
 
     /**
      * Getter for start point
      */
-    public Point getStartPoint()
+    public Point2D getStartPoint()
     {
         return _p0;
     }
@@ -40,13 +40,13 @@ public class Line extends Shape
      */
     public void setStartPoint(Point p0)
     {
-        _p0 = p0;
+        _p0 = new Point2D(p0);
     }
 
     /**
      * Getter for the end point
      */
-    public Point getEndPoint()
+    public Point2D getEndPoint()
     {
         return _p1;
     }
@@ -56,7 +56,7 @@ public class Line extends Shape
      */
     public void setEndPoint(Point p1)
     {
-        _p1 = p1;
+        _p1 = new Point2D(p1);
     }
 
     /**
