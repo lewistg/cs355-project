@@ -34,7 +34,7 @@ public class MouseTriangleBuilderStrategy extends MouseShapeBuilderStrategy
     public void mousePressed(MouseEvent mouseEvent)
     {
          _vertices[_i] = mouseEvent.getPoint();
-        if(_i == 3)
+        if(_i == 2)
         {
             Triangle triangle = new Triangle(_vertices[0], _vertices[1], _vertices[2], cs355.model.Context.getInstance().getCurrentColor());
             cs355.model.ShapeBuffer.getInstance().addShape(triangle);
