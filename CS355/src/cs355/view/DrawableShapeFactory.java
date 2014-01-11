@@ -31,6 +31,8 @@ public class DrawableShapeFactory
                 drawableShapes.add(getDrawableShape((Rectangle) shape));
             else if(shape instanceof Square)
                 drawableShapes.add(getDrawableShape((Square) shape));
+            else if(shape instanceof Ellipse)
+                drawableShapes.add(getDrawableShape((Ellipse) shape));
             else
                 assert(false);
         }
@@ -80,5 +82,17 @@ public class DrawableShapeFactory
         int size = (int) square.size();
         DrawableSquare drawableSquare = new DrawableSquare(x, y, size, size, square.getColor());
         return drawableSquare;
+    }
+
+    /**
+     * Builds a drawable ellipse shape
+     */
+    private static DrawableEllipse getDrawableShape(Ellipse ellipse)
+    {
+        Point2D center = ellipse.getCenter();
+        double x = center.getX() - (ellipse.getWidth() / 2.0);
+        double y = center.getY() - (ellipse.getHeight() / 2.0);
+        DrawableEllipse drawableEllipse = new DrawableEllipse(x, y, ellipse.getWidth(), ellipse.getHeight(), ellipse.getColor());
+        return drawableEllipse;
     }
 }
