@@ -29,6 +29,8 @@ public class DrawableShapeFactory
                 drawableShapes.add(getDrawableShape((Line) shape));
             else if(shape instanceof Rectangle)
                 drawableShapes.add(getDrawableShape((Rectangle) shape));
+            else if(shape instanceof Square)
+                drawableShapes.add(getDrawableShape((Square) shape));
             else
                 assert(false);
         }
@@ -65,5 +67,18 @@ public class DrawableShapeFactory
         int h = (int) rectangle.getHeight();
         DrawableRectangle drawableRectangle = new DrawableRectangle(x, y, w, h, rectangle.getColor());
         return drawableRectangle;
+    }
+
+    /**
+     * Builds a drawable rectangle shape
+     */
+    private static DrawableShape getDrawableShape(cs355.model.Square square)
+    {
+        Point2D getLowerLeft = square.getLowerLeft();
+        int x = (int) getLowerLeft.getX();
+        int y = (int) getLowerLeft.getY();
+        int size = (int) square.size();
+        DrawableSquare drawableSquare = new DrawableSquare(x, y, size, size, square.getColor());
+        return drawableSquare;
     }
 }

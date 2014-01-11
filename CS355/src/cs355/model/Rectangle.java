@@ -48,11 +48,30 @@ public class Rectangle extends Shape
     }
 
     /**
+     * Width setter
+     */
+    public void setWidth(double width)
+    {
+        assert(width >= 0);
+        _width = width;
+    }
+
+    /**
      * Getter for the height
      */
     public double getHeight()
     {
         return _height;
+    }
+
+    /**
+     * Height setter
+     * @return
+     */
+    public void setHeight(double height)
+    {
+        assert(height >= 0);
+        _height = height;
     }
 
     public String toString()

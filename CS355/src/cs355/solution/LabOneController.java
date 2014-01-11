@@ -38,12 +38,11 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
 
     @Override
     public void triangleButtonHit() {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
     public void squareButtonHit() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        _shapeBuilderStrategy = new MouseSquareBuilderStrategy();
     }
 
     @Override
