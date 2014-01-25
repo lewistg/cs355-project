@@ -1,7 +1,7 @@
 package cs355.solution;
 
-import cs355.model.Rectangle;
-import cs355.model.Square;
+import cs355.model.*;
+import cs355.model.Canvas;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -26,7 +26,7 @@ public class MouseSquareBuilderStrategy extends MouseShapeBuilderStrategy
          _p0 = mouseEvent.getPoint();
          _p1 = _p0;
         Square square = new Square(_p0, 0, cs355.model.Context.getInstance().getCurrentColor());
-        cs355.model.ShapeBuffer.getInstance().addShape(square);
+        Canvas.getInstance().addShape(square);
     }
 
     @Override
@@ -47,6 +47,6 @@ public class MouseSquareBuilderStrategy extends MouseShapeBuilderStrategy
             lowerLeft.y = (int) (_p0.y - size);
 
         Square square = new Square(lowerLeft, size, cs355.model.Context.getInstance().getCurrentColor());
-        cs355.model.ShapeBuffer.getInstance().setLastShapeAdded(square);
+        cs355.model.Canvas.getInstance().setLastShapeAdded(square);
     }
 }

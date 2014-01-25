@@ -1,8 +1,7 @@
 package cs355.solution;
 
-import cs355.model.Circle;
-import cs355.model.Point2D;
-import cs355.model.Square;
+import cs355.model.*;
+import cs355.model.Canvas;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -27,7 +26,7 @@ public class MouseCircleBuilderStrategy extends MouseShapeBuilderStrategy
          _p0 = mouseEvent.getPoint();
          _p1 = _p0;
         Circle square = new Circle(new Point2D(_p0), 0, cs355.model.Context.getInstance().getCurrentColor());
-        cs355.model.ShapeBuffer.getInstance().addShape(square);
+        Canvas.getInstance().addShape(square);
     }
 
     @Override
@@ -43,6 +42,6 @@ public class MouseCircleBuilderStrategy extends MouseShapeBuilderStrategy
         double centerY = (_p0.y + radius * Math.signum(height));
 
         Circle circle = new Circle(new Point2D(centerX, centerY), radius, cs355.model.Context.getInstance().getCurrentColor());
-        cs355.model.ShapeBuffer.getInstance().setLastShapeAdded(circle);
+        cs355.model.Canvas.getInstance().setLastShapeAdded(circle);
     }
 }

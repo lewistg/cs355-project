@@ -2,7 +2,7 @@ package cs355.view;
 
 import cs355.GUIFunctions;
 import cs355.ViewRefresher;
-import cs355.model.ShapeBuffer;
+import cs355.model.Canvas;
 
 import java.awt.*;
 import java.util.*;
@@ -22,7 +22,7 @@ public class LabOneViewRefresher implements ViewRefresher, Observer
      */
     public LabOneViewRefresher()
     {
-        cs355.model.ShapeBuffer shapeBuffer = cs355.model.ShapeBuffer.getInstance();
+        Canvas shapeBuffer = Canvas.getInstance();
         shapeBuffer.addObserver(this);
     }
 
@@ -30,7 +30,7 @@ public class LabOneViewRefresher implements ViewRefresher, Observer
     public void refreshView(Graphics2D g2d)
     {
         // update the canvas here
-        cs355.model.ShapeBuffer shapeBuffer = cs355.model.ShapeBuffer.getInstance();
+        Canvas shapeBuffer = cs355.model.Canvas.getInstance();
         List<DrawableShape> drawableShapeList = DrawableShapeFactory.getDrawableShapes(shapeBuffer.getAllShapes());
         for(DrawableShape drawableShape : drawableShapeList)
             drawableShape.draw(g2d);

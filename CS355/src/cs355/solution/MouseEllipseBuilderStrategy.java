@@ -1,8 +1,7 @@
 package cs355.solution;
 
-import cs355.model.Ellipse;
-import cs355.model.Point2D;
-import cs355.model.Rectangle;
+import cs355.model.*;
+import cs355.model.Canvas;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -27,7 +26,7 @@ public class MouseEllipseBuilderStrategy extends MouseShapeBuilderStrategy
          _p0 = mouseEvent.getPoint();
          _p1 = _p0;
         Ellipse ellipse = new Ellipse(new Point2D(_p0), 0, 0, cs355.model.Context.getInstance().getCurrentColor());
-        cs355.model.ShapeBuffer.getInstance().addShape(ellipse);
+        Canvas.getInstance().addShape(ellipse);
     }
 
     @Override
@@ -41,6 +40,6 @@ public class MouseEllipseBuilderStrategy extends MouseShapeBuilderStrategy
         double height = Math.abs(_p1.y - _p0.y);
 
         Ellipse ellipse = new Ellipse(center, width, height, cs355.model.Context.getInstance().getCurrentColor());
-        cs355.model.ShapeBuffer.getInstance().setLastShapeAdded(ellipse);
+        cs355.model.Canvas.getInstance().setLastShapeAdded(ellipse);
     }
 }

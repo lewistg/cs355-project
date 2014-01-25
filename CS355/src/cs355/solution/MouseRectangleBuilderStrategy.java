@@ -1,5 +1,6 @@
 package cs355.solution;
 
+import cs355.model.Canvas;
 import cs355.model.Rectangle;
 
 import java.awt.*;
@@ -25,7 +26,7 @@ public class MouseRectangleBuilderStrategy extends MouseShapeBuilderStrategy
          _p0 = mouseEvent.getPoint();
          _p1 = _p0;
         Rectangle rectangle = new Rectangle(_p0, _p1, cs355.model.Context.getInstance().getCurrentColor());
-        cs355.model.ShapeBuffer.getInstance().addShape(rectangle);
+        Canvas.getInstance().addShape(rectangle);
     }
 
     @Override
@@ -33,6 +34,6 @@ public class MouseRectangleBuilderStrategy extends MouseShapeBuilderStrategy
     {
         _p1 = mouseEvent.getPoint();
         Rectangle rectangle = new Rectangle(_p0, _p1, cs355.model.Context.getInstance().getCurrentColor());
-        cs355.model.ShapeBuffer.getInstance().setLastShapeAdded(rectangle);
+        cs355.model.Canvas.getInstance().setLastShapeAdded(rectangle);
     }
 }

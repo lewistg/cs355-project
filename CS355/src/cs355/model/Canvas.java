@@ -1,8 +1,6 @@
 package cs355.model;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Observable;
 
 /**
@@ -13,10 +11,10 @@ import java.util.Observable;
  *
  * Singleton class
  */
-public class ShapeBuffer extends Observable
+public class Canvas extends Observable
 {
     /**Singleton instance of class*/
-    private static ShapeBuffer _instance;
+    private static Canvas _instance;
     /**Buffer of shapes drawn. They are ordered according to when they were added*/
     private static ArrayList<Shape> _shapes;
 
@@ -24,7 +22,7 @@ public class ShapeBuffer extends Observable
      * Private constructor
      * @return
      */
-    private ShapeBuffer()
+    private Canvas()
     {
         _shapes = new ArrayList<Shape>();
     }
@@ -33,10 +31,10 @@ public class ShapeBuffer extends Observable
      * Gets the singleton instance
      * @return
      */
-    public static ShapeBuffer getInstance()
+    public static Canvas getInstance()
     {
         if(_instance == null)
-            _instance = new ShapeBuffer();
+            _instance = new Canvas();
 
         return _instance;
     }

@@ -1,6 +1,7 @@
 package cs355.solution;
 
-import cs355.model.Line;
+import cs355.model.*;
+import cs355.model.Canvas;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -23,7 +24,7 @@ public class MouseLineBuilderStrategy extends MouseShapeBuilderStrategy {
         Point p0 = mouseEvent.getPoint();
         Point p1 = p0;
         _line = new Line(p1, p0, cs355.model.Context.getInstance().getCurrentColor());
-        cs355.model.ShapeBuffer.getInstance().addShape(_line);
+        Canvas.getInstance().addShape(_line);
     }
 
     @Override
@@ -31,6 +32,6 @@ public class MouseLineBuilderStrategy extends MouseShapeBuilderStrategy {
     {
         Point p1 = mouseEvent.getPoint();
         _line.setEndPoint(p1);
-        cs355.model.ShapeBuffer.getInstance().setLastShapeAdded(_line);
+        cs355.model.Canvas.getInstance().setLastShapeAdded(_line);
     }
 }

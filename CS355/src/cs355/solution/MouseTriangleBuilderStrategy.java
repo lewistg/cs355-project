@@ -1,12 +1,9 @@
 package cs355.solution;
 
-import cs355.model.Circle;
-import cs355.model.Point2D;
-import cs355.model.Triangle;
+import cs355.model.*;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -37,7 +34,7 @@ public class MouseTriangleBuilderStrategy extends MouseShapeBuilderStrategy
         if(_i == 2)
         {
             Triangle triangle = new Triangle(_vertices[0], _vertices[1], _vertices[2], cs355.model.Context.getInstance().getCurrentColor());
-            cs355.model.ShapeBuffer.getInstance().addShape(triangle);
+            cs355.model.Canvas.getInstance().addShape(triangle);
         }
         _i = (_i + 1) % 3;
     }
