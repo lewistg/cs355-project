@@ -1,6 +1,7 @@
 package cs355.model;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,6 +14,8 @@ public abstract class Shape
 {
     /**The shape's color*/
     private Color _color;
+    /**The shape's center*/
+    private Point2D _center;
 
     /**
      * Constructor
@@ -38,5 +41,13 @@ public abstract class Shape
     public Color getColor()
     {
         return _color;
+    }
+
+    /**
+     * Getter for the center
+     */
+    public Point2D getCenter()
+    {
+        return _center;
     }
 }
