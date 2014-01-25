@@ -15,7 +15,7 @@ public class Triangle extends Shape
     /**
      * Corners of the triangle
      */
-    private ArrayList<Point2D> _vertices;
+    private ArrayList<Vector2D> _vertices;
 
     /**
      * Constructor
@@ -23,16 +23,16 @@ public class Triangle extends Shape
     public Triangle(Point p0, Point p1, Point p2, Color color)
     {
         super(color);
-        _vertices = new ArrayList<Point2D>();
-        _vertices.add(new Point2D(p0));
-        _vertices.add(new Point2D(p1));
-        _vertices.add(new Point2D(p2));
+        _vertices = new ArrayList<Vector2D>();
+        _vertices.add(new Vector2D(p0));
+        _vertices.add(new Vector2D(p1));
+        _vertices.add(new Vector2D(p2));
     }
 
     /**
      * Getter for the vertices
      */
-    public ArrayList<Point2D> getVertices()
+    public ArrayList<Vector2D> getVertices()
     {
         return _vertices;
     }

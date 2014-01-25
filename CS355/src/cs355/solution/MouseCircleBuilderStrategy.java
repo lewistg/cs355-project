@@ -25,7 +25,7 @@ public class MouseCircleBuilderStrategy extends MouseShapeBuilderStrategy
     {
          _p0 = mouseEvent.getPoint();
          _p1 = _p0;
-        Circle square = new Circle(new Point2D(_p0), 0, cs355.model.Context.getInstance().getCurrentColor());
+        Circle square = new Circle(new Vector2D(_p0), 0, cs355.model.Context.getInstance().getCurrentColor());
         Canvas.getInstance().addShape(square);
     }
 
@@ -41,7 +41,7 @@ public class MouseCircleBuilderStrategy extends MouseShapeBuilderStrategy
         double centerX = (_p0.x + radius * Math.signum(width));
         double centerY = (_p0.y + radius * Math.signum(height));
 
-        Circle circle = new Circle(new Point2D(centerX, centerY), radius, cs355.model.Context.getInstance().getCurrentColor());
+        Circle circle = new Circle(new Vector2D(centerX, centerY), radius, cs355.model.Context.getInstance().getCurrentColor());
         cs355.model.Canvas.getInstance().setLastShapeAdded(circle);
     }
 }

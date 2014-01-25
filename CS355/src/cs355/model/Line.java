@@ -1,7 +1,6 @@
 package cs355.model;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,9 +12,9 @@ import java.util.ArrayList;
 public class Line extends Shape
 {
     /**The start point*/
-    private Point2D _p0;
+    private Vector2D _p0;
     /**The end point*/
-    private Point2D _p1;
+    private Vector2D _p1;
 
     /**
      * Constructor
@@ -23,14 +22,14 @@ public class Line extends Shape
     public Line(Point p1, Point p0, Color color)
     {
         super(color);
-        _p0 = new Point2D(p0);
-        _p1 = new Point2D(p1);
+        _p0 = new Vector2D(p0);
+        _p1 = new Vector2D(p1);
     }
 
     /**
      * Getter for start point
      */
-    public Point2D getStartPoint()
+    public Vector2D getStartPoint()
     {
         return _p0;
     }
@@ -40,13 +39,13 @@ public class Line extends Shape
      */
     public void setStartPoint(Point p0)
     {
-        _p0 = new Point2D(p0);
+        _p0 = new Vector2D(p0);
     }
 
     /**
      * Getter for the end point
      */
-    public Point2D getEndPoint()
+    public Vector2D getEndPoint()
     {
         return _p1;
     }
@@ -56,7 +55,7 @@ public class Line extends Shape
      */
     public void setEndPoint(Point p1)
     {
-        _p1 = new Point2D(p1);
+        _p1 = new Vector2D(p1);
     }
 
     /**

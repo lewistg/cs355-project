@@ -12,14 +12,14 @@ import java.awt.*;
 public class Circle extends Shape
 {
     /**Center of the circle*/
-    Point2D _center;
+    Vector2D _center;
     /**The radius of the circle*/
     double _radius;
 
     /**
      * Constructor
      */
-    public Circle(Point2D center, double radius, Color color)
+    public Circle(Vector2D center, double radius, Color color)
     {
         super(color);
         assert(radius >= 0);
@@ -30,7 +30,7 @@ public class Circle extends Shape
     /**
      * Getter for the center
      */
-    public Point2D getCenter()
+    public Vector2D getCenter()
     {
         return _center;
     }

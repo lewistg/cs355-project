@@ -9,7 +9,7 @@ import java.awt.*;
  * Time: 10:47 AM
  * To change this template use File | Settings | File Templates.
  */
-public class Point2D
+public class Vector2D
 {
     /**
      * The coordinates
@@ -20,7 +20,7 @@ public class Point2D
     /**
      * Constructor
      */
-    public Point2D(double x, double y)
+    public Vector2D(double x, double y)
     {
         _x = x;
         _y = y;
@@ -29,7 +29,7 @@ public class Point2D
     /**
      * Constructor
      */
-    public Point2D(Point point)
+    public Vector2D(Point point)
     {
         _x = point.getX();
         _y = point.getY();
@@ -65,6 +65,17 @@ public class Point2D
     public void setY(double y)
     {
         _y = y;
+    }
+
+    /**
+     * Returns the sum of the vectors
+     * @param v0
+     * @param v1
+     * @return
+     */
+    public static Vector2D add(Vector2D v0, Vector2D v1)
+    {
+        return new Vector2D(v0.getX() + v1.getX(), v0.getX() + v1.getX());
     }
 
     /**

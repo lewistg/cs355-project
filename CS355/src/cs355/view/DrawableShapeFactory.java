@@ -4,7 +4,6 @@ import cs355.model.*;
 import cs355.model.Rectangle;
 import cs355.model.Shape;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -51,8 +50,8 @@ public class DrawableShapeFactory
      */
     private static DrawableShape getDrawableShape(cs355.model.Line line)
     {
-        Point2D p0 = line.getStartPoint();
-        Point2D p1 = line.getEndPoint();
+        Vector2D p0 = line.getStartPoint();
+        Vector2D p1 = line.getEndPoint();
         int x0 = (int) p0.getX();
         int y0 = (int) p0.getY();
         int x1 = (int) p1.getX();
@@ -66,7 +65,7 @@ public class DrawableShapeFactory
      */
     private static DrawableShape getDrawableShape(cs355.model.Rectangle rectangle)
     {
-        Point2D getLowerLeft = rectangle.getLowerLeft();
+        Vector2D getLowerLeft = rectangle.getLowerLeft();
         int x = (int) getLowerLeft.getX();
         int y = (int) getLowerLeft.getY();
         int w = (int) rectangle.getWidth();
@@ -80,7 +79,7 @@ public class DrawableShapeFactory
      */
     private static DrawableShape getDrawableShape(cs355.model.Square square)
     {
-        Point2D getLowerLeft = square.getLowerLeft();
+        Vector2D getLowerLeft = square.getLowerLeft();
         int x = (int) getLowerLeft.getX();
         int y = (int) getLowerLeft.getY();
         int size = (int) square.size();
@@ -93,7 +92,7 @@ public class DrawableShapeFactory
      */
     private static DrawableEllipse getDrawableShape(Ellipse ellipse)
     {
-        Point2D center = ellipse.getCenter();
+        Vector2D center = ellipse.getCenter();
         double x = center.getX() - (ellipse.getWidth() / 2.0);
         double y = center.getY() - (ellipse.getHeight() / 2.0);
         DrawableEllipse drawableEllipse = new DrawableEllipse(x, y, ellipse.getWidth(), ellipse.getHeight(), ellipse.getColor());
@@ -105,7 +104,7 @@ public class DrawableShapeFactory
      */
     private static DrawableCircle getDrawableShape(Circle circle)
     {
-        Point2D center = circle.getCenter();
+        Vector2D center = circle.getCenter();
         double x = center.getX() - circle.getRadius();
         double y = center.getY() - circle.getRadius();
         double diameter = circle.getRadius() * 2.0;
@@ -121,7 +120,7 @@ public class DrawableShapeFactory
         int[] xCoords = new int[3];
         int[] yCoords = new int[3];
 
-        ArrayList<Point2D> vertices = triangle.getVertices();
+        ArrayList<Vector2D> vertices = triangle.getVertices();
         for(int i = 0; i < 3; i++)
         {
             xCoords[i] = (int) vertices.get(i).getX();

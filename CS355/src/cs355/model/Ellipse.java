@@ -12,7 +12,7 @@ import java.awt.*;
 public class Ellipse extends Shape
 {
     /**Center of the ellipse*/
-    Point2D _center;
+    Vector2D _center;
     /**Width*/
     double _width;
     /**Height*/
@@ -21,7 +21,7 @@ public class Ellipse extends Shape
     /**
      * Constructor
      */
-    public Ellipse(Point2D center, double width, double height, Color color)
+    public Ellipse(Vector2D center, double width, double height, Color color)
     {
         super(color);
         _center = center;
@@ -32,7 +32,7 @@ public class Ellipse extends Shape
     /**
      * Getter for the center
      */
-    public Point2D getCenter()
+    public Vector2D getCenter()
     {
         return _center;
     }

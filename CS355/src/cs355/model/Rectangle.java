@@ -12,7 +12,7 @@ import java.awt.*;
 public class Rectangle extends Shape
 {
     /**Lower left corner (Note: appears as upper left on the screen)*/
-    Point2D _lowerLeft;
+    Vector2D _lowerLeft;
     /**The width of the rectangle*/
     double _width;
     /**The height of the rectangle*/
@@ -24,8 +24,8 @@ public class Rectangle extends Shape
     public Rectangle(Point p0, Point p1, Color color)
     {
         super(color);
-        _lowerLeft = new Point2D(Math.min(p0.getX(), p1.getX()), Math.min(p0.getY(), p1.getY()));
-        Point2D upperRight = new Point2D(Math.max(p0.getX(), p1.getX()), Math.max(p0.getY(), p1.getY()));
+        _lowerLeft = new Vector2D(Math.min(p0.getX(), p1.getX()), Math.min(p0.getY(), p1.getY()));
+        Vector2D upperRight = new Vector2D(Math.max(p0.getX(), p1.getX()), Math.max(p0.getY(), p1.getY()));
 
         _width = upperRight.getX() - _lowerLeft.getX();
         _height = upperRight.getY() - _lowerLeft.getY();
@@ -34,7 +34,7 @@ public class Rectangle extends Shape
     /**
      * Getter for the upper left
      */
-    public Point2D getLowerLeft()
+    public Vector2D getLowerLeft()
     {
         return _lowerLeft;
     }
