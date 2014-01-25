@@ -36,8 +36,6 @@ public class MouseSquareBuilderStrategy extends MouseShapeBuilderStrategy
         double width = _p1.getX() - _p0.getX();
         double height = _p1.getY() - _p0.getY();
 
-        double widthSign = Math.signum(width);
-        double heightSign = Math.signum(height);
         double size = Math.min(Math.abs(width), Math.abs(height));
 
         Point lowerLeft = new Point(_p0);

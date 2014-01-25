@@ -10,8 +10,6 @@ import java.awt.*;
  * To change this template use File | Settings | File Templates.
  */
 public class Square extends Shape {
-    /**The actual square is stored as rectangle underneath*/
-    private Vector2D _lowerLeft;
     /**The width of the rectangle*/
     private double _size;
 
@@ -20,8 +18,7 @@ public class Square extends Shape {
      */
     public Square(Point lowerLeft, double size, Color color)
     {
-        super(color);
-        _lowerLeft = new Vector2D(lowerLeft);
+        super(color, new Vector2D(lowerLeft.getX() + (size/2.0), lowerLeft.getY() + (size/2.0)));
         _size = size;
     }
 
@@ -31,7 +28,9 @@ public class Square extends Shape {
     public Vector2D getLowerLeft()
     {
         Vector2D center = getCenter();
-        return _lowerLeft;
+        Vector2D cornerOffset = new Vector2D(-_size / 2.0, -_size / 2.0);
+        Vector2D calculatedLowerLeft = Vector2D.add(center, cornerOffset);
+        return calculatedLowerLeft;
     }
 
     /**

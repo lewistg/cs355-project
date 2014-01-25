@@ -75,7 +75,7 @@ public class Vector2D
      */
     public static Vector2D add(Vector2D v0, Vector2D v1)
     {
-        return new Vector2D(v0.getX() + v1.getX(), v0.getX() + v1.getX());
+        return new Vector2D(v0.getX() + v1.getX(), v0.getY() + v1.getY());
     }
 
     /**

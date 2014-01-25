@@ -26,6 +26,15 @@ public abstract class Shape
     }
 
     /**
+     * Going to be the main constructor
+     */
+    public Shape(Color color, Vector2D center)
+    {
+        _color = color;
+        _center = center;
+    }
+
+    /**
      * Setter for the color
      */
     public void setColor(Color color)
