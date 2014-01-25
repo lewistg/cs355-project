@@ -70,4 +70,24 @@ public class Canvas extends Observable
         _instance.setChanged();
         _instance.notifyObservers();
     }
+
+    /**
+     * Finds the first shape that contains the given world coordinates. The
+     * shapes are searched back to front (which corresponds to front to back
+     * on the screen).
+     */
+    public Shape getSelectedShape(Vector2D worldCoord, double tolerance)
+    {
+        Shape hitShape = null;
+        for(int i = _shapes.size() - 1; i >= 0; i--)
+        {
+            if(_shapes.get(i).pointInShape(worldCoord, tolerance))
+            {
+                hitShape = _shapes.get(i);
+                break;
+            }
+        }
+
+        return hitShape;
+    }
 }

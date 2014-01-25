@@ -92,7 +92,7 @@ public class Vector2D
     public static Vector2D rot(Vector2D v0, double theta)
     {
         double rotX = v0.getX() * Math.cos(theta) - v0.getY() * Math.sin(theta);
-        double rotY = v0.getY() * Math.sin(theta) - v0.getX() * Math.cos(theta);
+        double rotY = v0.getX() * Math.sin(theta) + v0.getY() * Math.cos(theta);
         return new Vector2D(rotX, rotY);
     }
 

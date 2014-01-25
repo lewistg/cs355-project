@@ -15,6 +15,8 @@ public abstract class Shape
     private Color _color;
     /**The shape's center*/
     private Vector2D _center;
+    /**The shapes object to world transformation*/
+    ObjToWorldTransform _objToWorld;
 
     /**
      * Constructor
@@ -23,6 +25,7 @@ public abstract class Shape
     public Shape(Color color)
     {
         _color = color;
+        _objToWorld = new ObjToWorldTransform(new Vector2D(0, 0), 0.0);
     }
 
     /**
@@ -32,6 +35,7 @@ public abstract class Shape
     {
         _color = color;
         _center = center;
+        _objToWorld = new ObjToWorldTransform(new Vector2D(0, 0), 0.0);
     }
 
     /**
@@ -65,6 +69,14 @@ public abstract class Shape
     public void setCenter(Vector2D center)
     {
         _center = center;
+    }
+
+    /**
+     * Gets the object to world transformation
+     */
+    public ObjToWorldTransform getObjToWorldTransform()
+    {
+        return _objToWorld;
     }
 
     /**

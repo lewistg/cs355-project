@@ -36,4 +36,9 @@ public class Triangle extends Shape
     {
         return _vertices;
     }
+
+    @Override
+    public boolean pointInShape(Vector2D worldCoord, double tolerance) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

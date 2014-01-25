@@ -82,6 +82,10 @@ public class Rectangle extends Shape
     public boolean pointInShape(Vector2D worldCoord, double tolerance)
     {
         // transform the world coordinates to object space
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        ObjToWorldTransform objToWorld = getObjToWorldTransform();
+        Vector2D objCoords = objToWorld.getObjectCoords(worldCoord);
+        double xDist = Math.abs(objCoords.getX() - getCenter().getX());
+        double yDist = Math.abs(objCoords.getY() - getCenter().getY());
+        return (xDist < _width / 2.0) && (yDist < _height / 2.0);
     }
 }
