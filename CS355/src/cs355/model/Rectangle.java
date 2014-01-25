@@ -77,4 +77,11 @@ public class Rectangle extends Shape
         String rect = "Lower lower left: " + getLowerLeft().toString() + ", width = " + _width + ", height = "  + _height;
         return rect;
     }
+
+    @Override
+    public boolean pointInShape(Vector2D worldCoord, double tolerance)
+    {
+        // transform the world coordinates to object space
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

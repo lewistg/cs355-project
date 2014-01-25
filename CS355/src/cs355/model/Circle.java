@@ -31,4 +31,9 @@ public class Circle extends Shape
     {
         return _radius;
     }
+
+    @Override
+    public boolean pointInShape(Vector2D worldCoord, double tolerance) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

@@ -40,4 +40,9 @@ public class Square extends Shape {
     {
         return _size;
     }
+
+    @Override
+    public boolean pointInShape(Vector2D worldCoord, double tolerance) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

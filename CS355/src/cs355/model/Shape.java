@@ -66,4 +66,12 @@ public abstract class Shape
     {
         _center = center;
     }
+
+    /**
+     * Tests whether or not a particular worldCoord is within an object.
+     * @param worldCoord
+     * @param tolerance
+     * @return
+     */
+    public abstract boolean pointInShape(Vector2D worldCoord, double tolerance);
 }

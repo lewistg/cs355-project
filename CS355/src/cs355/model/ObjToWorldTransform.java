@@ -10,16 +10,27 @@ package cs355.model;
 public class ObjToWorldTransform
 {
     /**Translation to get to world space*/
-    private double _translateOToW;
+    private Vector2D _oToWTrans;
     /**Rotation to get to world space*/
-    private double _thetaOToW;
+    private double _oToWRot;
 
     /**
      * Constructor
      */
-    public ObjToWorldTransform(double translateOToW, double thetaOToW)
+    public ObjToWorldTransform(Vector2D oToWTrans, double oToWRot)
     {
-        _translateOToW = translateOToW;
-        _thetaOToW = thetaOToW;
+        _oToWTrans = oToWTrans;
+        _oToWRot = oToWRot;
+    }
+
+    /**
+     * Transforms a world coordinate to object space
+     */
+    public Vector2D getObjectCoords(Vector2D worldCoords)
+    {
+        // do inverse transformation
+        Vector2D objCoords = Vector2D.sub(worldCoords, _oToWTrans);
+        objCoords = Vector2D.rot(objCoords, -_oToWRot);
+        return objCoords;
     }
 }

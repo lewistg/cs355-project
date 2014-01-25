@@ -79,6 +79,24 @@ public class Vector2D
     }
 
     /**
+     * Returns v0 - v1
+     */
+    public static Vector2D sub(Vector2D v0, Vector2D v1)
+    {
+        return new Vector2D(v0.getX() - v1.getX(), v0.getY() - v1.getY());
+    }
+
+    /**
+     * Returns v0 rotated theta
+     */
+    public static Vector2D rot(Vector2D v0, double theta)
+    {
+        double rotX = v0.getX() * Math.cos(theta) - v0.getY() * Math.sin(theta);
+        double rotY = v0.getY() * Math.sin(theta) - v0.getX() * Math.cos(theta);
+        return new Vector2D(rotX, rotY);
+    }
+
+    /**
      * To-string
      */
     public String toString()

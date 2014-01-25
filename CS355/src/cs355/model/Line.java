@@ -66,4 +66,9 @@ public class Line extends Shape
         String lineStr = "Line from: " + _p0.toString() + " to " + _p1.toString();
         return lineStr;
     }
+
+    @Override
+    public boolean pointInShape(Vector2D worldCoord, double tolerance) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }
