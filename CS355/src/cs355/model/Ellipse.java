@@ -11,8 +11,6 @@ import java.awt.*;
  */
 public class Ellipse extends Shape
 {
-    /**Center of the ellipse*/
-    Vector2D _center;
     /**Width*/
     double _width;
     /**Height*/
@@ -23,18 +21,9 @@ public class Ellipse extends Shape
      */
     public Ellipse(Vector2D center, double width, double height, Color color)
     {
-        super(color);
-        _center = center;
+        super(color, center);
         _width = width;
         _height = height;
-    }
-
-    /**
-     * Getter for the center
-     */
-    public Vector2D getCenter()
-    {
-        return _center;
     }
 
     /**
@@ -58,7 +47,7 @@ public class Ellipse extends Shape
      */
     public String toString()
     {
-        String ellipseStr = "Center: " + _center.toString() + " width: " + _width + " height: " + _height;
+        String ellipseStr = "Center: " + getCenter().toString() + " width: " + _width + " height: " + _height;
         return ellipseStr;
     }
 }
