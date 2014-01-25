@@ -11,8 +11,6 @@ import java.awt.*;
  */
 public class Circle extends Shape
 {
-    /**Center of the circle*/
-    Vector2D _center;
     /**The radius of the circle*/
     double _radius;
 
@@ -21,18 +19,9 @@ public class Circle extends Shape
      */
     public Circle(Vector2D center, double radius, Color color)
     {
-        super(color);
+        super(color, center);
         assert(radius >= 0);
-        _center = center;
         _radius = radius;
-    }
-
-    /**
-     * Getter for the center
-     */
-    public Vector2D getCenter()
-    {
-        return _center;
     }
 
     /**
