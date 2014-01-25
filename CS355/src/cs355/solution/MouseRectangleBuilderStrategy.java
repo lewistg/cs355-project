@@ -25,7 +25,12 @@ public class MouseRectangleBuilderStrategy extends MouseShapeBuilderStrategy
     {
          _p0 = mouseEvent.getPoint();
          _p1 = _p0;
-        Rectangle rectangle = new Rectangle(_p0, _p1, cs355.model.Context.getInstance().getCurrentColor());
+
+        Point lowerLeft = getLowerLeft();
+        double width = getWidth();
+        double height = getHeight();
+
+        Rectangle rectangle = new Rectangle(lowerLeft, width, height, cs355.model.Context.getInstance().getCurrentColor());
         Canvas.getInstance().addShape(rectangle);
     }
 
@@ -33,7 +38,42 @@ public class MouseRectangleBuilderStrategy extends MouseShapeBuilderStrategy
     public void mouseDragged(MouseEvent mouseEvent)
     {
         _p1 = mouseEvent.getPoint();
-        Rectangle rectangle = new Rectangle(_p0, _p1, cs355.model.Context.getInstance().getCurrentColor());
+
+        Point lowerLeft = getLowerLeft();
+        double width = getWidth();
+        double height = getHeight();
+
+        Rectangle rectangle = new Rectangle(lowerLeft, width, height, cs355.model.Context.getInstance().getCurrentColor());
         cs355.model.Canvas.getInstance().setLastShapeAdded(rectangle);
+    }
+
+    /**
+     * Calculates the lower left corner of the rectangle
+     * @return
+     */
+    private Point getLowerLeft()
+    {
+        double minX = Math.min(_p0.getX(), _p1.getX());
+        double minY = Math.min(_p0.getY(), _p1.getY());
+        Point lowerLeft = new Point((int) minX, (int) minY);
+
+        return lowerLeft;
+    }
+
+    /**
+     * Gets the width of the rectangle
+     * @return
+     */
+    private double getWidth()
+    {
+        return Math.abs(_p0.getX() - _p1.getX());
+    }
+
+    /**
+     * Gets the height of the rectangle
+     */
+    private double getHeight()
+    {
+        return Math.abs(_p0.getY() - _p1.getY());
     }
 }

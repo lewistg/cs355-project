@@ -11,8 +11,6 @@ import java.awt.*;
  */
 public class Rectangle extends Shape
 {
-    /**Lower left corner (Note: appears as upper left on the screen)*/
-    Vector2D _lowerLeft;
     /**The width of the rectangle*/
     double _width;
     /**The height of the rectangle*/
@@ -21,14 +19,11 @@ public class Rectangle extends Shape
     /**
      * Constructor
      */
-    public Rectangle(Point p0, Point p1, Color color)
+    public Rectangle(Point lowerLeft, double width, double height, Color color)
     {
-        super(color);
-        _lowerLeft = new Vector2D(Math.min(p0.getX(), p1.getX()), Math.min(p0.getY(), p1.getY()));
-        Vector2D upperRight = new Vector2D(Math.max(p0.getX(), p1.getX()), Math.max(p0.getY(), p1.getY()));
-
-        _width = upperRight.getX() - _lowerLeft.getX();
-        _height = upperRight.getY() - _lowerLeft.getY();
+        super(color, new Vector2D(lowerLeft.getX() + (width/2.0), lowerLeft.getY() + (height/2.0)));
+        _width = width;
+        _height = height;
     }
 
     /**
@@ -36,7 +31,10 @@ public class Rectangle extends Shape
      */
     public Vector2D getLowerLeft()
     {
-        return _lowerLeft;
+        Vector2D center = getCenter();
+        Vector2D cornerOffset = new Vector2D(-_width / 2.0, -_height / 2.0);
+        Vector2D calculatedLowerLeft = Vector2D.add(center, cornerOffset);
+        return calculatedLowerLeft;
     }
 
     /**
@@ -76,7 +74,7 @@ public class Rectangle extends Shape
 
     public String toString()
     {
-        String rect = "Lower lower left: " + _lowerLeft.toString() + ", width = " + _width + ", height = "  + _height;
+        String rect = "Lower lower left: " + getLowerLeft().toString() + ", width = " + _width + ", height = "  + _height;
         return rect;
     }
 }
