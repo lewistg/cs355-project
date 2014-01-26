@@ -10,15 +10,19 @@ import java.awt.*;
  * To change this template use File | Settings | File Templates.
  */
 public class Square extends Shape {
+    /**Underneath the square is simply a rectangle*/
+    private Rectangle _squareRect;
     /**The width of the rectangle*/
     private double _size;
 
     /**
      * Constructor
      */
-    public Square(Point lowerLeft, double size, Color color)
+    public Square(Point lowerLeftWC, double size, Color color)
     {
-        super(color, new Vector2D(lowerLeft.getX() + (size/2.0), lowerLeft.getY() + (size/2.0)));
+        super(color);
+        System.out.println("Lower left square wc coords: " + lowerLeftWC);
+        _squareRect = new Rectangle(lowerLeftWC, size, size, color);
         _size = size;
     }
 
@@ -27,10 +31,7 @@ public class Square extends Shape {
      */
     public Vector2D getLowerLeft()
     {
-        Vector2D center = getCenter();
-        Vector2D cornerOffset = new Vector2D(-_size / 2.0, -_size / 2.0);
-        Vector2D calculatedLowerLeft = Vector2D.add(center, cornerOffset);
-        return calculatedLowerLeft;
+        return _squareRect.getLowerLeft();
     }
 
     /**
@@ -42,7 +43,25 @@ public class Square extends Shape {
     }
 
     @Override
+    public Vector2D getCenter()
+    {
+        return _squareRect.getCenter();
+    }
+
+    @Override
+    public void setObjToWorldTransform(ObjToWorldTransform objToWorld)
+    {
+        _squareRect.setObjToWorldTransform(objToWorld);
+    }
+
+    @Override
+    public ObjToWorldTransform getObjToWorldTransform()
+    {
+        return _squareRect.getObjToWorldTransform();
+    }
+
+    @Override
     public boolean pointInShape(Vector2D worldCoord, double tolerance) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        return _squareRect.pointInShape(worldCoord, tolerance);
     }
 }

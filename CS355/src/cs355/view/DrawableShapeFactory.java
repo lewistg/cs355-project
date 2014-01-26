@@ -30,7 +30,7 @@ public class DrawableShapeFactory
             else if(shape instanceof Rectangle)
                 drawableShapes.add(getDrawableRectangle((Rectangle) shape));
             else if(shape instanceof Square)
-                drawableShapes.add(getDrawableShape((Square) shape));
+                drawableShapes.add(getDrawableSquare((Square) shape));
             else if(shape instanceof Ellipse)
                 drawableShapes.add(getDrawableShape((Ellipse) shape));
             else if (shape instanceof Circle)
@@ -79,13 +79,15 @@ public class DrawableShapeFactory
     /**
      * Builds a drawable rectangle shape
      */
-    private static DrawableShape getDrawableShape(cs355.model.Square square)
+    private static DrawableShape getDrawableSquare(cs355.model.Square square)
     {
         Vector2D getLowerLeft = square.getLowerLeft();
         int x = (int) getLowerLeft.getX();
         int y = (int) getLowerLeft.getY();
         int size = (int) square.size();
-        DrawableSquare drawableSquare = new DrawableSquare(x, y, size, size, square.getColor());
+        //DrawableSquare drawableSquare = new DrawableSquare(x, y, size, size, square.getColor());
+        AffineTransform affineTransform = square.getObjToWorldTransform().getObjToWorldAffine();
+        DrawableRectangle drawableSquare = new DrawableRectangle(x, y, size, size, square.getColor(), affineTransform);
         return drawableSquare;
     }
 
