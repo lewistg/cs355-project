@@ -34,7 +34,7 @@ public class DrawableShapeFactory
             else if(shape instanceof Ellipse)
                 drawableShapes.add(getDrawableShape((Ellipse) shape));
             else if (shape instanceof Circle)
-                drawableShapes.add(getDrawableShape((Circle) shape));
+                drawableShapes.add(getDrawableCircle((Circle) shape));
             else if(shape instanceof Triangle)
                 drawableShapes.add(getDrawableTriangle((Triangle) shape));
             else
@@ -106,13 +106,14 @@ public class DrawableShapeFactory
     /**
      * Builds a drawable circle shape
      */
-    private static DrawableCircle getDrawableShape(Circle circle)
+    private static DrawableCircle getDrawableCircle(Circle circle)
     {
         Vector2D center = circle.getCenter();
         double x = center.getX() - circle.getRadius();
         double y = center.getY() - circle.getRadius();
         double diameter = circle.getRadius() * 2.0;
-        DrawableCircle drawableCircle = new DrawableCircle(x, y, diameter, circle.getColor());
+        AffineTransform affineTransform = circle.getObjToWorldTransform().getObjToWorldAffine();
+        DrawableCircle drawableCircle = new DrawableCircle(x, y, diameter, circle.getColor(), affineTransform);
         return drawableCircle;
     }
 

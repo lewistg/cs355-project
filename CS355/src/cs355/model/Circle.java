@@ -17,9 +17,15 @@ public class Circle extends Shape
     /**
      * Constructor
      */
-    public Circle(Vector2D center, double radius, Color color)
+    public Circle(Vector2D centerWC, double radius, Color color)
     {
-        super(color, center);
+        //super(color, centerWC);
+        super(color, new Vector2D(0, 0));
+
+        // create object to world
+        ObjToWorldTransform objToWorldTransform = new ObjToWorldTransform(centerWC, 0.0);
+        setObjToWorldTransform(objToWorldTransform);
+
         assert(radius >= 0);
         _radius = radius;
     }
