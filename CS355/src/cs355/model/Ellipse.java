@@ -19,9 +19,13 @@ public class Ellipse extends Shape
     /**
      * Constructor
      */
-    public Ellipse(Vector2D center, double width, double height, Color color)
+    public Ellipse(Vector2D centerWC, double width, double height, Color color)
     {
-        super(color, center);
+        super(color, new Vector2D(0, 0));
+
+        ObjToWorldTransform objToWorldTransform = new ObjToWorldTransform(centerWC, 0.0);
+        setObjToWorldTransform(objToWorldTransform);
+
         _width = width;
         _height = height;
     }

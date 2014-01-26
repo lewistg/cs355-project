@@ -99,7 +99,8 @@ public class DrawableShapeFactory
         Vector2D center = ellipse.getCenter();
         double x = center.getX() - (ellipse.getWidth() / 2.0);
         double y = center.getY() - (ellipse.getHeight() / 2.0);
-        DrawableEllipse drawableEllipse = new DrawableEllipse(x, y, ellipse.getWidth(), ellipse.getHeight(), ellipse.getColor());
+        AffineTransform affineTransform = ellipse.getObjToWorldTransform().getObjToWorldAffine();
+        DrawableEllipse drawableEllipse = new DrawableEllipse(x, y, ellipse.getWidth(), ellipse.getHeight(), ellipse.getColor(), affineTransform);
         return drawableEllipse;
     }
 
