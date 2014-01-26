@@ -72,6 +72,14 @@ public abstract class Shape
     }
 
     /**
+     * Sets the object to world transformation
+     */
+    public void setObjToWorldTransform(ObjToWorldTransform objToWorld)
+    {
+        _objToWorld = objToWorld;
+    }
+
+    /**
      * Gets the object to world transformation
      */
     public ObjToWorldTransform getObjToWorldTransform()

@@ -4,6 +4,7 @@ import cs355.model.*;
 import cs355.model.Rectangle;
 import cs355.model.Shape;
 
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
 /**
@@ -27,7 +28,7 @@ public class DrawableShapeFactory
             if(shape instanceof Line)
                 drawableShapes.add(getDrawableShape((Line) shape));
             else if(shape instanceof Rectangle)
-                drawableShapes.add(getDrawableShape((Rectangle) shape));
+                drawableShapes.add(getDrawableRectangle((Rectangle) shape));
             else if(shape instanceof Square)
                 drawableShapes.add(getDrawableShape((Square) shape));
             else if(shape instanceof Ellipse)
@@ -63,14 +64,15 @@ public class DrawableShapeFactory
     /**
      * Builds a drawable rectangle shape
      */
-    private static DrawableShape getDrawableShape(cs355.model.Rectangle rectangle)
+    private static DrawableShape getDrawableRectangle(cs355.model.Rectangle rectangle)
     {
         Vector2D getLowerLeft = rectangle.getLowerLeft();
         int x = (int) getLowerLeft.getX();
         int y = (int) getLowerLeft.getY();
         int w = (int) rectangle.getWidth();
         int h = (int) rectangle.getHeight();
-        DrawableRectangle drawableRectangle = new DrawableRectangle(x, y, w, h, rectangle.getColor());
+        AffineTransform affineTransform = rectangle.getObjToWorldTransform().getObjToWorldAffine();
+        DrawableRectangle drawableRectangle = new DrawableRectangle(x, y, w, h, rectangle.getColor(), affineTransform);
         return drawableRectangle;
     }
 

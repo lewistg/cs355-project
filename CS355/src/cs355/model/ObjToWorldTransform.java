@@ -1,5 +1,7 @@
 package cs355.model;
 
+import java.awt.geom.AffineTransform;
+
 /**
  * Created with IntelliJ IDEA.
  * User: ty
@@ -10,17 +12,17 @@ package cs355.model;
 public class ObjToWorldTransform
 {
     /**Translation to get to world space*/
-    private Vector2D _oToWTrans;
+    private Vector2D _objToWorldTrans;
     /**Rotation to get to world space*/
-    private double _oToWRot;
+    private double _objToWorldRot;
 
     /**
      * Constructor
      */
     public ObjToWorldTransform(Vector2D oToWTrans, double oToWRot)
     {
-        _oToWTrans = oToWTrans;
-        _oToWRot = oToWRot;
+        _objToWorldTrans = oToWTrans;
+        _objToWorldRot = oToWRot;
     }
 
     /**
@@ -29,8 +31,27 @@ public class ObjToWorldTransform
     public Vector2D getObjectCoords(Vector2D worldCoords)
     {
         // do inverse transformation
-        Vector2D objCoords = Vector2D.sub(worldCoords, _oToWTrans);
-        objCoords = Vector2D.rot(objCoords, -_oToWRot);
+        Vector2D objCoords = Vector2D.sub(worldCoords, _objToWorldTrans);
+        objCoords = Vector2D.rot(objCoords, -_objToWorldRot);
         return objCoords;
+    }
+
+    public Vector2D getWorldCoords(Vector2D objCoords)
+    {
+        Vector2D worldCoords = Vector2D.rot(objCoords, _objToWorldRot);
+        worldCoords = Vector2D.add(worldCoords, _objToWorldTrans);
+        return worldCoords;
+    }
+
+    /**
+     * Gets the affine transformation
+     */
+    public AffineTransform getObjToWorldAffine()
+    {
+        AffineTransform affineTransform = new AffineTransform();
+        affineTransform.rotate(_objToWorldRot);
+        affineTransform.translate(_objToWorldTrans.getX(), _objToWorldTrans.getY());
+        System.out.println("Mine: " + _objToWorldTrans);
+        return affineTransform;
     }
 }

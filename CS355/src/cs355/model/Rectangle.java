@@ -19,9 +19,20 @@ public class Rectangle extends Shape
     /**
      * Constructor
      */
-    public Rectangle(Point lowerLeft, double width, double height, Color color)
+    public Rectangle(Point lowerLeftWC, double width, double height, Color color)
     {
-        super(color, new Vector2D(lowerLeft.getX() + (width/2.0), lowerLeft.getY() + (height/2.0)));
+        //super(color, new Vector2D(lowerLeftWC.getX() + (width/2.0), lowerLeftWC.getY() + (height/2.0)));
+        super(color, new Vector2D(0, 0));
+
+        // create the object to world transform
+        int centerXWC = (int) (lowerLeftWC.getX() + (width / 2));
+        int centerYWC = (int) (lowerLeftWC.getY() + (height / 2));
+        //Vector2D centerWC = new Vector2D(lowerLeftWC.getX() + (width / 2), lowerLeftWC.getY() + (height / 2));
+        Vector2D centerWC = new Vector2D(centerXWC, centerYWC);
+        Vector2D objToWorldTrans = new Vector2D(centerWC.getX(), centerWC.getY());
+        ObjToWorldTransform objToWorldTransform = new ObjToWorldTransform(objToWorldTrans, 0.0);
+        setObjToWorldTransform(objToWorldTransform);
+
         _width = width;
         _height = height;
     }
@@ -34,6 +45,10 @@ public class Rectangle extends Shape
         Vector2D center = getCenter();
         Vector2D cornerOffset = new Vector2D(-_width / 2.0, -_height / 2.0);
         Vector2D calculatedLowerLeft = Vector2D.add(center, cornerOffset);
+
+        ObjToWorldTransform objToWorld = getObjToWorldTransform();
+        Vector2D lowerLeftWC = objToWorld.getWorldCoords(calculatedLowerLeft);
+        System.out.println(lowerLeftWC);
         return calculatedLowerLeft;
     }
 
