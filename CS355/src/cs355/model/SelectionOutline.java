@@ -13,8 +13,10 @@ public class SelectionOutline
 {
     /**Outline pts in object space*/
     private ArrayList<Vector2D> _outlinePts;
-    /**Handle locations*/
+    /**Scale handle locations*/
     private ArrayList<Vector2D> _handlePts;
+    /**Rotation handle location*/
+    private Vector2D _rotationHandle;
 
     /**
      * Constructor
@@ -23,6 +25,7 @@ public class SelectionOutline
     {
         _outlinePts = new ArrayList<Vector2D>();
         _handlePts = new ArrayList<Vector2D>();
+        _rotationHandle = new Vector2D(0, 0);
     }
 
     /**
@@ -49,5 +52,21 @@ public class SelectionOutline
     public ArrayList<Vector2D> getOutlinePts()
     {
         return _outlinePts;
+    }
+
+    /**
+     * Setter for the rotation handle
+     */
+    public void setRotationHandle(Vector2D rotHandle)
+    {
+        _rotationHandle = rotHandle;
+    }
+
+    /**
+     * Gets the handle pts
+     */
+    public Vector2D getRotationHandle()
+    {
+        return _rotationHandle;
     }
 }

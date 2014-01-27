@@ -115,6 +115,8 @@ public class Rectangle extends Shape
         selectionOutline.addOutlinePt(Vector2D.add(center, new Vector2D(xOffset, yOffset)));
         selectionOutline.addOutlinePt(Vector2D.add(center, new Vector2D(xOffset, -yOffset)));
         selectionOutline.addOutlinePt(Vector2D.add(center, new Vector2D(-xOffset, -yOffset)));
+
+        selectionOutline.setRotationHandle(new Vector2D(center.getX(), center.getY() - (_height / 2) - 40));
         return selectionOutline;
     }
 }

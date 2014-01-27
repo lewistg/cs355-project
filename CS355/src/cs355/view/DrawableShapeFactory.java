@@ -4,6 +4,7 @@ import cs355.model.*;
 import cs355.model.Rectangle;
 import cs355.model.Shape;
 
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
@@ -25,6 +26,10 @@ public class DrawableShapeFactory
         ArrayList<DrawableShape> drawableShapes = new ArrayList<DrawableShape>();
         for(Shape shape : shapeList)
         {
+            // add the selection
+            //drawableShapes.add(new DrawableSelectionOutline(shape, Color.ORANGE));
+            drawableShapes.add(new DrawableSelectionOutline(shape, Context.getCurrentColor()));
+
             if(shape instanceof Line)
                 drawableShapes.add(getDrawableShape((Line) shape));
             else if(shape instanceof Rectangle)
