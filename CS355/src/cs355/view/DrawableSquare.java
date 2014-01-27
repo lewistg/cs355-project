@@ -21,7 +21,7 @@ public class DrawableSquare extends DrawableShape{
      */
     DrawableSquare(int lowerLeftX, int lowerLeftY, int w, int h, Color color)
     {
-        super(color);
+        super(new Color(color.getRGB()));
         _lowerLeftX = lowerLeftX;
         _lowerRightY = lowerLeftY;
         _w = w;

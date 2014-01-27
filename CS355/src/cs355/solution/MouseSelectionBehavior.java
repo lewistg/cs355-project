@@ -55,7 +55,17 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
         Vector2D centerWC = objToWorldTransform.getWorldCoords(center);
         double xOffset = p1.getX() - centerWC.getX();
         double yOffset = p1.getY() - centerWC.getY();
-        double theta = Math.atan2(yOffset, xOffset);
+
+        Vector2D v0 = new Vector2D(_p0);
+        v0.normalize();
+        Vector2D v1 = new Vector2D(xOffset, yOffset);
+        v1.normalize();
+        double theta = Math.asin(Vector2D.dot(v0, v1));
+
+        //double theta = Math.atan2(yOffset, xOffset);
+
+        System.out.println("Theta: " + Math.toDegrees(theta));
+
         DrawingFacade.getInstance().rotateSelectedShape(theta);
     }
 }

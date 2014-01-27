@@ -66,6 +66,15 @@ public class ObjToWorldTransform
     }
 
     /**
+     * Gets the object to world rotation
+     * @return
+     */
+    public double getObjToWorldRot()
+    {
+        return _objToWorldRot;
+    }
+
+    /**
      * Rotates the selected shape by updating its object
      */
     public static void rotateSelectedShape(Shape shape, double theta)

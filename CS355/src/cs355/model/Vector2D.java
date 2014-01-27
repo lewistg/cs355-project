@@ -67,6 +67,15 @@ public class Vector2D
         _y = y;
     }
 
+    public void normalize()
+    {
+        double mag = (_x * _x) + (_y * _y);
+        mag = Math.sqrt(mag);
+
+        _x /= mag;
+        _y /= mag;
+    }
+
     /**
      * Returns the sum of the vectors
      * @param v0
@@ -84,6 +93,14 @@ public class Vector2D
     public static Vector2D sub(Vector2D v0, Vector2D v1)
     {
         return new Vector2D(v0.getX() - v1.getX(), v0.getY() - v1.getY());
+    }
+
+    /**
+     * Dot product
+     */
+    public static double dot(Vector2D v0, Vector2D v1)
+    {
+        return v0._x * v1._x + v0._y * v1._y;
     }
 
     /**

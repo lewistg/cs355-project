@@ -104,6 +104,10 @@ public class Canvas extends Observable
         return _selectedShape;
     }
 
+    /**
+     * This should be deprecated!!!
+     * @return
+     */
     public Shape getSelectedShape()
     {
         return _selectedShape;
