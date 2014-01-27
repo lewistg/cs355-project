@@ -89,7 +89,8 @@ public class Canvas extends Observable
                 break;
             }
         }
-
+        _instance.setChanged();
+        _instance.notifyObservers();
         return _selectedShape;
     }
 
