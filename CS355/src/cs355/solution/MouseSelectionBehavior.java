@@ -20,16 +20,20 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
     private Shape _selectedShape;
     /**The first click point*/
     Point _p0;
+    /**The initial angle*/
+    double _initAngle;
 
     @Override
     public void mousePressed(MouseEvent mouseEvent)
     {
         Canvas canvas = Canvas.getInstance();
         _selectedShape = canvas.selectShape(new Vector2D(mouseEvent.getPoint()), 4);
-        if(_selectedShape != null)
+        ObjToWorldTransform objToWorld = _selectedShape.getObjToWorldTransform();
+        _initAngle = objToWorld.getObjToWorldRot();
+        /*if(_selectedShape != null)
             System.out.println("Hit: " + _selectedShape.toString());
         else
-            System.out.println("Nothing..");
+            System.out.println("Nothing..");*/
 
         _p0 = mouseEvent.getPoint();
     }
@@ -56,15 +60,26 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
         double xOffset = p1.getX() - centerWC.getX();
         double yOffset = p1.getY() - centerWC.getY();
 
-        Vector2D v0 = new Vector2D(_p0);
+        Vector2D v0 = Vector2D.sub(new Vector2D(_p0), centerWC);
         v0.normalize();
+        System.out.println("v0: " + v0.toString());
         Vector2D v1 = new Vector2D(xOffset, yOffset);
         v1.normalize();
-        double theta = Math.asin(Vector2D.dot(v0, v1));
+        System.out.println("v1: " + v1.toString());
+        double dot = Vector2D.dot(v0, v1);
+        double theta = Math.acos(dot);
+        System.out.println("Dot: " + Vector2D.dot(v0, v1));
 
         //double theta = Math.atan2(yOffset, xOffset);
 
-        System.out.println("Theta: " + Math.toDegrees(theta));
+
+        double alpha = Math.atan2(v0.getY(), v0.getX());
+        double beta = Math.atan2(v1.getY(), v1.getX());
+        System.out.println("Alpha: " + Math.toDegrees(alpha));
+        System.out.println("Beta: " + Math.toDegrees(beta));
+        theta =  (beta - alpha) + _initAngle;
+
+        System.out.println("Theta: " + Math.toDegrees(alpha - beta));
 
         DrawingFacade.getInstance().rotateSelectedShape(theta);
     }

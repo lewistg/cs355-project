@@ -100,7 +100,7 @@ public class Vector2D
      */
     public static double dot(Vector2D v0, Vector2D v1)
     {
-        return v0._x * v1._x + v0._y * v1._y;
+        return (v0._x * v1._x) + (v0._y * v1._y);
     }
 
     /**
