@@ -37,9 +37,6 @@ public class DrawableRectangle extends DrawableShape{
     {
         Point lowerLeftWC = new Point();
         _affineTransform.transform(new Point(_lowerLeftX, _lowerRightY), lowerLeftWC);
-        System.out.println("Lower left wc:" + lowerLeftWC.toString());
-        System.out.println("x: " + _affineTransform.getTranslateX());
-        System.out.println("y: " + _affineTransform.getTranslateY());
         context.setTransform(_affineTransform);
         context.setColor(getColor());
         context.fillRect(_lowerLeftX, _lowerRightY, _w, _h);

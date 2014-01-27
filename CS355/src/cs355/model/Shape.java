@@ -94,4 +94,12 @@ public abstract class Shape
      * @return
      */
     public abstract boolean pointInShape(Vector2D worldCoord, double tolerance);
+
+    /**
+     * Returns the slection outline
+     */
+    public SelectionOutline getSelectionOutline()
+    {
+        return null;
+    }
 }

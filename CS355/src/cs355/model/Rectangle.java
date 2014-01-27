@@ -103,4 +103,18 @@ public class Rectangle extends Shape
         double yDist = Math.abs(objCoords.getY() - getCenter().getY());
         return (xDist < _width / 2.0) && (yDist < _height / 2.0);
     }
+
+    @Override
+    public SelectionOutline getSelectionOutline()
+    {
+        SelectionOutline selectionOutline = new SelectionOutline();
+        Vector2D center = getCenter();
+        double xOffset = (_width / 2) + 4;
+        double yOffset = (_height / 2) + 4;
+        selectionOutline.addOutlinePt(Vector2D.add(center, new Vector2D(-xOffset, yOffset)));
+        selectionOutline.addOutlinePt(Vector2D.add(center, new Vector2D(xOffset, yOffset)));
+        selectionOutline.addOutlinePt(Vector2D.add(center, new Vector2D(xOffset, -yOffset)));
+        selectionOutline.addOutlinePt(Vector2D.add(center, new Vector2D(-xOffset, -yOffset)));
+        return selectionOutline;
+    }
 }
