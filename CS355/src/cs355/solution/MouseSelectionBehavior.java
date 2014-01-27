@@ -40,10 +40,22 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
         if(_selectedShape == null)
             return;
 
-        Point p1 = mouseEvent.getPoint();
-        double xOffset = p1.getX() - _p0.getX();
-        double yOffset = p1.getY() - _p0.getY();
+        rotatingSelected(mouseEvent);
+
+        /*Point p1 = mouseEvent.getPoint();
         _p0 = p1;
-        DrawingFacade.getInstance().translateSelectedShape(new Vector2D(xOffset, yOffset));
+        DrawingFacade.getInstance().translateSelectedShape(new Vector2D(xOffset, yOffset));*/
+    }
+
+    private void rotatingSelected(MouseEvent mouseEvent)
+    {
+        Point p1 = mouseEvent.getPoint();
+        Vector2D center = _selectedShape.getCenter();
+        ObjToWorldTransform objToWorldTransform = _selectedShape.getObjToWorldTransform();
+        Vector2D centerWC = objToWorldTransform.getWorldCoords(center);
+        double xOffset = p1.getX() - centerWC.getX();
+        double yOffset = p1.getY() - centerWC.getY();
+        double theta = Math.atan2(yOffset, xOffset);
+        DrawingFacade.getInstance().rotateSelectedShape(theta);
     }
 }

@@ -49,8 +49,8 @@ public class ObjToWorldTransform
     public AffineTransform getObjToWorldAffine()
     {
         AffineTransform affineTransform = new AffineTransform();
-        affineTransform.rotate(_objToWorldRot);
         affineTransform.translate(_objToWorldTrans.getX(), _objToWorldTrans.getY());
+        affineTransform.rotate(_objToWorldRot);
         System.out.println("Mine: " + _objToWorldTrans);
         return affineTransform;
     }
@@ -62,6 +62,18 @@ public class ObjToWorldTransform
     {
         ObjToWorldTransform objToWorldTransform = shape.getObjToWorldTransform();
         objToWorldTransform._objToWorldTrans = Vector2D.add(objToWorldTransform._objToWorldTrans, worldOffset);
+        shape.setObjToWorldTransform(objToWorldTransform);
+    }
+
+    /**
+     * Rotates the selected shape by updating its object
+     */
+    public static void rotateSelectedShape(Shape shape, double theta)
+    {
+        ObjToWorldTransform objToWorldTransform = shape.getObjToWorldTransform();
+        objToWorldTransform._objToWorldRot = theta;
+        objToWorldTransform._objToWorldRot %= 2 * Math.PI;
+        System.out.println("Rotation: " + objToWorldTransform._objToWorldRot);
         shape.setObjToWorldTransform(objToWorldTransform);
     }
 }

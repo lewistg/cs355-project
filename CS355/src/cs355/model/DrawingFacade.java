@@ -44,4 +44,14 @@ public class DrawingFacade extends Observable
     /**
      * Rotates the given shape by the given offset
      */
+    public void rotateSelectedShape(double theta)
+    {
+        Shape selectedShape = Canvas.getInstance().getSelectedShape();
+        if(selectedShape == null)
+            return;
+
+        ObjToWorldTransform.rotateSelectedShape(selectedShape, theta);
+        _instance.setChanged();
+        _instance.notifyObservers();
+    }
 }
