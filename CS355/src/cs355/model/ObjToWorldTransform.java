@@ -58,7 +58,7 @@ public class ObjToWorldTransform
     /**
      * Moves shape by updating its object to world transformation
      */
-    public static void translateShape(Shape shape, Vector2D worldOffset)
+    public static void translateSelectedShape(Shape shape, Vector2D worldOffset)
     {
         ObjToWorldTransform objToWorldTransform = shape.getObjToWorldTransform();
         objToWorldTransform._objToWorldTrans = Vector2D.add(objToWorldTransform._objToWorldTrans, worldOffset);

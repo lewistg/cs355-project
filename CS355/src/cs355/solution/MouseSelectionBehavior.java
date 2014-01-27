@@ -25,7 +25,7 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
     public void mousePressed(MouseEvent mouseEvent)
     {
         Canvas canvas = Canvas.getInstance();
-        _selectedShape = canvas.getSelectedShape(new Vector2D(mouseEvent.getPoint()), 4);
+        _selectedShape = canvas.selectShape(new Vector2D(mouseEvent.getPoint()), 4);
         if(_selectedShape != null)
             System.out.println("Hit: " + _selectedShape.toString());
         else
@@ -44,6 +44,6 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
         double xOffset = p1.getX() - _p0.getX();
         double yOffset = p1.getY() - _p0.getY();
         _p0 = p1;
-        DrawingFacade.getInstance().translateShape(_selectedShape, new Vector2D(xOffset, yOffset));
+        DrawingFacade.getInstance().translateSelectedShape(new Vector2D(xOffset, yOffset));
     }
 }

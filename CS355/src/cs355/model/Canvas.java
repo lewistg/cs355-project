@@ -17,6 +17,8 @@ public class Canvas extends Observable
     private static Canvas _instance;
     /**Buffer of shapes drawn. They are ordered according to when they were added*/
     private static ArrayList<Shape> _shapes;
+    /**The currently selected shape*/
+    private Shape _selectedShape;
 
     /**
      * Private constructor
@@ -76,18 +78,23 @@ public class Canvas extends Observable
      * shapes are searched back to front (which corresponds to front to back
      * on the screen).
      */
-    public Shape getSelectedShape(Vector2D worldCoord, double tolerance)
+    public Shape selectShape(Vector2D worldCoord, double tolerance)
     {
-        Shape hitShape = null;
+        _selectedShape = null;
         for(int i = _shapes.size() - 1; i >= 0; i--)
         {
             if(_shapes.get(i).pointInShape(worldCoord, tolerance))
             {
-                hitShape = _shapes.get(i);
+                _selectedShape = _shapes.get(i);
                 break;
             }
         }
 
-        return hitShape;
+        return _selectedShape;
+    }
+
+    public Shape getSelectedShape()
+    {
+        return _selectedShape;
     }
 }
