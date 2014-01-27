@@ -1,9 +1,8 @@
 package cs355.solution;
 
+import cs355.model.*;
 import cs355.model.Canvas;
-import cs355.model.ObjToWorldTransform;
 import cs355.model.Shape;
-import cs355.model.Vector2D;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -45,6 +44,6 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
         double xOffset = p1.getX() - _p0.getX();
         double yOffset = p1.getY() - _p0.getY();
         _p0 = p1;
-        ObjToWorldTransform.translateShape(_selectedShape, new Vector2D(xOffset, yOffset));
+        DrawingFacade.getInstance().translateShape(_selectedShape, new Vector2D(xOffset, yOffset));
     }
 }

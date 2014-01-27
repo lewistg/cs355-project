@@ -3,6 +3,7 @@ package cs355.view;
 import cs355.GUIFunctions;
 import cs355.ViewRefresher;
 import cs355.model.Canvas;
+import cs355.model.DrawingFacade;
 
 import java.awt.*;
 import java.util.*;
@@ -24,6 +25,9 @@ public class LabOneViewRefresher implements ViewRefresher, Observer
     {
         Canvas shapeBuffer = Canvas.getInstance();
         shapeBuffer.addObserver(this);
+
+        DrawingFacade drawingFacade = DrawingFacade.getInstance();
+        drawingFacade.addObserver(this);
     }
 
     @Override
