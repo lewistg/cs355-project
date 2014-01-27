@@ -17,6 +17,8 @@ public class SelectionOutline
     private ArrayList<Vector2D> _handlePts;
     /**Rotation handle location*/
     private Vector2D _rotationHandle;
+    /**Handle size in object space*/
+    private double _handleSize;
 
     /**
      * Constructor
@@ -26,6 +28,7 @@ public class SelectionOutline
         _outlinePts = new ArrayList<Vector2D>();
         _handlePts = new ArrayList<Vector2D>();
         _rotationHandle = new Vector2D(0, 0);
+        _handleSize = 7.0;
     }
 
     /**
@@ -68,5 +71,14 @@ public class SelectionOutline
     public Vector2D getRotationHandle()
     {
         return _rotationHandle;
+    }
+
+    boolean rotHandleSelected(Vector2D objCoords)
+    {
+        // test whether or not the rotation handle was selected
+        double xDelta = objCoords.getX() - _rotationHandle.getX();
+        double yDelta = objCoords.getY() - _rotationHandle.getY();
+
+        return ((xDelta * xDelta) + (yDelta * yDelta)) < (_handleSize * _handleSize);
     }
 }

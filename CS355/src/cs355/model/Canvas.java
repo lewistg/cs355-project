@@ -80,6 +80,16 @@ public class Canvas extends Observable
      */
     public Shape selectShape(Vector2D worldCoord, double tolerance)
     {
+        // check to see if the rotation handle was clicked
+        if(_selectedShape != null)
+        {
+            ObjToWorldTransform objToWorldTransform = _selectedShape.getObjToWorldTransform();
+            Vector2D objCoords =  objToWorldTransform.getObjectCoords(worldCoord);
+            if(_selectedShape.getSelectionOutline().rotHandleSelected(objCoords))
+                return _selectedShape;
+        }
+
+
         _selectedShape = null;
         for(int i = _shapes.size() - 1; i >= 0; i--)
         {
