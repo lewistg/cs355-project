@@ -54,4 +54,14 @@ public class ObjToWorldTransform
         System.out.println("Mine: " + _objToWorldTrans);
         return affineTransform;
     }
+
+    /**
+     * Moves shape by updating its object to world transformation
+     */
+    public static void translateShape(Shape shape, Vector2D worldOffset)
+    {
+        ObjToWorldTransform objToWorldTransform = shape.getObjToWorldTransform();
+        objToWorldTransform._objToWorldTrans = Vector2D.add(objToWorldTransform._objToWorldTrans, worldOffset);
+        shape.setObjToWorldTransform(objToWorldTransform);
+    }
 }

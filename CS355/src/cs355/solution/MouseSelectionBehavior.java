@@ -1,9 +1,11 @@
 package cs355.solution;
 
 import cs355.model.Canvas;
+import cs355.model.ObjToWorldTransform;
 import cs355.model.Shape;
 import cs355.model.Vector2D;
 
+import java.awt.*;
 import java.awt.event.MouseEvent;
 
 /**
@@ -15,14 +17,34 @@ import java.awt.event.MouseEvent;
  */
 public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
 {
+    /**The currently selected shape*/
+    private Shape _selectedShape;
+    /**The first click point*/
+    Point _p0;
+
     @Override
     public void mousePressed(MouseEvent mouseEvent)
     {
         Canvas canvas = Canvas.getInstance();
-        Shape selectedShape = canvas.getSelectedShape(new Vector2D(mouseEvent.getPoint()), 4);
-        if(selectedShape != null)
-            System.out.println("Hit: " + selectedShape.toString());
+        _selectedShape = canvas.getSelectedShape(new Vector2D(mouseEvent.getPoint()), 4);
+        if(_selectedShape != null)
+            System.out.println("Hit: " + _selectedShape.toString());
         else
             System.out.println("Nothing..");
+
+        _p0 = mouseEvent.getPoint();
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent mouseEvent)
+    {
+        if(_selectedShape == null)
+            return;
+
+        Point p1 = mouseEvent.getPoint();
+        double xOffset = p1.getX() - _p0.getX();
+        double yOffset = p1.getY() - _p0.getY();
+        _p0 = p1;
+        ObjToWorldTransform.translateShape(_selectedShape, new Vector2D(xOffset, yOffset));
     }
 }
