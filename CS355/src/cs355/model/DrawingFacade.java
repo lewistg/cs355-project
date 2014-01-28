@@ -30,13 +30,12 @@ public class DrawingFacade extends Observable
     /**
      * Translates the given shape by the given offset
      */
-    public void translateShape(Vector2D worldOffset)
+    public void translateShape(Shape shape, Vector2D worldOffset)
     {
-        Shape selectedShape = Canvas.getInstance().getSelectedShape();
-        if(selectedShape == null)
+        if(shape == null)
             return;
 
-        ObjToWorldTransform.translateSelectedShape(selectedShape, worldOffset);
+        ObjToWorldTransform.translateSelectedShape(shape, worldOffset);
         _instance.setChanged();
         _instance.notifyObservers();
     }
@@ -44,13 +43,12 @@ public class DrawingFacade extends Observable
     /**
      * Rotates the given shape by the given offset
      */
-    public void rotateSelectedShape(double theta)
+    public void rotateSelectedShape(Shape shape, double theta)
     {
-        Shape selectedShape = Canvas.getInstance().getSelectedShape();
-        if(selectedShape == null)
+        if(shape == null)
             return;
 
-        ObjToWorldTransform.rotateSelectedShape(selectedShape, theta);
+        ObjToWorldTransform.rotateSelectedShape(shape, theta);
         _instance.setChanged();
         _instance.notifyObservers();
     }

@@ -95,7 +95,7 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
         double xOffset = p1.getX() - _p0.getX();
         double yOffset = p1.getY() - _p0.getY();
         _p0 = p1;
-        DrawingFacade.getInstance().translateShape(new Vector2D(xOffset, yOffset));
+        DrawingFacade.getInstance().translateShape(_selectedShape, new Vector2D(xOffset, yOffset));
     }
 
     private void rotatingSelected(MouseEvent mouseEvent)
@@ -115,6 +115,6 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
         double alpha = Math.atan2(v0.getY(), v0.getX());
         double beta = Math.atan2(v1.getY(), v1.getX());
         double theta =  (beta - alpha) + _initAngle;
-        DrawingFacade.getInstance().rotateSelectedShape(theta);
+        DrawingFacade.getInstance().rotateSelectedShape(_selectedShape, theta);
     }
 }
