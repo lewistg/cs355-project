@@ -22,7 +22,7 @@ public class Triangle extends Shape
      */
     public Triangle(Point p0, Point p1, Point p2, Color color)
     {
-        super(color);
+        super(color, new Vector2D(0,0));
         _vertices = new ArrayList<Vector2D>();
         _vertices.add(new Vector2D(p0));
         _vertices.add(new Vector2D(p1));
@@ -32,7 +32,6 @@ public class Triangle extends Shape
         for(Vector2D p : _vertices)
             centroidWC = Vector2D.add(centroidWC, p);
         centroidWC.scale(1.0 / 3.0);
-        setCenter(centroidWC);
 
         for(Vector2D p : _vertices)
             p.sub(centroidWC);
@@ -53,7 +52,8 @@ public class Triangle extends Shape
     @Override
     public boolean pointInShape(Vector2D worldCoord, double tolerance)
     {
-        ArrayList<Double> barryCoords = getBarrycentric(worldCoord);
+        Vector2D objCoords = getObjToWorldTransform().getObjectCoords(worldCoord);
+        ArrayList<Double> barryCoords = getBarrycentric(objCoords);
         for(Double coord : barryCoords)
         {
             if(coord < 0)

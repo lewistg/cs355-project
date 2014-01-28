@@ -79,7 +79,7 @@ public class DrawableShapeFactory
         {
             Circle selectedCircle = (Circle) selectedShape;
             Vector2D rotHandle = selectedCircle.getCenter();
-            rotHandle.addToY(-selectedCircle.getRadius() - 14);
+            //rotHandle.addToY(-selectedCircle.getRadius() - 14);
             ArrayList<Vector2D> corners = selectedCircle.getObjBoundingBox();
 
             selectionOutline = new DrawableSelectionOutline(selectedShape, corners, rotHandle, selectedShape.getColor());
@@ -88,7 +88,7 @@ public class DrawableShapeFactory
         {
             Triangle selectedTriangle = (Triangle) selectedShape;
             Vector2D rotHandle = selectedTriangle.getCenter();
-            rotHandle.addToY(-selectedTriangle.getHeight() - 14);
+            rotHandle.addToY(-selectedTriangle.getHeight());
             ArrayList<Vector2D> corners = selectedTriangle.getObjBoundingBox();
             selectionOutline = new DrawableSelectionOutline(selectedShape, corners, rotHandle, selectedShape.getColor());
         }
