@@ -109,7 +109,7 @@ public class Rectangle extends Shape
      * Gets an array of the corners in world coordinates
      * @return
      */
-    public ArrayList<Vector2D> getCorners()
+    public ArrayList<Vector2D> getObjBoundingBox()
     {
         Vector2D center = getCenter();
         double xOffset = (_width / 2);

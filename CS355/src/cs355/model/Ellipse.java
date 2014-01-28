@@ -1,6 +1,7 @@
 package cs355.model;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -56,7 +57,32 @@ public class Ellipse extends Shape
     }
 
     @Override
-    public boolean pointInShape(Vector2D worldCoord, double tolerance) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    public boolean pointInShape(Vector2D worldCoord, double tolerance)
+    {
+        ObjToWorldTransform objToWorld = getObjToWorldTransform();
+        Vector2D objCoords = objToWorld.getObjectCoords(worldCoord);
+        Vector2D center = getCenter();
+        double xDelta = center._x - objCoords._x;
+        double yDelta = center._y - objCoords._y;
+
+        double xDeltaScaled = xDelta / (_width / 2.0);
+        double yDeltaScaled = yDelta / (_height / 2.0);
+
+        return (xDeltaScaled * xDeltaScaled) + (yDeltaScaled * yDeltaScaled) <= 1;
+    }
+
+    public ArrayList<Vector2D> getObjBoundingBox()
+    {
+        Vector2D center = getCenter();
+        double xOffset = (_width / 2);
+        double yOffset = (_height / 2);
+
+        ArrayList<Vector2D> corners = new ArrayList<>();
+        corners.add(Vector2D.add(center, new Vector2D(-xOffset, yOffset)));
+        corners.add(Vector2D.add(center, new Vector2D(xOffset, yOffset)));
+        corners.add(Vector2D.add(center, new Vector2D(xOffset, -yOffset)));
+        corners.add(Vector2D.add(center, new Vector2D(-xOffset, -yOffset)));
+
+        return corners;
     }
 }
