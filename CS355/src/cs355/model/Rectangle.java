@@ -1,6 +1,7 @@
 package cs355.model;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -118,5 +119,24 @@ public class Rectangle extends Shape
 
         selectionOutline.setRotationHandle(new Vector2D(center.getX(), center.getY() - (_height / 2) - 40));
         return selectionOutline;
+    }
+
+    /**
+     * Gets an array of the corners in world coordinates
+     * @return
+     */
+    public ArrayList<Vector2D> getCorners()
+    {
+        Vector2D center = getCenter();
+        double xOffset = (_width / 2);
+        double yOffset = (_height / 2);
+
+        ArrayList<Vector2D> corners = new ArrayList<>();
+        corners.add(Vector2D.add(center, new Vector2D(-xOffset, yOffset)));
+        corners.add(Vector2D.add(center, new Vector2D(xOffset, yOffset)));
+        corners.add(Vector2D.add(center, new Vector2D(xOffset, -yOffset)));
+        corners.add(Vector2D.add(center, new Vector2D(-xOffset, -yOffset)));
+
+        return corners;
     }
 }

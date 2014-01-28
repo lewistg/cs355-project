@@ -1,10 +1,9 @@
 package cs355.view;
 
 import cs355.model.*;
+import cs355.model.Shape;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
 /**
@@ -16,9 +15,13 @@ import java.util.ArrayList;
  */
 public class DrawableSelectionOutline extends DrawableShape
 {
-    /**The outline to be drawn*/
-    SelectionOutline _selectionOutline;
-    AffineTransform _affineTransform;
+    /**Selected shape*/
+    Shape _selectedShape;
+    /**Corners of outline*/
+    ArrayList<Vector2D> _corners;
+    /**Rotation handle*/
+    Vector2D _rotHandle;
+
 
     /**
      * Constructor
@@ -26,30 +29,41 @@ public class DrawableSelectionOutline extends DrawableShape
     DrawableSelectionOutline(cs355.model.Shape selectedShape, Color color)
     {
         super(color);
-        _selectionOutline = selectedShape.getSelectionOutline();
-        _affineTransform = selectedShape.getObjToWorldTransform().getObjToWorldAffine();
+        _selectedShape = selectedShape;
+    }
+
+    /**
+     * Sets the rotation handle
+     */
+    void setRotHandle(Vector2D rotHandle)
+    {
+        _rotHandle = rotHandle;
+    }
+
+    void setCorners(ArrayList<Vector2D> corners)
+    {
+        _corners = corners;
     }
 
     @Override
     public void draw(Graphics2D context)
     {
-        context.setTransform(_affineTransform);
-        context.setColor(getColor());
+        context.setTransform(_selectedShape.getObjToWorldTransform().getObjToWorldAffine());
+        context.setColor(Color.ORANGE);
 
         // draw outline
-        ArrayList<Vector2D> outlinePts = _selectionOutline.getOutlinePts();
-        for(int i = 0; i < outlinePts.size(); i++)
+        for(int i = 0; i < _corners.size(); i++)
         {
-            int x0 = (int) outlinePts.get((i + 1) % outlinePts.size()).getX();
-            int y0 = (int) outlinePts.get((i + 1) % outlinePts.size()).getY();
-            int x1 = (int) outlinePts.get(i).getX();
-            int y1 = (int) outlinePts.get(i).getY();
+            int x0 = (int) _corners.get((i + 1) % _corners.size()).getX();
+            int y0 = (int) _corners.get((i + 1) % _corners.size()).getY();
+            int x1 = (int) _corners.get(i).getX();
+            int y1 = (int) _corners.get(i).getY();
             context.drawLine(x0, y0, x1, y1);
         }
 
         // draw the selection handle
-        int x0 = (int) _selectionOutline.getRotationHandle().getX();
+        /*int x0 = (int) _selectionOutline.getRotationHandle().getX();
         int y0 = (int) _selectionOutline.getRotationHandle().getY();
-        context.draw(new Ellipse2D.Double(x0, y0, 7, 7));
+        context.draw(new Ellipse2D.Double(x0, y0, 7, 7));*/
     }
 }

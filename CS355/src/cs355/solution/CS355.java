@@ -22,7 +22,7 @@ public class CS355
     	// Fill in the parameters below with your controller, view, 
     	//   mouse listener, and mouse motion listener
         LabOneController controller = new LabOneController();
-        LabOneViewRefresher viewRefresher = new LabOneViewRefresher();
+        LabOneViewRefresher viewRefresher = LabOneViewRefresher.getInstance();
         GUIFunctions.createCS355Frame(controller, viewRefresher, controller, controller);
         
         GUIFunctions.refresh();        

@@ -60,7 +60,7 @@ public abstract class Shape
      */
     public Vector2D getCenter()
     {
-        return _center;
+        return new Vector2D(_center);
     }
 
     /**

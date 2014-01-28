@@ -3,6 +3,9 @@ package cs355.solution;
 import cs355.model.*;
 import cs355.model.Canvas;
 import cs355.model.Shape;
+import cs355.view.DrawableSelectionOutline;
+import cs355.view.DrawableShapeFactory;
+import cs355.view.LabOneViewRefresher;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -28,8 +31,16 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
     {
         Canvas canvas = Canvas.getInstance();
         _selectedShape = canvas.selectShape(new Vector2D(mouseEvent.getPoint()), 4);
-        ObjToWorldTransform objToWorld = _selectedShape.getObjToWorldTransform();
-        _initAngle = objToWorld.getObjToWorldRot();
+        if(_selectedShape != null)
+        {
+            ObjToWorldTransform objToWorld = _selectedShape.getObjToWorldTransform();
+            _initAngle = objToWorld.getObjToWorldRot();
+
+            // create the selection box and handles
+            DrawableSelectionOutline drawableSelection = DrawableShapeFactory.getDrawableSelection(_selectedShape);
+            LabOneViewRefresher.getInstance().setSelection(drawableSelection);
+        }
+
         /*if(_selectedShape != null)
             System.out.println("Hit: " + _selectedShape.toString());
         else

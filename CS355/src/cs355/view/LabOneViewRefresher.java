@@ -19,10 +19,29 @@ import java.util.List;
  */
 public class LabOneViewRefresher implements ViewRefresher, Observer
 {
+    /**Instance*/
+    private static LabOneViewRefresher _instance;
+    /**The current selection*/
+    DrawableSelectionOutline _selection;
+
+    public static LabOneViewRefresher getInstance()
+    {
+        if(_instance == null)
+            _instance = new LabOneViewRefresher();
+
+        return _instance;
+    }
+
+    public void setSelection(DrawableSelectionOutline selection)
+    {
+        _selection = selection;
+        GUIFunctions.refresh();
+    }
+
     /**
      * Constructor
      */
-    public LabOneViewRefresher()
+    private LabOneViewRefresher()
     {
         Canvas shapeBuffer = Canvas.getInstance();
         shapeBuffer.addObserver(this);
@@ -36,15 +55,12 @@ public class LabOneViewRefresher implements ViewRefresher, Observer
     {
         // update the canvas here
         Canvas shapeBuffer = cs355.model.Canvas.getInstance();
-        Shape selectedShape = Canvas.getInstance().getSelectedShape();
-        if(selectedShape != null)
-        {
-           DrawableShape selection = new DrawableSelectionOutline(selectedShape, Color.orange);
-           selection.draw(g2d);
-        }
         List<DrawableShape> drawableShapeList = DrawableShapeFactory.getDrawableShapes(shapeBuffer.getAllShapes());
         for(DrawableShape drawableShape : drawableShapeList)
             drawableShape.draw(g2d);
+
+        if(_selection != null)
+            _selection.draw(g2d);
     }
 
     @Override

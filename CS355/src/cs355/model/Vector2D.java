@@ -26,6 +26,12 @@ public class Vector2D
         _y = y;
     }
 
+    public Vector2D(Vector2D copy)
+    {
+        _x = copy._x;
+        _y = copy._y;
+    }
+
     /**
      * Constructor
      */
@@ -41,6 +47,24 @@ public class Vector2D
     public double getX()
     {
         return _x;
+    }
+
+    /**
+     * Adds the offset to x
+     * @param xOffset
+     */
+    public void addToX(double xOffset)
+    {
+        _x += xOffset;
+    }
+
+    /**
+     * Adds the offset to y
+     * @param yOffset
+     */
+    public void addToY(double yOffset)
+    {
+        _y += yOffset;
     }
 
     /**

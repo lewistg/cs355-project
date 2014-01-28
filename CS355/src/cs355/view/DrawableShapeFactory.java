@@ -4,7 +4,6 @@ import cs355.model.*;
 import cs355.model.Rectangle;
 import cs355.model.Shape;
 
-import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
@@ -33,7 +32,7 @@ public class DrawableShapeFactory
             else if(shape instanceof Square)
                 drawableShapes.add(getDrawableSquare((Square) shape));
             else if(shape instanceof Ellipse)
-                drawableShapes.add(getDrawableShape((Ellipse) shape));
+                drawableShapes.add(getDrawableEllipse((Ellipse) shape));
             else if (shape instanceof Circle)
                 drawableShapes.add(getDrawableCircle((Circle) shape));
             else if(shape instanceof Triangle)
@@ -43,6 +42,30 @@ public class DrawableShapeFactory
         }
 
         return drawableShapes;
+    }
+
+    public static DrawableSelectionOutline getDrawableSelection(Shape selectedShape)
+    {
+        DrawableSelectionOutline selectionOutline = new DrawableSelectionOutline(selectedShape, selectedShape.getColor());
+        if(selectedShape instanceof Rectangle)
+        {
+            Rectangle selectedRect = (Rectangle) selectedShape;
+            ObjToWorldTransform objToWorld = selectedRect.getObjToWorldTransform();
+
+            Vector2D rotHandle = selectedRect.getCenter();
+            rotHandle.addToY(selectedRect.getHeight() / 2 + 14);
+            rotHandle = objToWorld.getWorldCoords(rotHandle);
+            selectionOutline.setRotHandle(rotHandle);
+
+            ArrayList<Vector2D> corners = selectedRect.getCorners();
+            selectionOutline.setCorners(corners);
+        }
+        else
+        {
+            assert(false);
+        }
+
+        return selectionOutline;
     }
 
     /**
@@ -95,7 +118,7 @@ public class DrawableShapeFactory
     /**
      * Builds a drawable ellipse shape
      */
-    private static DrawableEllipse getDrawableShape(Ellipse ellipse)
+    private static DrawableEllipse getDrawableEllipse(Ellipse ellipse)
     {
         Vector2D center = ellipse.getCenter();
         double x = center.getX() - (ellipse.getWidth() / 2.0);
