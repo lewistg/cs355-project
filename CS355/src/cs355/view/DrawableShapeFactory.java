@@ -46,19 +46,16 @@ public class DrawableShapeFactory
 
     public static DrawableSelectionOutline getDrawableSelection(Shape selectedShape)
     {
-        DrawableSelectionOutline selectionOutline = new DrawableSelectionOutline(selectedShape, selectedShape.getColor());
+        DrawableSelectionOutline selectionOutline = null;
         if(selectedShape instanceof Rectangle)
         {
             Rectangle selectedRect = (Rectangle) selectedShape;
-            ObjToWorldTransform objToWorld = selectedRect.getObjToWorldTransform();
 
             Vector2D rotHandle = selectedRect.getCenter();
-            rotHandle.addToY(selectedRect.getHeight() / 2 + 14);
-            rotHandle = objToWorld.getWorldCoords(rotHandle);
-            selectionOutline.setRotHandle(rotHandle);
-
+            rotHandle.addToY(-selectedRect.getHeight() / 2 - 14);
             ArrayList<Vector2D> corners = selectedRect.getCorners();
-            selectionOutline.setCorners(corners);
+
+            selectionOutline = new DrawableSelectionOutline(selectedShape, corners, rotHandle, selectedShape.getColor());
         }
         else
         {

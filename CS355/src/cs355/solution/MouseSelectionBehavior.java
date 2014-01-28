@@ -19,34 +19,52 @@ import java.awt.event.MouseEvent;
  */
 public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
 {
+    enum SelectionMode
+    {
+        NONE,
+        TRANSLATE,
+        ROTATE,
+        SCALE
+    }
+
     /**The currently selected shape*/
     private Shape _selectedShape;
+    /**The current selection */
+    DrawableSelectionOutline _drawableSelection;
     /**The first click point*/
     Point _p0;
     /**The initial angle*/
     double _initAngle;
+    /**The selection mode*/
+    SelectionMode _selectionMode;
+
 
     @Override
     public void mousePressed(MouseEvent mouseEvent)
     {
-        Canvas canvas = Canvas.getInstance();
-        _selectedShape = canvas.selectShape(new Vector2D(mouseEvent.getPoint()), 4);
+        _p0 = mouseEvent.getPoint();
+
         if(_selectedShape != null)
         {
+            assert(_drawableSelection != null);
+            if(_drawableSelection.rotHandleSelected(new Vector2D(mouseEvent.getPoint())))
+                _selectionMode = SelectionMode.ROTATE;
+
             ObjToWorldTransform objToWorld = _selectedShape.getObjToWorldTransform();
             _initAngle = objToWorld.getObjToWorldRot();
 
-            // create the selection box and handles
-            DrawableSelectionOutline drawableSelection = DrawableShapeFactory.getDrawableSelection(_selectedShape);
-            LabOneViewRefresher.getInstance().setSelection(drawableSelection);
+            return;
         }
 
-        /*if(_selectedShape != null)
-            System.out.println("Hit: " + _selectedShape.toString());
-        else
-            System.out.println("Nothing..");*/
+        Canvas canvas = Canvas.getInstance();
+        _selectedShape = canvas.selectShape(new Vector2D(mouseEvent.getPoint()), 4);
+        _drawableSelection = null;
+        if(_selectedShape != null)
+            _drawableSelection = DrawableShapeFactory.getDrawableSelection(_selectedShape);
+        LabOneViewRefresher.getInstance().setSelection(_drawableSelection);
 
-        _p0 = mouseEvent.getPoint();
+        if(_selectedShape != null)
+            _selectionMode = SelectionMode.TRANSLATE;
     }
 
     @Override
@@ -55,11 +73,29 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
         if(_selectedShape == null)
             return;
 
-        rotatingSelected(mouseEvent);
+        switch (_selectionMode)
+        {
+            case TRANSLATE:
+                translateSelected(mouseEvent);
+                break;
 
-        /*Point p1 = mouseEvent.getPoint();
+            case ROTATE:
+                rotatingSelected(mouseEvent);
+                break;
+
+            default:
+                assert(false);
+                break;
+        }
+    }
+
+    private void translateSelected(MouseEvent mouseEvent)
+    {
+        Point p1 = mouseEvent.getPoint();
         _p0 = p1;
-        DrawingFacade.getInstance().translateSelectedShape(new Vector2D(xOffset, yOffset));*/
+        double xOffset = p1.getX() - _p0.getX();
+        double yOffset = p1.getY() - _p0.getY();
+        DrawingFacade.getInstance().translateShape(new Vector2D(xOffset, yOffset));
     }
 
     private void rotatingSelected(MouseEvent mouseEvent)

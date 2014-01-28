@@ -30,7 +30,7 @@ public class DrawingFacade extends Observable
     /**
      * Translates the given shape by the given offset
      */
-    public void translateSelectedShape(Vector2D worldOffset)
+    public void translateShape(Vector2D worldOffset)
     {
         Shape selectedShape = Canvas.getInstance().getSelectedShape();
         if(selectedShape == null)

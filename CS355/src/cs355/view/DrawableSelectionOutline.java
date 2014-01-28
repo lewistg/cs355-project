@@ -4,6 +4,7 @@ import cs355.model.*;
 import cs355.model.Shape;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
 /**
@@ -26,10 +27,12 @@ public class DrawableSelectionOutline extends DrawableShape
     /**
      * Constructor
      */
-    DrawableSelectionOutline(cs355.model.Shape selectedShape, Color color)
+    DrawableSelectionOutline(cs355.model.Shape selectedShape, ArrayList<Vector2D> corners, Vector2D rotHandle, Color color)
     {
         super(color);
         _selectedShape = selectedShape;
+        _corners = corners;
+        _rotHandle = rotHandle;
     }
 
     /**
@@ -62,8 +65,17 @@ public class DrawableSelectionOutline extends DrawableShape
         }
 
         // draw the selection handle
-        /*int x0 = (int) _selectionOutline.getRotationHandle().getX();
-        int y0 = (int) _selectionOutline.getRotationHandle().getY();
-        context.draw(new Ellipse2D.Double(x0, y0, 7, 7));*/
+        context.draw(new Ellipse2D.Double(_rotHandle.getX(), _rotHandle.getY(), 7, 7));
+    }
+
+    public boolean rotHandleSelected(Vector2D worldCoords)
+    {
+        // test whether or not the rotation handle was selected
+        ObjToWorldTransform objToWorld = _selectedShape.getObjToWorldTransform();
+        Vector2D objCoords = objToWorld.getObjectCoords(worldCoords);
+        double xDelta = objCoords.getX() - _rotHandle.getX();
+        double yDelta = objCoords.getY() - _rotHandle.getY();
+
+        return ((xDelta * xDelta) + (yDelta * yDelta)) < (7 * 7);
     }
 }

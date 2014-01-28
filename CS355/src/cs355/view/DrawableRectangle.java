@@ -24,7 +24,7 @@ public class DrawableRectangle extends DrawableShape{
      */
     DrawableRectangle(int lowerLeftX, int lowerLeftY, int w, int h, Color color, AffineTransform affineTransform)
     {
-        super(new Color(250));
+        super(color);
         _lowerLeftX = lowerLeftX;
         _lowerRightY = lowerLeftY;
         _w = w;
