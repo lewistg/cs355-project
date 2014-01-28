@@ -48,12 +48,12 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
         {
             assert(_drawableSelection != null);
             if(_drawableSelection.rotHandleSelected(new Vector2D(mouseEvent.getPoint())))
+            {
                 _selectionMode = SelectionMode.ROTATE;
-
-            ObjToWorldTransform objToWorld = _selectedShape.getObjToWorldTransform();
-            _initAngle = objToWorld.getObjToWorldRot();
-
-            return;
+                ObjToWorldTransform objToWorld = _selectedShape.getObjToWorldTransform();
+                _initAngle = objToWorld.getObjToWorldRot();
+                return;
+            }
         }
 
         Canvas canvas = Canvas.getInstance();
@@ -92,9 +92,9 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
     private void translateSelected(MouseEvent mouseEvent)
     {
         Point p1 = mouseEvent.getPoint();
-        _p0 = p1;
         double xOffset = p1.getX() - _p0.getX();
         double yOffset = p1.getY() - _p0.getY();
+        _p0 = p1;
         DrawingFacade.getInstance().translateShape(new Vector2D(xOffset, yOffset));
     }
 
