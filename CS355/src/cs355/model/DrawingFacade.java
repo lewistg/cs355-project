@@ -1,5 +1,6 @@
 package cs355.model;
 
+import java.awt.*;
 import java.util.Observable;
 
 /**
@@ -49,6 +50,13 @@ public class DrawingFacade extends Observable
             return;
 
         ObjToWorldTransform.rotateSelectedShape(shape, theta);
+        _instance.setChanged();
+        _instance.notifyObservers();
+    }
+
+    public void setShapeColor(Shape shape, Color c)
+    {
+        shape.setColor(c);
         _instance.setChanged();
         _instance.notifyObservers();
     }

@@ -117,4 +117,12 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
         double theta =  (beta - alpha) + _initAngle;
         DrawingFacade.getInstance().rotateSelectedShape(_selectedShape, theta);
     }
+
+    /**
+     * Getter for the selected shape
+     */
+    public Shape getSelectedShape()
+    {
+        return _selectedShape;
+    }
 }

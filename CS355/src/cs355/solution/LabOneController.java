@@ -1,6 +1,8 @@
 package cs355.solution;
 
 import cs355.CS355Controller;
+import cs355.model.*;
+import cs355.model.Shape;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -34,6 +36,11 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
     @Override
     public void colorButtonHit(Color c) {
         cs355.model.Context.getInstance().setCurrentColor(c);
+        if(_shapeBuilderStrategy instanceof MouseSelectionBehavior)
+        {
+            Shape selectedShape = ((MouseSelectionBehavior) _shapeBuilderStrategy).getSelectedShape();
+            DrawingFacade.getInstance().setShapeColor(selectedShape, c);
+        }
     }
 
     @Override
