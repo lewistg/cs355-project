@@ -91,6 +91,15 @@ public class Vector2D
         _y = y;
     }
 
+    /**
+     * Scales the x,y components
+     */
+    public void scale(double scaleFactor)
+    {
+        _x *= scaleFactor;
+        _y *= scaleFactor;
+    }
+
     public void normalize()
     {
         double mag = (_x * _x) + (_y * _y);

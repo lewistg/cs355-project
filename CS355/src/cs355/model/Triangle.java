@@ -27,6 +27,13 @@ public class Triangle extends Shape
         _vertices.add(new Vector2D(p0));
         _vertices.add(new Vector2D(p1));
         _vertices.add(new Vector2D(p2));
+
+        Vector2D average = new Vector2D(0, 0);
+        for(Vector2D p : _vertices)
+            average = Vector2D.add(average, p);
+        average.scale(1.0 / 3.0);
+
+        setCenter(average);
     }
 
     /**
@@ -38,7 +45,57 @@ public class Triangle extends Shape
     }
 
     @Override
-    public boolean pointInShape(Vector2D worldCoord, double tolerance) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    public boolean pointInShape(Vector2D worldCoord, double tolerance)
+    {
+        ArrayList<Double> barryCoords = getBarrycentric(worldCoord);
+        for(Double coord : barryCoords)
+        {
+            if(coord < 0)
+                return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Calculates the barycentric coordinates of a point
+     */
+    private ArrayList<Double> getBarrycentric(Vector2D p)
+    {
+        ArrayList<Double> coords = new ArrayList<>();
+
+        double denom = (_vertices.get(0).getY() - _vertices.get(2).getY()) *
+                            (_vertices.get(1).getX() - _vertices.get(2).getX()) +
+                            (_vertices.get(1).getY() - _vertices.get(2).getY()) *
+                            (_vertices.get(2).getX() - _vertices.get(0).getX());
+        double b1 = (p.getY() - _vertices.get(2).getY()) * (_vertices.get(1).getX() - _vertices.get(2).getX()) +
+                (_vertices.get(1).getY() - _vertices.get(2).getY()) * (_vertices.get(2).getX() - p.getX());
+        b1 /= denom;
+
+        double b2 = (p.getY() - _vertices.get(0).getY()) * (_vertices.get(2).getX() - _vertices.get(0).getX()) +
+                (_vertices.get(2).getY() - _vertices.get(0).getY()) * (_vertices.get(0).getX() - p.getX());
+        b2 /= denom;
+
+        double b3 = (p.getY() - _vertices.get(1).getY()) * (_vertices.get(0).getX() - _vertices.get(1).getX()) +
+                (_vertices.get(0).getY() - _vertices.get(1).getY()) * (_vertices.get(1).getX() - p.getX());
+        b3 /= denom;
+
+        coords.add(b1);
+        coords.add(b2);
+        coords.add(b3);
+
+        return coords;
+    }
+
+    public ArrayList<Vector2D> getObjBoundingBox()
+    {
+        return _vertices;
+    }
+
+    public double getHeight()
+    {
+        double maxY = Math.max(_vertices.get(0).getY(), _vertices.get(1).getY());
+        maxY = Math.max(maxY, _vertices.get(2).getY());
+        return maxY;
     }
 }
