@@ -1,6 +1,7 @@
 package cs355.model;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -63,5 +64,10 @@ public class Square extends Shape {
     @Override
     public boolean pointInShape(Vector2D worldCoord, double tolerance) {
         return _squareRect.pointInShape(worldCoord, tolerance);
+    }
+
+    public ArrayList<Vector2D> getObjBoundingBox()
+    {
+        return _squareRect.getObjBoundingBox();
     }
 }
