@@ -189,7 +189,7 @@ public class DrawableShapeFactory
             yCoords[i] = (int) vertices.get(i).getY();
         }
 
-        DrawableTriangle drawableTriangle = new DrawableTriangle(xCoords, yCoords, triangle.getColor());
+        DrawableTriangle drawableTriangle = new DrawableTriangle(xCoords, yCoords, triangle.getColor(), triangle.getObjToWorldTransform().getObjToWorldAffine());
         return drawableTriangle;
     }
 }

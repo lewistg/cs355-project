@@ -28,12 +28,18 @@ public class Triangle extends Shape
         _vertices.add(new Vector2D(p1));
         _vertices.add(new Vector2D(p2));
 
-        Vector2D average = new Vector2D(0, 0);
+        Vector2D centroidWC = new Vector2D(0, 0);
         for(Vector2D p : _vertices)
-            average = Vector2D.add(average, p);
-        average.scale(1.0 / 3.0);
+            centroidWC = Vector2D.add(centroidWC, p);
+        centroidWC.scale(1.0 / 3.0);
+        setCenter(centroidWC);
 
-        setCenter(average);
+        for(Vector2D p : _vertices)
+            p.sub(centroidWC);
+
+        Vector2D objToWorldTrans = new Vector2D(centroidWC.getX(), centroidWC.getY());
+        ObjToWorldTransform objToWorldTransform = new ObjToWorldTransform(objToWorldTrans, 0.0);
+        setObjToWorldTransform(objToWorldTransform);
     }
 
     /**

@@ -100,6 +100,15 @@ public class Vector2D
         _y *= scaleFactor;
     }
 
+    /**
+     * Subtracts the
+     */
+    public void sub(Vector2D v)
+    {
+        _x -= v._x;
+        _y -= v._y;
+    }
+
     public void normalize()
     {
         double mag = (_x * _x) + (_y * _y);
