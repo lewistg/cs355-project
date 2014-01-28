@@ -16,7 +16,7 @@ public abstract class Shape
     /**The shape's center*/
     private Vector2D _center;
     /**The shapes object to world transformation*/
-    ObjToWorldTransform _objToWorld;
+    private ObjToWorldTransform _objToWorld;
 
     /**
      * Constructor

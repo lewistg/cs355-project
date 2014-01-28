@@ -1,6 +1,7 @@
 package cs355.model;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -39,7 +40,25 @@ public class Circle extends Shape
     }
 
     @Override
-    public boolean pointInShape(Vector2D worldCoord, double tolerance) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    public boolean pointInShape(Vector2D worldCoord, double tolerance)
+    {
+        ObjToWorldTransform objToWorld = getObjToWorldTransform();
+        Vector2D objCoords = objToWorld.getObjectCoords(worldCoord);
+
+        Vector2D delta = Vector2D.sub(objCoords, getCenter());
+        return (delta.getX() * delta.getX() + delta.getY() * delta.getY()) < (_radius * _radius);
+    }
+
+    public ArrayList<Vector2D> getObjBoundingBox()
+    {
+        Vector2D center = getCenter();
+
+        ArrayList<Vector2D> corners = new ArrayList<>();
+        corners.add(Vector2D.add(center, new Vector2D(-_radius, _radius)));
+        corners.add(Vector2D.add(center, new Vector2D(_radius, _radius)));
+        corners.add(Vector2D.add(center, new Vector2D(_radius, -_radius)));
+        corners.add(Vector2D.add(center, new Vector2D(-_radius, -_radius)));
+
+        return corners;
     }
 }

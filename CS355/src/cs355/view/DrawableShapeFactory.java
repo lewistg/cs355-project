@@ -75,6 +75,15 @@ public class DrawableShapeFactory
 
             selectionOutline = new DrawableSelectionOutline(selectedShape, corners, rotHandle, selectedShape.getColor());
         }
+        else if(selectedShape instanceof Circle)
+        {
+            Circle selectedCircle = (Circle) selectedShape;
+            Vector2D rotHandle = selectedCircle.getCenter();
+            rotHandle.addToY(-selectedCircle.getRadius() - 14);
+            ArrayList<Vector2D> corners = selectedCircle.getObjBoundingBox();
+
+            selectionOutline = new DrawableSelectionOutline(selectedShape, corners, rotHandle, selectedShape.getColor());
+        }
         else
         {
             assert(false);
