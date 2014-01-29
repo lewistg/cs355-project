@@ -62,10 +62,11 @@ public class DrawableSelectionOutline extends DrawableShape
             int x1 = (int) _corners.get(i).getX();
             int y1 = (int) _corners.get(i).getY();
             context.drawLine(x0, y0, x1, y1);
+            context.draw(new Ellipse2D.Double(x0 - 3, y0 - 3, 7, 7));
         }
 
         // draw the selection handle
-        context.draw(new Ellipse2D.Double(_rotHandle.getX(), _rotHandle.getY(), 7, 7));
+        context.draw(new Ellipse2D.Double(_rotHandle.getX() - 3, _rotHandle.getY() - 3, 7, 7));
     }
 
     public boolean rotHandleSelected(Vector2D worldCoords)
