@@ -3,6 +3,7 @@ package cs355.view;
 import cs355.model.Line;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,23 +19,26 @@ public class DrawableLine extends DrawableShape
     private int _y0;
     private int _x1;
     private int _y1;
+    private AffineTransform _affineTransform;
 
     /**
      * Constructor
      */
-    DrawableLine(int x0, int y0, int x1, int y1, Color color)
+    DrawableLine(int x0, int y0, int x1, int y1, Color color, AffineTransform affineTransform)
     {
         super(color);
         _x0 = x0;
         _y0 = y0;
         _x1 = x1;
         _y1 = y1;
+        _affineTransform = affineTransform;
     }
 
     @Override
     public void draw(Graphics2D context)
     {
         context.setColor(getColor());
+        context.setTransform(_affineTransform);
         context.drawLine(_x0, _y0, _x1, _y1);
     }
 }

@@ -122,7 +122,7 @@ public class DrawableShapeFactory
         int y0 = (int) p0.getY();
         int x1 = (int) p1.getX();
         int y1 = (int) p1.getY();
-        DrawableLine drawableLine = new DrawableLine(x0, y0, x1, y1, line.getColor());
+        DrawableLine drawableLine = new DrawableLine(x0, y0, x1, y1, line.getColor(), line.getObjToWorldTransform().getObjToWorldAffine());
         return drawableLine;
     }
 

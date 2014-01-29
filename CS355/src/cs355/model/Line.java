@@ -69,6 +69,8 @@ public class Line extends Shape
 
     @Override
     public boolean pointInShape(Vector2D worldCoord, double tolerance) {
+        worldCoord = getObjToWorldTransform().getObjectCoords(worldCoord);
+
         Vector2D dir = Vector2D.sub(_p1, _p0);
         double mag = dir.getMag();
         dir.normalize();

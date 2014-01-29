@@ -78,6 +78,9 @@ public class DrawableSelectionOutline extends DrawableShape
 
     public boolean rotHandleSelected(Vector2D worldCoords)
     {
+        if(_rotHandle == null)
+            return false;
+
         // test whether or not the rotation handle was selected
         ObjToWorldTransform objToWorld = _selectedShape.getObjToWorldTransform();
         Vector2D objCoords = objToWorld.getObjectCoords(worldCoords);
