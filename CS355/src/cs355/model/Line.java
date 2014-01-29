@@ -69,6 +69,22 @@ public class Line extends Shape
 
     @Override
     public boolean pointInShape(Vector2D worldCoord, double tolerance) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        Vector2D dir = Vector2D.sub(_p1, _p0);
+        double mag = dir.getMag();
+        dir.normalize();
+        Vector2D normal = dir.perpVector();
+
+        Vector2D toPoint = Vector2D.sub(worldCoord, _p0);
+        double d = -Vector2D.dot(normal, _p0);
+
+        double distToLine = Vector2D.dot(worldCoord, normal) + d;
+        if(Math.abs(distToLine) > 4)
+            return false;
+
+        double projDist = Vector2D.dot(dir, toPoint);
+        if(projDist < 0 || projDist > mag)
+            return false;
+
+        return true;
     }
 }

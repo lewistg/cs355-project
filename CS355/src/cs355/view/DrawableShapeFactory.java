@@ -55,7 +55,7 @@ public class DrawableShapeFactory
             rotHandle.addToY(-selectedRect.getHeight() / 2 - 14);
             ArrayList<Vector2D> corners = selectedRect.getObjBoundingBox();
 
-            selectionOutline = new DrawableSelectionOutline(selectedShape, corners, rotHandle, selectedShape.getColor());
+            selectionOutline = new DrawableSelectionOutline(selectedShape, corners, true, rotHandle, selectedShape.getColor());
         }
         else if(selectedShape instanceof Ellipse)
         {
@@ -64,7 +64,7 @@ public class DrawableShapeFactory
             rotHandle.addToY(-selectedEllipse.getHeight() / 2 - 14);
             ArrayList<Vector2D> corners = selectedEllipse.getObjBoundingBox();
 
-            selectionOutline = new DrawableSelectionOutline(selectedShape, corners, rotHandle, selectedShape.getColor());
+            selectionOutline = new DrawableSelectionOutline(selectedShape, corners, true, rotHandle, selectedShape.getColor());
         }
         else if(selectedShape instanceof Square)
         {
@@ -73,7 +73,7 @@ public class DrawableShapeFactory
             rotHandle.addToY(-selectedSquare.size() / 2 - 14);
             ArrayList<Vector2D> corners = selectedSquare.getObjBoundingBox();
 
-            selectionOutline = new DrawableSelectionOutline(selectedShape, corners, rotHandle, selectedShape.getColor());
+            selectionOutline = new DrawableSelectionOutline(selectedShape, corners, true, rotHandle, selectedShape.getColor());
         }
         else if(selectedShape instanceof Circle)
         {
@@ -82,7 +82,7 @@ public class DrawableShapeFactory
             //rotHandle.addToY(-selectedCircle.getRadius() - 14);
             ArrayList<Vector2D> corners = selectedCircle.getObjBoundingBox();
 
-            selectionOutline = new DrawableSelectionOutline(selectedShape, corners, rotHandle, selectedShape.getColor());
+            selectionOutline = new DrawableSelectionOutline(selectedShape, corners, true, rotHandle, selectedShape.getColor());
         }
         else if(selectedShape instanceof Triangle)
         {
@@ -91,7 +91,15 @@ public class DrawableShapeFactory
             double yDelta = rotHandle.getY() - selectedTriangle.getTopPoint().getY();
             rotHandle.addToY(-yDelta - 14);
             ArrayList<Vector2D> corners = selectedTriangle.getObjBoundingBox();
-            selectionOutline = new DrawableSelectionOutline(selectedShape, corners, rotHandle, selectedShape.getColor());
+            selectionOutline = new DrawableSelectionOutline(selectedShape, corners, true, rotHandle, selectedShape.getColor());
+        }
+        else if(selectedShape instanceof  Line)
+        {
+            Line selectedLine = (Line) selectedShape;
+            ArrayList<Vector2D> corners = new ArrayList<>();
+            corners.add(selectedLine.getStartPoint());
+            corners.add(selectedLine.getEndPoint());
+            selectionOutline = new DrawableSelectionOutline(selectedShape, corners, false, null, selectedShape.getColor());
         }
         else
         {
