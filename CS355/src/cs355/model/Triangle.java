@@ -98,10 +98,12 @@ public class Triangle extends Shape
         return _vertices;
     }
 
-    public double getHeight()
+    public Vector2D getTopPoint()
     {
-        double maxY = Math.max(_vertices.get(0).getY(), _vertices.get(1).getY());
-        maxY = Math.max(maxY, _vertices.get(2).getY());
-        return maxY;
+        Vector2D topPoint = (_vertices.get(0).getY() < _vertices.get(1).getY()) ? _vertices.get(0) : _vertices.get(1);
+        if(topPoint.getY() > _vertices.get(2).getY())
+            topPoint = _vertices.get(2);
+
+        return new Vector2D(topPoint);
     }
 }

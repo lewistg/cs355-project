@@ -88,7 +88,8 @@ public class DrawableShapeFactory
         {
             Triangle selectedTriangle = (Triangle) selectedShape;
             Vector2D rotHandle = selectedTriangle.getCenter();
-            rotHandle.addToY(-selectedTriangle.getHeight() - 14);
+            double yDelta = rotHandle.getY() - selectedTriangle.getTopPoint().getY();
+            rotHandle.addToY(-yDelta - 14);
             ArrayList<Vector2D> corners = selectedTriangle.getObjBoundingBox();
             selectionOutline = new DrawableSelectionOutline(selectedShape, corners, rotHandle, selectedShape.getColor());
         }
