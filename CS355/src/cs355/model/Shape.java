@@ -24,7 +24,8 @@ public abstract class Shape
      */
     public Shape(Color color)
     {
-        _color = color;
+        assert(color != null);
+        _color = new Color(color.getRed(), color.getGreen(), color.getBlue());
         _objToWorld = new ObjToWorldTransform(new Vector2D(0, 0), 0.0);
     }
 

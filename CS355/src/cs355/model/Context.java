@@ -20,7 +20,9 @@ public class Context
      * Constructor
      */
     private Context()
-    {}
+    {
+        _currentColor = Color.white;
+    }
 
     /**
      * Getter for the single instance

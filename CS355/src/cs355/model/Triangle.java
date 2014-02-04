@@ -106,4 +106,10 @@ public class Triangle extends Shape
 
         return new Vector2D(topPoint);
     }
+
+    public static void main(String[] args)
+    {
+        Triangle tri = new Triangle(new Point(10, 20), new Point(30, 40), new Point(20, 50), Color.ORANGE);
+        System.out.println("" + tri.pointInShape(new Vector2D(20, 80),0));
+    }
 }
