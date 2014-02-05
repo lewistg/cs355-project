@@ -4,6 +4,7 @@ import cs355.CS355Controller;
 import cs355.GUIFunctions;
 import cs355.model.*;
 import cs355.model.Shape;
+import cs355.view.LabOneViewRefresher;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -48,31 +49,37 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
     @Override
     public void triangleButtonHit() {
         _shapeBuilderStrategy = new MouseTriangleBuilderStrategy();
+        LabOneViewRefresher.getInstance().setSelection(null);
     }
 
     @Override
     public void squareButtonHit() {
         _shapeBuilderStrategy = new MouseSquareBuilderStrategy();
+        LabOneViewRefresher.getInstance().setSelection(null);
     }
 
     @Override
     public void rectangleButtonHit() {
         _shapeBuilderStrategy = new MouseRectangleBuilderStrategy();
+        LabOneViewRefresher.getInstance().setSelection(null);
     }
 
     @Override
     public void circleButtonHit() {
         _shapeBuilderStrategy = new MouseCircleBuilderStrategy();
+        LabOneViewRefresher.getInstance().setSelection(null);
     }
 
     @Override
     public void ellipseButtonHit() {
         _shapeBuilderStrategy = new MouseEllipseBuilderStrategy();
+        LabOneViewRefresher.getInstance().setSelection(null);
     }
 
     @Override
     public void lineButtonHit() {
         _shapeBuilderStrategy = new MouseLineBuilderStrategy();
+        LabOneViewRefresher.getInstance().setSelection(null);
     }
 
     @Override

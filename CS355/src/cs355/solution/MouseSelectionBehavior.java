@@ -1,5 +1,6 @@
 package cs355.solution;
 
+import cs355.GUIFunctions;
 import cs355.model.*;
 import cs355.model.Canvas;
 import cs355.model.Shape;
@@ -60,7 +61,11 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
         _selectedShape = canvas.selectShape(new Vector2D(mouseEvent.getPoint()), 4);
         _drawableSelection = null;
         if(_selectedShape != null)
+        {
             _drawableSelection = DrawableShapeFactory.getDrawableSelection(_selectedShape);
+            Context.getInstance().setCurrentColor(_selectedShape.getColor());
+            GUIFunctions.changeSelectedColor(_selectedShape.getColor());
+        }
         LabOneViewRefresher.getInstance().setSelection(_drawableSelection);
 
         if(_selectedShape != null)
@@ -124,5 +129,13 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
     public Shape getSelectedShape()
     {
         return _selectedShape;
+    }
+
+    /**
+     * Deselects current shape
+     */
+    public void deselectShape()
+    {
+        _selectedShape = null;
     }
 }

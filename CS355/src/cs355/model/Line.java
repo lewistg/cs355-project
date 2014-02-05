@@ -80,7 +80,7 @@ public class Line extends Shape
         double d = -Vector2D.dot(normal, _p0);
 
         double distToLine = Vector2D.dot(worldCoord, normal) + d;
-        if(Math.abs(distToLine) > 4)
+        if(Math.abs(distToLine) > tolerance)
             return false;
 
         double projDist = Vector2D.dot(dir, toPoint);
