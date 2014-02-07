@@ -25,7 +25,7 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
         NONE,
         TRANSLATE,
         ROTATE,
-        SCALE
+        RESIZE
     }
 
     /**The currently selected shape*/
@@ -55,6 +55,10 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
                 _initAngle = objToWorld.getObjToWorldRot();
                 return;
             }
+            /*else if(_drawableSelection.resizeHandleSelected(new Vector2D(mouseEvent.getPoint())))
+            {
+                _selectionMode = SelectionMode.RESIZE;
+            }*/
         }
 
         Canvas canvas = Canvas.getInstance();

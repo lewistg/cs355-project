@@ -1,5 +1,7 @@
 package cs355.model;
 
+import sun.font.TrueTypeFont;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -43,14 +45,30 @@ public class Rectangle extends Shape
      */
     public Vector2D getLowerLeft()
     {
-        Vector2D center = getCenter();
-        Vector2D cornerOffset = new Vector2D(-_width / 2.0, -_height / 2.0);
-        Vector2D calculatedLowerLeft = Vector2D.add(center, cornerOffset);
+        return getCorner(0);
+    }
 
-        ObjToWorldTransform objToWorld = getObjToWorldTransform();
-        Vector2D lowerLeftWC = objToWorld.getWorldCoords(calculatedLowerLeft);
-        System.out.println(lowerLeftWC);
-        return calculatedLowerLeft;
+    /**
+     * Gets the corner for the indexed corner in object coordinates. Lower left is 0
+     */
+    public Vector2D getCorner(int cornerIndex)
+    {
+        assert(cornerIndex >= 0 && cornerIndex < 4);
+
+        double xOffset = 0;
+        double yOffset = 0;
+        if(cornerIndex == 0 || cornerIndex == 1)
+            xOffset = -_width / 2.0;
+        else
+            xOffset = _width / 2.0;
+
+        if(cornerIndex == 0 || cornerIndex == 3)
+            yOffset = -_height / 2.0;
+        else
+            yOffset = _height / 2.0;
+
+        Vector2D offset = new Vector2D(xOffset, yOffset);
+        return Vector2D.add(getCenter(), offset);
     }
 
     /**

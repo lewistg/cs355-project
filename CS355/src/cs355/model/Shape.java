@@ -13,7 +13,7 @@ public abstract class Shape
 {
     /**The shape's color*/
     private Color _color;
-    /**The shape's center*/
+    /**The shape's center in object space*/
     private Vector2D _center;
     /**The shapes object to world transformation*/
     private ObjToWorldTransform _objToWorld;
