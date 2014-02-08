@@ -70,4 +70,51 @@ public class Square extends Shape {
     {
         return _squareRect.getObjBoundingBox();
     }
+
+    public int moveBoundingBoxCorner(int boundingBoxCornerIndex, Vector2D newCornerPosWC)
+    {
+        assert(boundingBoxCornerIndex < 4);
+
+        ObjToWorldTransform t = getObjToWorldTransform();
+        Vector2D newCornerPos = t.getObjectCoords(newCornerPosWC);
+        Vector2D oppCorner = _squareRect.getCorner((boundingBoxCornerIndex + 2) % 4);
+
+        Vector2D oppCornerWC = t.getWorldCoords(oppCorner);
+
+        double xDelta = newCornerPos.getX() - oppCorner.getX();
+        double yDelta = newCornerPos.getY() - oppCorner.getY();
+
+        System.out.println("New corner pos before: " + newCornerPos);
+        System.out.println("X delta before: " + xDelta);
+        System.out.println("Y delta before: " + yDelta);
+        if(Math.abs(xDelta) > Math.abs(yDelta))
+        {
+            double xAdjustment = Math.abs(xDelta) - Math.abs(yDelta);
+            if(newCornerPos.getX() < 0)
+                newCornerPos.addToX(xAdjustment);
+            else
+                newCornerPos.addToX(-xAdjustment);
+
+            xDelta = newCornerPos.getX() - oppCorner.getX();
+            System.out.println("X delta after: " + xDelta);
+        }
+        else
+        {
+            double yAdjustment = Math.abs(yDelta) - Math.abs(xDelta);
+            if(newCornerPos.getY() < 0)
+                newCornerPos.addToY(yAdjustment);
+            else
+                newCornerPos.addToY(-yAdjustment);
+
+            yDelta = newCornerPos.getY() - oppCorner.getY();
+            System.out.println("Y delta after: " + yDelta);
+        }
+        System.out.println("New corner pos after: " + newCornerPos);
+        newCornerPosWC = t.getWorldCoords(newCornerPos);
+        System.out.println("New corner: " + newCornerPosWC);
+
+        int selectedCorner = _squareRect.moveBoundingBoxCorner(boundingBoxCornerIndex, newCornerPosWC);
+        _size = _squareRect.getWidth();
+        return selectedCorner;
+    }
 }
