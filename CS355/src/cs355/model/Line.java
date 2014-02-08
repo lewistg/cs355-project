@@ -1,6 +1,7 @@
 package cs355.model;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -67,6 +68,14 @@ public class Line extends Shape
         return lineStr;
     }
 
+    public ArrayList<Vector2D> getObjBoundingBox()
+    {
+        ArrayList<Vector2D> endPoints = new ArrayList<>();
+        endPoints.add(_p0);
+        endPoints.add(_p1);
+        return endPoints;
+    }
+
     @Override
     public boolean pointInShape(Vector2D worldCoord, double tolerance) {
         worldCoord = getObjToWorldTransform().getObjectCoords(worldCoord);
@@ -88,5 +97,16 @@ public class Line extends Shape
             return false;
 
         return true;
+    }
+
+    public int moveBoundingBoxCorner(int boundingBoxCornerIndex, Vector2D newCornerPosWC)
+    {
+        assert(boundingBoxCornerIndex >= 0 && boundingBoxCornerIndex < 2);
+        if(boundingBoxCornerIndex == 0)
+            _p0 = newCornerPosWC;
+        else
+            _p1 = newCornerPosWC;
+
+        return boundingBoxCornerIndex;
     }
 }
