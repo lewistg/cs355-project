@@ -38,6 +38,8 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
     double _initAngle;
     /**The selection mode*/
     SelectionMode _selectionMode;
+    /**The selected corner*/
+    int _selectedCorner;
 
 
     @Override
@@ -48,6 +50,8 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
         if(_selectedShape != null)
         {
             assert(_drawableSelection != null);
+            int cornerIndex =  _drawableSelection.resizeHandleSelected(new Vector2D(mouseEvent.getPoint()));
+
             if(_drawableSelection.rotHandleSelected(new Vector2D(mouseEvent.getPoint())))
             {
                 _selectionMode = SelectionMode.ROTATE;
@@ -55,10 +59,12 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
                 _initAngle = objToWorld.getObjToWorldRot();
                 return;
             }
-            /*else if(_drawableSelection.resizeHandleSelected(new Vector2D(mouseEvent.getPoint())))
+            else if(cornerIndex != -1)
             {
                 _selectionMode = SelectionMode.RESIZE;
-            }*/
+                _selectedCorner = cornerIndex;
+                return;
+            }
         }
 
         Canvas canvas = Canvas.getInstance();
@@ -91,6 +97,10 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
             case ROTATE:
                 rotatingSelected(mouseEvent);
                 break;
+
+             case RESIZE:
+                 _selectedCorner = _drawableSelection.resizeShape(_selectedCorner, new Vector2D(mouseEvent.getPoint()));
+                 break;
 
             default:
                 assert(false);

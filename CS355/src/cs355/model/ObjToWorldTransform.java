@@ -26,6 +26,14 @@ public class ObjToWorldTransform
     }
 
     /**
+     * Sets the object to world translation
+     */
+    public void setObjToWorldTrans(Vector2D objToWorldTrans)
+    {
+        _objToWorldTrans = objToWorldTrans;
+    }
+
+    /**
      * Transforms a world coordinate to object space
      */
     public Vector2D getObjectCoords(Vector2D worldCoords)
@@ -51,7 +59,6 @@ public class ObjToWorldTransform
         AffineTransform affineTransform = new AffineTransform();
         affineTransform.translate(_objToWorldTrans.getX(), _objToWorldTrans.getY());
         affineTransform.rotate(_objToWorldRot);
-        System.out.println("Mine: " + _objToWorldTrans);
         return affineTransform;
     }
 
@@ -82,7 +89,6 @@ public class ObjToWorldTransform
         ObjToWorldTransform objToWorldTransform = shape.getObjToWorldTransform();
         objToWorldTransform._objToWorldRot = theta;
         objToWorldTransform._objToWorldRot %= 2 * Math.PI;
-        System.out.println("Rotation: " + objToWorldTransform._objToWorldRot);
         shape.setObjToWorldTransform(objToWorldTransform);
     }
 }

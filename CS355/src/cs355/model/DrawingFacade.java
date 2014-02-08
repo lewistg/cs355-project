@@ -60,4 +60,18 @@ public class DrawingFacade extends Observable
         _instance.setChanged();
         _instance.notifyObservers();
     }
+
+    /**
+     * Moves the corner of the rectangle
+     * @param rect
+     * @param cornerIndex
+     * @param newCornerPosWC
+     */
+    public int moveRectCorner(Rectangle rect, int cornerIndex, Vector2D newCornerPosWC)
+    {
+        int newCornerIndex = rect.moveCorner(cornerIndex, newCornerPosWC);
+        _instance.setChanged();
+        _instance.notifyObservers();
+        return newCornerIndex;
+    }
 }

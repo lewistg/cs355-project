@@ -17,13 +17,13 @@ import java.util.ArrayList;
 public class DrawableSelectionOutline extends DrawableShape
 {
     /**Selected shape*/
-    Shape _selectedShape;
+    private Shape _selectedShape;
     /**Corners of outline*/
-    ArrayList<Vector2D> _corners;
+    private ArrayList<Vector2D> _corners;
     /**Rotation handle*/
-    Vector2D _rotHandle;
+    private Vector2D _rotHandle;
     /**Flag for drawing the outline*/
-    boolean _drawOutline;
+    private boolean _drawOutline;
 
 
     /**
@@ -49,6 +49,14 @@ public class DrawableSelectionOutline extends DrawableShape
     void setCorners(ArrayList<Vector2D> corners)
     {
         _corners = corners;
+    }
+
+    /**
+     * Getter for the selected shape
+     */
+    Shape getSelectedShape()
+    {
+        return _selectedShape;
     }
 
     @Override
@@ -88,5 +96,31 @@ public class DrawableSelectionOutline extends DrawableShape
         double yDelta = objCoords.getY() - _rotHandle.getY();
 
         return ((xDelta * xDelta) + (yDelta * yDelta)) < (7 * 7);
+    }
+
+    /**
+     * Checks to see if a selection handle was selected.
+     * Returns the index of the selected handle.
+     * @param worldCoords
+     * @return
+     */
+    public int resizeHandleSelected(Vector2D worldCoords)
+    {
+        ObjToWorldTransform objToWorld = _selectedShape.getObjToWorldTransform();
+        for(int i = 0; i < _corners.size(); i++)
+        {
+            Vector2D objCoords = objToWorld.getObjectCoords(worldCoords);
+            double xDelta = objCoords.getX() - _corners.get(i).getX();
+            double yDelta = objCoords.getY() - _corners.get(i).getY();
+            if(((xDelta * xDelta) + (yDelta * yDelta)) < (7 * 7))
+                return i;
+        }
+
+        return -1;
+    }
+
+    public int resizeShape(int cornerIndex, Vector2D newCornerPosWC)
+    {
+        return -1;
     }
 }

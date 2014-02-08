@@ -49,7 +49,8 @@ public class Rectangle extends Shape
     }
 
     /**
-     * Gets the corner for the indexed corner in object coordinates. Lower left is 0
+     * Gets the corner for the indexed corner in object coordinates. Lower left is 0,
+     * lower
      */
     public Vector2D getCorner(int cornerIndex)
     {
@@ -57,12 +58,12 @@ public class Rectangle extends Shape
 
         double xOffset = 0;
         double yOffset = 0;
-        if(cornerIndex == 0 || cornerIndex == 1)
+        if(cornerIndex == 0 || cornerIndex == 3)
             xOffset = -_width / 2.0;
         else
             xOffset = _width / 2.0;
 
-        if(cornerIndex == 0 || cornerIndex == 3)
+        if(cornerIndex == 0 || cornerIndex == 1)
             yOffset = -_height / 2.0;
         else
             yOffset = _height / 2.0;
@@ -134,11 +135,70 @@ public class Rectangle extends Shape
         double yOffset = (_height / 2);
 
         ArrayList<Vector2D> corners = new ArrayList<>();
-        corners.add(Vector2D.add(center, new Vector2D(-xOffset, yOffset)));
-        corners.add(Vector2D.add(center, new Vector2D(xOffset, yOffset)));
-        corners.add(Vector2D.add(center, new Vector2D(xOffset, -yOffset)));
         corners.add(Vector2D.add(center, new Vector2D(-xOffset, -yOffset)));
+        corners.add(Vector2D.add(center, new Vector2D(xOffset, -yOffset)));
+        corners.add(Vector2D.add(center, new Vector2D(xOffset, yOffset)));
+        corners.add(Vector2D.add(center, new Vector2D(-xOffset, yOffset)));
 
         return corners;
+    }
+
+    /**
+     * Moves the indexed corner
+     * @return The new corner index
+     */
+    public int moveCorner(int cornerIndex, Vector2D newCornerPosWC)
+    {
+        assert(cornerIndex < 4);
+        System.out.println("Corner index: " + cornerIndex);
+
+        ObjToWorldTransform t = getObjToWorldTransform();
+        Vector2D newCornerPos = t.getObjectCoords(newCornerPosWC);
+        Vector2D oppCorner = getCorner((cornerIndex + 2) % 4);
+
+        // find the new center in WC
+        Vector2D oppCornerWC = t.getWorldCoords(oppCorner);
+        Vector2D newCenterWC = Vector2D.add(oppCornerWC, newCornerPosWC);
+        newCenterWC.scale(0.5);
+        t.setObjToWorldTrans(newCenterWC);
+
+        // calculate the new width and height
+        _width = newCornerPos.getX() - oppCorner.getX();
+        _height = newCornerPos.getY() - oppCorner.getY();
+
+        if(_width < 0)
+        {
+            if(cornerIndex == 1)
+                cornerIndex = 0;
+            else if(cornerIndex == 2)
+                cornerIndex = 3;
+        }
+        else if(_width > 0)
+        {
+            if(cornerIndex == 0)
+                cornerIndex = 1;
+            else if(cornerIndex == 3)
+                cornerIndex = 2;
+        }
+
+        if(_height < 0)
+        {
+            if(cornerIndex == 2)
+                cornerIndex = 1;
+            else if(cornerIndex == 3)
+                cornerIndex = 0;
+        }
+        else if(_height > 0)
+        {
+            if(cornerIndex == 1)
+                cornerIndex = 2;
+            else if(cornerIndex == 0)
+                cornerIndex = 3;
+        }
+
+        _width = Math.abs(_width);
+        _height = Math.abs(_height);
+
+        return cornerIndex;
     }
 }

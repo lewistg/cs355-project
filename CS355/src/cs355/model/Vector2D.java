@@ -49,6 +49,12 @@ public class Vector2D
         return _x;
     }
 
+    public void add(Vector2D offset)
+    {
+        _x += offset._x;
+        _y += offset._y;
+    }
+
     /**
      * Adds the offset to x
      * @param xOffset
