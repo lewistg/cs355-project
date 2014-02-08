@@ -14,6 +14,8 @@ public class Circle extends Shape
 {
     /**The radius of the circle*/
     double _radius;
+    /**Underneath it is represented as an ellipse*/
+    private Ellipse _circleEllipse;
 
     /**
      * Constructor
@@ -22,11 +24,7 @@ public class Circle extends Shape
     {
         //super(color, centerWC);
         super(color, new Vector2D(0, 0));
-
-        // create object to world
-        ObjToWorldTransform objToWorldTransform = new ObjToWorldTransform(centerWC, 0.0);
-        setObjToWorldTransform(objToWorldTransform);
-
+        _circleEllipse = new Ellipse(centerWC, radius * 2, radius * 2, color);
         assert(radius >= 0);
         _radius = radius;
     }
@@ -39,26 +37,67 @@ public class Circle extends Shape
         return _radius;
     }
 
-    @Override
-    public boolean pointInShape(Vector2D worldCoord, double tolerance)
-    {
-        ObjToWorldTransform objToWorld = getObjToWorldTransform();
-        Vector2D objCoords = objToWorld.getObjectCoords(worldCoord);
-
-        Vector2D delta = Vector2D.sub(objCoords, getCenter());
-        return (delta.getX() * delta.getX() + delta.getY() * delta.getY()) < (_radius * _radius);
-    }
-
     public ArrayList<Vector2D> getObjBoundingBox()
     {
-        Vector2D center = getCenter();
+        return _circleEllipse.getObjBoundingBox();
+    }
 
-        ArrayList<Vector2D> corners = new ArrayList<>();
-        corners.add(Vector2D.add(center, new Vector2D(-_radius, _radius)));
-        corners.add(Vector2D.add(center, new Vector2D(_radius, _radius)));
-        corners.add(Vector2D.add(center, new Vector2D(_radius, -_radius)));
-        corners.add(Vector2D.add(center, new Vector2D(-_radius, -_radius)));
+    @Override
+    public Vector2D getCenter()
+    {
+        return _circleEllipse.getCenter();
+    }
 
-        return corners;
+    @Override
+    public void setObjToWorldTransform(ObjToWorldTransform objToWorld)
+    {
+        _circleEllipse.setObjToWorldTransform(objToWorld);
+    }
+
+    @Override
+    public ObjToWorldTransform getObjToWorldTransform()
+    {
+        return _circleEllipse.getObjToWorldTransform();
+    }
+
+    @Override
+    public boolean pointInShape(Vector2D worldCoord, double tolerance) {
+        return _circleEllipse.pointInShape(worldCoord, tolerance);
+    }
+
+    public int moveBoundingBoxCorner(int boundingBoxCornerIndex, Vector2D newCornerPosWC)
+    {
+        assert(boundingBoxCornerIndex < 4);
+
+        ObjToWorldTransform t = getObjToWorldTransform();
+        Vector2D newCornerPos = t.getObjectCoords(newCornerPosWC);
+        Vector2D oppCorner = _circleEllipse.getCorner((boundingBoxCornerIndex + 2) % 4);
+
+        Vector2D oppCornerWC = t.getWorldCoords(oppCorner);
+
+        double xDelta = newCornerPos.getX() - oppCorner.getX();
+        double yDelta = newCornerPos.getY() - oppCorner.getY();
+
+        if(Math.abs(xDelta) > Math.abs(yDelta))
+        {
+            double xAdjustment = Math.abs(xDelta) - Math.abs(yDelta);
+            if(newCornerPos.getX() < 0)
+                newCornerPos.addToX(xAdjustment);
+            else
+                newCornerPos.addToX(-xAdjustment);
+        }
+        else
+        {
+            double yAdjustment = Math.abs(yDelta) - Math.abs(xDelta);
+            if(newCornerPos.getY() < 0)
+                newCornerPos.addToY(yAdjustment);
+            else
+                newCornerPos.addToY(-yAdjustment);
+        }
+        newCornerPosWC = t.getWorldCoords(newCornerPos);
+
+        int selectedCorner = _circleEllipse.moveBoundingBoxCorner(boundingBoxCornerIndex, newCornerPosWC);
+        _radius = _circleEllipse.getWidth() / 2.0;
+        return selectedCorner;
     }
 }

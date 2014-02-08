@@ -22,7 +22,6 @@ public class Square extends Shape {
     public Square(Point lowerLeftWC, double size, Color color)
     {
         super(color);
-        System.out.println("Lower left square wc coords: " + lowerLeftWC);
         _squareRect = new Rectangle(lowerLeftWC, size, size, color);
         _size = size;
     }
