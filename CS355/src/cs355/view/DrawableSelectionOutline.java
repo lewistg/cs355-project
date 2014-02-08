@@ -66,6 +66,7 @@ public class DrawableSelectionOutline extends DrawableShape
         context.setColor(Color.ORANGE);
 
         // draw outline
+        _corners = _selectedShape.getObjBoundingBox();
         for(int i = 0; i < _corners.size(); i++)
         {
             int x0 = (int) _corners.get((i + 1) % _corners.size()).getX();
