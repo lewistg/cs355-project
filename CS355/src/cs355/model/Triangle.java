@@ -107,6 +107,20 @@ public class Triangle extends Shape
         return new Vector2D(topPoint);
     }
 
+    /**
+     * Moving the bounding box corner
+     * @param boundingBoxCornerIndex
+     * @param newCornerPosWC
+     * @return
+     */
+    public int moveBoundingBoxCorner(int boundingBoxCornerIndex, Vector2D newCornerPosWC)
+    {
+        assert(boundingBoxCornerIndex >= 0 && boundingBoxCornerIndex < 3);
+        ObjToWorldTransform t = getObjToWorldTransform();
+        _vertices.set(boundingBoxCornerIndex, t.getObjectCoords(newCornerPosWC));
+        return boundingBoxCornerIndex;
+    }
+
     public static void main(String[] args)
     {
         Triangle tri = new Triangle(new Point(10, 20), new Point(30, 40), new Point(20, 50), Color.ORANGE);

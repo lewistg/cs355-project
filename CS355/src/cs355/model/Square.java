@@ -84,9 +84,6 @@ public class Square extends Shape {
         double xDelta = newCornerPos.getX() - oppCorner.getX();
         double yDelta = newCornerPos.getY() - oppCorner.getY();
 
-        System.out.println("New corner pos before: " + newCornerPos);
-        System.out.println("X delta before: " + xDelta);
-        System.out.println("Y delta before: " + yDelta);
         if(Math.abs(xDelta) > Math.abs(yDelta))
         {
             double xAdjustment = Math.abs(xDelta) - Math.abs(yDelta);
@@ -94,9 +91,6 @@ public class Square extends Shape {
                 newCornerPos.addToX(xAdjustment);
             else
                 newCornerPos.addToX(-xAdjustment);
-
-            xDelta = newCornerPos.getX() - oppCorner.getX();
-            System.out.println("X delta after: " + xDelta);
         }
         else
         {
@@ -105,13 +99,8 @@ public class Square extends Shape {
                 newCornerPos.addToY(yAdjustment);
             else
                 newCornerPos.addToY(-yAdjustment);
-
-            yDelta = newCornerPos.getY() - oppCorner.getY();
-            System.out.println("Y delta after: " + yDelta);
         }
-        System.out.println("New corner pos after: " + newCornerPos);
         newCornerPosWC = t.getWorldCoords(newCornerPos);
-        System.out.println("New corner: " + newCornerPosWC);
 
         int selectedCorner = _squareRect.moveBoundingBoxCorner(boundingBoxCornerIndex, newCornerPosWC);
         _size = _squareRect.getWidth();
