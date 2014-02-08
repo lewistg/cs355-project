@@ -121,6 +121,6 @@ public class DrawableSelectionOutline extends DrawableShape
 
     public int resizeShape(int cornerIndex, Vector2D newCornerPosWC)
     {
-        return -1;
+        return DrawingFacade.getInstance().moveBoundingBoxCorner(_selectedShape, cornerIndex, newCornerPosWC);
     }
 }

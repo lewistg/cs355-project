@@ -56,7 +56,7 @@ public class DrawableShapeFactory
             ArrayList<Vector2D> corners = selectedRect.getObjBoundingBox();
 
             //selectionOutline = new DrawableSelectionOutline(selectedShape, corners, true, rotHandle, selectedShape.getColor());
-            selectionOutline = new DrawableRectSelectionOutline(selectedShape, corners, true, rotHandle, selectedShape.getColor());
+            selectionOutline = new DrawableSelectionOutline(selectedShape, corners, true, rotHandle, selectedShape.getColor());
         }
         else if(selectedShape instanceof Ellipse)
         {

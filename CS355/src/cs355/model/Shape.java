@@ -1,6 +1,7 @@
 package cs355.model;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -95,4 +96,24 @@ public abstract class Shape
      * @return
      */
     public abstract boolean pointInShape(Vector2D worldCoord, double tolerance);
+
+    /**
+     * Gets the bounding box corners
+     * @return
+     */
+    public ArrayList<Vector2D> getObjBoundingBox()
+    {
+        return new ArrayList<>();
+    }
+
+    /**
+     * Edits the shape by moving a corner of the bounding box
+     * @param boundingBoxCornerIndex
+     * @param newCornerPosWC
+     * @return
+     */
+    public int moveBoundingBoxCorner(int boundingBoxCornerIndex, Vector2D newCornerPosWC)
+    {
+        return 0;
+    }
 }
