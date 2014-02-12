@@ -144,29 +144,6 @@ public class Triangle extends Shape
         for(Vector2D p : _vertices)
                 p.sub(newCentroid);
 
-        /*ObjToWorldTransform t = getObjToWorldTransform();
-        Vector2D oldCentroid = getCentroid();
-        _vertices.set(boundingBoxCornerIndex, t.getObjectCoords(newCornerPosWC));
-        Vector2D newCentroid = getCentroid();
-
-        // get the new centroid in WC
-        Vector2D newCentroidWC = new Vector2D(0, 0);
-        for(Vector2D p : _vertices)
-            newCentroidWC.add(t.getWorldCoords(p));
-        newCentroidWC.scale(1.0/3.0);
-        //t.setObjToWorldTrans(newCentroidWC);
-        System.out.println("New centroid WC: " + newCentroidWC);
-
-        // adjust the model to be centered on the new centroid
-        Vector2D trans = Vector2D.sub(newCentroid, oldCentroid);
-        System.out.println("New vertices: ");
-        for(Vector2D p : _vertices)
-        {
-            p.sub(newCentroid);
-            System.out.println(p.toString());
-        }
-        System.out.println("");*/
-
         return boundingBoxCornerIndex;
     }
 
