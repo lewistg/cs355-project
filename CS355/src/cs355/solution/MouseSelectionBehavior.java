@@ -45,14 +45,14 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
     @Override
     public void mousePressed(MouseEvent mouseEvent)
     {
-        _p0 = mouseEvent.getPoint();
+        _p0 = WorldToScreen.getInstance().getInWorldCoords(mouseEvent.getPoint());
 
         if(_selectedShape != null)
         {
             assert(_drawableSelection != null);
-            int cornerIndex =  _drawableSelection.resizeHandleSelected(new Vector2D(mouseEvent.getPoint()));
+            int cornerIndex =  _drawableSelection.resizeHandleSelected(new Vector2D(_p0));
 
-            if(_drawableSelection.rotHandleSelected(new Vector2D(mouseEvent.getPoint())))
+            if(_drawableSelection.rotHandleSelected(new Vector2D(_p0)))
             {
                 _selectionMode = SelectionMode.ROTATE;
                 ObjToWorldTransform objToWorld = _selectedShape.getObjToWorldTransform();
@@ -68,7 +68,7 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
         }
 
         Canvas canvas = Canvas.getInstance();
-        _selectedShape = canvas.selectShape(new Vector2D(mouseEvent.getPoint()), 4);
+        _selectedShape = canvas.selectShape(new Vector2D(_p0), 4);
         _drawableSelection = null;
         if(_selectedShape != null)
         {
@@ -99,7 +99,8 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
                 break;
 
              case RESIZE:
-                 _selectedCorner = _drawableSelection.resizeShape(_selectedCorner, new Vector2D(mouseEvent.getPoint()));
+                 Vector2D point = new Vector2D(WorldToScreen.getInstance().getInWorldCoords(mouseEvent.getPoint()));
+                 _selectedCorner = _drawableSelection.resizeShape(_selectedCorner, point);
                  break;
 
             default:
@@ -110,7 +111,7 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
 
     private void translateSelected(MouseEvent mouseEvent)
     {
-        Point p1 = mouseEvent.getPoint();
+        Point p1 = WorldToScreen.getInstance().getInWorldCoords(mouseEvent.getPoint());
         double xOffset = p1.getX() - _p0.getX();
         double yOffset = p1.getY() - _p0.getY();
         _p0 = p1;
@@ -119,7 +120,7 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
 
     private void rotatingSelected(MouseEvent mouseEvent)
     {
-        Point p1 = mouseEvent.getPoint();
+        Point p1 = WorldToScreen.getInstance().getInWorldCoords(mouseEvent.getPoint());
         Vector2D center = _selectedShape.getCenter();
         ObjToWorldTransform objToWorldTransform = _selectedShape.getObjToWorldTransform();
         Vector2D centerWC = objToWorldTransform.getWorldCoords(center);

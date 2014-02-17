@@ -23,7 +23,7 @@ public class MouseRectangleBuilderStrategy extends MouseShapeBuilderStrategy
     @Override
     public void mousePressed(MouseEvent mouseEvent)
     {
-         _p0 = mouseEvent.getPoint();
+         _p0 = WorldToScreen.getInstance().getInWorldCoords(mouseEvent.getPoint());
          _p1 = _p0;
 
         Point lowerLeft = getLowerLeft();
@@ -37,7 +37,7 @@ public class MouseRectangleBuilderStrategy extends MouseShapeBuilderStrategy
     @Override
     public void mouseDragged(MouseEvent mouseEvent)
     {
-        _p1 = mouseEvent.getPoint();
+        _p1 = WorldToScreen.getInstance().getInWorldCoords(mouseEvent.getPoint());
 
         Point lowerLeft = getLowerLeft();
         double width = getWidth();

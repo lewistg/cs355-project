@@ -3,6 +3,7 @@ package cs355.view;
 import cs355.model.*;
 import cs355.model.Rectangle;
 import cs355.model.Shape;
+import cs355.solution.WorldToScreen;
 
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
@@ -137,7 +138,8 @@ public class DrawableShapeFactory
         int y = (int) getLowerLeft.getY();
         int w = (int) rectangle.getWidth();
         int h = (int) rectangle.getHeight();
-        AffineTransform affineTransform = rectangle.getObjToWorldTransform().getObjToWorldAffine();
+        AffineTransform affineTransform = WorldToScreen.getInstance().getWorldToScreenTrans();
+        affineTransform.concatenate(rectangle.getObjToWorldTransform().getObjToWorldAffine());
         DrawableRectangle drawableRectangle = new DrawableRectangle(x, y, w, h, rectangle.getColor(), affineTransform);
         return drawableRectangle;
     }
@@ -179,7 +181,8 @@ public class DrawableShapeFactory
         double x = center.getX() - circle.getRadius();
         double y = center.getY() - circle.getRadius();
         double diameter = circle.getRadius() * 2.0;
-        AffineTransform affineTransform = circle.getObjToWorldTransform().getObjToWorldAffine();
+        AffineTransform affineTransform = WorldToScreen.getInstance().getWorldToScreenTrans();
+        affineTransform.concatenate(circle.getObjToWorldTransform().getObjToWorldAffine());
         DrawableCircle drawableCircle = new DrawableCircle(x, y, diameter, circle.getColor(), affineTransform);
         return drawableCircle;
     }

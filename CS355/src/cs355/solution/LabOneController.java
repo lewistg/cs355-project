@@ -35,6 +35,24 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
         _shapeBuilderStrategy = new MouseLineBuilderStrategy();
     }
 
+    public void init()
+    {
+        GUIFunctions.setHScrollBarMax(2048);
+        GUIFunctions.setVScrollBarMax(2048);
+
+        /*GUIFunctions.setVScrollBarKnob((int) (2048 / (512 * WorldToScreen.getInstance().getScaleFactor())));
+        GUIFunctions.setHScrollBarKnob((int) (2048 / (512 * WorldToScreen.getInstance().getScaleFactor())));*/
+
+        int knobSize = (int) (512 * WorldToScreen.getInstance().getScaleFactor());
+
+        WorldToScreen.getInstance().setUpperLeftViewportWC(new Vector2D(768, 768));
+
+        GUIFunctions.setVScrollBarKnob(knobSize);
+        GUIFunctions.setHScrollBarKnob(knobSize);
+        GUIFunctions.setHScrollBarPosit(768);
+        GUIFunctions.setVScrollBarPosit(768);
+    }
+
     @Override
     public void colorButtonHit(Color c) {
         GUIFunctions.changeSelectedColor(c);
@@ -91,6 +109,15 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
     @Override
     public void zoomInButtonHit() {
         //To change body of implemented methods use File | Settings | File Templates.
+
+        double scaleFactor = WorldToScreen.getInstance().getScaleFactor();
+        if(scaleFactor < 4.0)
+            scaleFactor *= 2;
+        WorldToScreen.getInstance().setScaleFactor(scaleFactor);
+
+
+        GUIFunctions.setVScrollBarKnob((int) (2048 / scaleFactor));
+        GUIFunctions.setHScrollBarKnob((int) (2048 / scaleFactor));
     }
 
     @Override
@@ -101,6 +128,7 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
     @Override
     public void hScrollbarChanged(int value) {
         //To change body of implemented methods use File | Settings | File Templates.
+        //System.out.println(value);
     }
 
     @Override

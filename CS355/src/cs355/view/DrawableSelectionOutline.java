@@ -2,8 +2,10 @@ package cs355.view;
 
 import cs355.model.*;
 import cs355.model.Shape;
+import cs355.solution.WorldToScreen;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
@@ -62,7 +64,9 @@ public class DrawableSelectionOutline extends DrawableShape
     @Override
     public void draw(Graphics2D context)
     {
-        context.setTransform(_selectedShape.getObjToWorldTransform().getObjToWorldAffine());
+        AffineTransform affineTransform = WorldToScreen.getInstance().getWorldToScreenTrans();
+        affineTransform.concatenate(_selectedShape.getObjToWorldTransform().getObjToWorldAffine());
+        context.setTransform(affineTransform);
         context.setColor(Color.ORANGE);
 
         // draw outline

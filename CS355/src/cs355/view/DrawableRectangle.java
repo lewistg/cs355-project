@@ -35,8 +35,8 @@ public class DrawableRectangle extends DrawableShape{
     @Override
     public void draw(Graphics2D context)
     {
-        Point lowerLeftWC = new Point();
-        _affineTransform.transform(new Point(_lowerLeftX, _lowerRightY), lowerLeftWC);
+        //Point lowerLeftWC = new Point();
+        //_affineTransform.transform(new Point(_lowerLeftX, _lowerRightY), lowerLeftWC);
         context.setTransform(_affineTransform);
         context.setColor(getColor());
         context.fillRect(_lowerLeftX, _lowerRightY, _w, _h);

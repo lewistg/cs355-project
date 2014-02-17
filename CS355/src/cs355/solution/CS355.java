@@ -24,6 +24,7 @@ public class CS355
         LabOneController controller = new LabOneController();
         LabOneViewRefresher viewRefresher = LabOneViewRefresher.getInstance();
         GUIFunctions.createCS355Frame(controller, viewRefresher, controller, controller);
+        controller.init();
         
         GUIFunctions.refresh();        
     }
