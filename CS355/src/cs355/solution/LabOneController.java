@@ -47,7 +47,7 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
     private void updateScrollBars()
     {
         // the knob size is proportional to the viewport size
-        int knobSize = (int) (512 * WorldToScreen.getInstance().getScaleFactor());
+        int knobSize = (int) (512 / WorldToScreen.getInstance().getScaleFactor());
 
         Vector2D viewportCenterWC = WorldToScreen.getInstance().getViewportCenterWC();
 
@@ -62,6 +62,8 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
         GUIFunctions.setHScrollBarPosit((int) upperLeft.getX());
         GUIFunctions.setVScrollBarPosit((int) upperLeft.getY());
 
+        WorldToScreen.getInstance().setViewportUpperLeftX((int) upperLeft.getX());
+        WorldToScreen.getInstance().setViewportUpperLeftY((int) upperLeft.getX());
     }
 
     @Override
@@ -121,30 +123,22 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
     public void zoomInButtonHit() {
         //To change body of implemented methods use File | Settings | File Templates.
 
-        System.out.println("Before: " + WorldToScreen.getInstance().getUpperLeftViewportCorner().toString());
-        System.out.println("Before center: " + WorldToScreen.getInstance().getViewportCenterWC().toString());
-
         double scaleFactor = WorldToScreen.getInstance().getScaleFactor();
-        if(scaleFactor > 0.25)
+        if(scaleFactor < 4.0)
         {
-            scaleFactor /= 2.0;
+            scaleFactor *= 2;
             WorldToScreen.getInstance().setScaleFactor(scaleFactor);
-            System.out.println("After center: " + WorldToScreen.getInstance().getViewportCenterWC().toString());
-            System.out.println("After center: " + WorldToScreen.getInstance().getViewportCenterWC().toString());
         }
         updateScrollBars();
-        System.out.println("After center: " + WorldToScreen.getInstance().getViewportCenterWC().toString());
-        System.out.println("After: " + WorldToScreen.getInstance().getUpperLeftViewportCorner().toString());
-        System.out.println("After center: " + WorldToScreen.getInstance().getViewportCenterWC().toString());
         GUIFunctions.refresh();
     }
 
     @Override
     public void zoomOutButtonHit() {
         double scaleFactor = WorldToScreen.getInstance().getScaleFactor();
-        if(scaleFactor < 4.0)
+        if(scaleFactor > 0.25)
         {
-            scaleFactor *= 2;
+            scaleFactor /= 2.0;
             WorldToScreen.getInstance().setScaleFactor(scaleFactor);
         }
         updateScrollBars();

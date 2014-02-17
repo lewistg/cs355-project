@@ -47,12 +47,12 @@ public class WorldToScreen
 
     public void setViewportUpperLeftX(double x)
     {
-        _viewportCenterWC.setX(x + (_viewportW * _scaleFactor) / 2.0);
+        _viewportCenterWC.setX(x + getScaledViewportW());
     }
 
     public void setViewportUpperLeftY(double y)
     {
-        _viewportCenterWC.setY(y + (_viewportH * _scaleFactor) / 2.0);
+        _viewportCenterWC.setY(y + getScaledViewportH());
     }
 
     /**
@@ -79,8 +79,18 @@ public class WorldToScreen
 
     public Vector2D getUpperLeftViewportCorner()
     {
-        return new Vector2D(_viewportCenterWC.getX() - (_viewportW * _scaleFactor / 2.0),
-                _viewportCenterWC.getY() - (_viewportH * _scaleFactor / 2.0));
+        return new Vector2D(_viewportCenterWC.getX() - getScaledViewportW(),
+                _viewportCenterWC.getY() - getScaledViewportH());
+    }
+
+    private double getScaledViewportW()
+    {
+        return (_viewportW / (2.0 * _scaleFactor));
+    }
+
+    private double getScaledViewportH()
+    {
+        return (_viewportH / (_scaleFactor * 2.0));
     }
 
     /**
@@ -106,7 +116,7 @@ public class WorldToScreen
         Vector2D upperLeft = getUpperLeftViewportCorner();
         AffineTransform transform = new AffineTransform(_scaleFactor, 0.0,
                 0.0, _scaleFactor,
-                -upperLeft.getX(), -upperLeft.getY());
+                -upperLeft.getX() * _scaleFactor, -upperLeft.getY() * _scaleFactor);
 
         return transform;
     }
