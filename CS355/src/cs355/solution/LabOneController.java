@@ -40,17 +40,28 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
         GUIFunctions.setHScrollBarMax(2048);
         GUIFunctions.setVScrollBarMax(2048);
 
-        /*GUIFunctions.setVScrollBarKnob((int) (2048 / (512 * WorldToScreen.getInstance().getScaleFactor())));
-        GUIFunctions.setHScrollBarKnob((int) (2048 / (512 * WorldToScreen.getInstance().getScaleFactor())));*/
+        WorldToScreen.getInstance().setViewportCenter(new Vector2D(1024, 1024));
+        updateScrollBars();
+    }
 
+    private void updateScrollBars()
+    {
+        // the knob size is proportional to the viewport size
         int knobSize = (int) (512 * WorldToScreen.getInstance().getScaleFactor());
 
-        WorldToScreen.getInstance().setUpperLeftViewportWC(new Vector2D(768, 768));
+        Vector2D viewportCenterWC = WorldToScreen.getInstance().getViewportCenterWC();
 
         GUIFunctions.setVScrollBarKnob(knobSize);
         GUIFunctions.setHScrollBarKnob(knobSize);
-        GUIFunctions.setHScrollBarPosit(768);
-        GUIFunctions.setVScrollBarPosit(768);
+
+        // recenter the scroll bar to be on the center
+        double xOffset = -knobSize / 2.0;
+        double yOffset = -knobSize / 2.0;
+
+        Vector2D upperLeft = new Vector2D(viewportCenterWC.getX() + xOffset, viewportCenterWC.getY() + yOffset);
+        GUIFunctions.setHScrollBarPosit((int) upperLeft.getX());
+        GUIFunctions.setVScrollBarPosit((int) upperLeft.getY());
+
     }
 
     @Override
@@ -110,30 +121,46 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
     public void zoomInButtonHit() {
         //To change body of implemented methods use File | Settings | File Templates.
 
+        System.out.println("Before: " + WorldToScreen.getInstance().getUpperLeftViewportCorner().toString());
+        System.out.println("Before center: " + WorldToScreen.getInstance().getViewportCenterWC().toString());
+
         double scaleFactor = WorldToScreen.getInstance().getScaleFactor();
-        if(scaleFactor < 4.0)
-            scaleFactor *= 2;
-        WorldToScreen.getInstance().setScaleFactor(scaleFactor);
-
-
-        GUIFunctions.setVScrollBarKnob((int) (2048 / scaleFactor));
-        GUIFunctions.setHScrollBarKnob((int) (2048 / scaleFactor));
+        if(scaleFactor > 0.25)
+        {
+            scaleFactor /= 2.0;
+            WorldToScreen.getInstance().setScaleFactor(scaleFactor);
+            System.out.println("After center: " + WorldToScreen.getInstance().getViewportCenterWC().toString());
+            System.out.println("After center: " + WorldToScreen.getInstance().getViewportCenterWC().toString());
+        }
+        updateScrollBars();
+        System.out.println("After center: " + WorldToScreen.getInstance().getViewportCenterWC().toString());
+        System.out.println("After: " + WorldToScreen.getInstance().getUpperLeftViewportCorner().toString());
+        System.out.println("After center: " + WorldToScreen.getInstance().getViewportCenterWC().toString());
+        GUIFunctions.refresh();
     }
 
     @Override
     public void zoomOutButtonHit() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        double scaleFactor = WorldToScreen.getInstance().getScaleFactor();
+        if(scaleFactor < 4.0)
+        {
+            scaleFactor *= 2;
+            WorldToScreen.getInstance().setScaleFactor(scaleFactor);
+        }
+        updateScrollBars();
+        GUIFunctions.refresh();
     }
 
     @Override
     public void hScrollbarChanged(int value) {
-        //To change body of implemented methods use File | Settings | File Templates.
-        //System.out.println(value);
+        WorldToScreen.getInstance().setViewportUpperLeftX((double) value);
+        GUIFunctions.refresh();
     }
 
     @Override
     public void vScrollbarChanged(int value) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        WorldToScreen.getInstance().setViewportUpperLeftY((double) value);
+        GUIFunctions.refresh();
     }
 
     @Override
