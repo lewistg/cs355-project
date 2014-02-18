@@ -54,6 +54,9 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
 
         Vector2D viewportCenterWC = WorldToScreen.getInstance().getViewportCenterWC();
 
+        // resize the scroll bar
+        GUIFunctions.setHScrollBarPosit(0);
+        GUIFunctions.setVScrollBarPosit(0);
         GUIFunctions.setVScrollBarKnob(knobSize);
         GUIFunctions.setHScrollBarKnob(knobSize);
 
