@@ -153,8 +153,8 @@ public class DrawableShapeFactory
         int x = (int) getLowerLeft.getX();
         int y = (int) getLowerLeft.getY();
         int size = (int) square.size();
-        //DrawableSquare drawableSquare = new DrawableSquare(x, y, size, size, square.getColor());
-        AffineTransform affineTransform = square.getObjToWorldTransform().getObjToWorldAffine();
+        AffineTransform affineTransform = WorldToScreen.getInstance().getWorldToScreenTrans();
+        affineTransform.concatenate(square.getObjToWorldTransform().getObjToWorldAffine());
         DrawableRectangle drawableSquare = new DrawableRectangle(x, y, size, size, square.getColor(), affineTransform);
         return drawableSquare;
     }
@@ -167,7 +167,8 @@ public class DrawableShapeFactory
         Vector2D center = ellipse.getCenter();
         double x = center.getX() - (ellipse.getWidth() / 2.0);
         double y = center.getY() - (ellipse.getHeight() / 2.0);
-        AffineTransform affineTransform = ellipse.getObjToWorldTransform().getObjToWorldAffine();
+        AffineTransform affineTransform = WorldToScreen.getInstance().getWorldToScreenTrans();
+        affineTransform.concatenate(ellipse.getObjToWorldTransform().getObjToWorldAffine());
         DrawableEllipse drawableEllipse = new DrawableEllipse(x, y, ellipse.getWidth(), ellipse.getHeight(), ellipse.getColor(), affineTransform);
         return drawableEllipse;
     }
@@ -202,7 +203,9 @@ public class DrawableShapeFactory
             yCoords[i] = (int) vertices.get(i).getY();
         }
 
-        DrawableTriangle drawableTriangle = new DrawableTriangle(xCoords, yCoords, triangle.getColor(), triangle.getObjToWorldTransform().getObjToWorldAffine());
+        AffineTransform affineTransform = WorldToScreen.getInstance().getWorldToScreenTrans();
+        affineTransform.concatenate(triangle.getObjToWorldTransform().getObjToWorldAffine());
+        DrawableTriangle drawableTriangle = new DrawableTriangle(xCoords, yCoords, triangle.getColor(), affineTransform);
         return drawableTriangle;
     }
 }

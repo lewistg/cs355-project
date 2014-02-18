@@ -22,6 +22,8 @@ import java.util.Iterator;
  */
 public class LabOneController implements CS355Controller, MouseListener, MouseMotionListener
 {
+    static final int DRAWING_AREA_SIZE = 2047;
+
     /**
      * Controls how shapes are built from mouse-click events.
      */
@@ -37,10 +39,10 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
 
     public void init()
     {
-        GUIFunctions.setHScrollBarMax(2048);
-        GUIFunctions.setVScrollBarMax(2048);
+        GUIFunctions.setHScrollBarMax(DRAWING_AREA_SIZE);
+        GUIFunctions.setVScrollBarMax(DRAWING_AREA_SIZE);
 
-        WorldToScreen.getInstance().setViewportCenter(new Vector2D(1024, 1024));
+        WorldToScreen.getInstance().setViewportCenter(new Vector2D(DRAWING_AREA_SIZE / 2, DRAWING_AREA_SIZE / 2));
         updateScrollBars();
     }
 
@@ -48,6 +50,7 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
     {
         // the knob size is proportional to the viewport size
         int knobSize = (int) (512 / WorldToScreen.getInstance().getScaleFactor());
+        System.out.println("Knob size: " + Integer.toString(knobSize));
 
         Vector2D viewportCenterWC = WorldToScreen.getInstance().getViewportCenterWC();
 
@@ -59,11 +62,31 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
         double yOffset = -knobSize / 2.0;
 
         Vector2D upperLeft = new Vector2D(viewportCenterWC.getX() + xOffset, viewportCenterWC.getY() + yOffset);
+        if(upperLeft.getX() < 0)
+        {
+            upperLeft.setX(0);
+        }
+        else if(upperLeft.getX() - xOffset > DRAWING_AREA_SIZE)
+        {
+             double offset = (DRAWING_AREA_SIZE - (upperLeft.getX() - xOffset));
+            upperLeft.addToX(-offset);
+        }
+
+        if(upperLeft.getY() < 0)
+        {
+            upperLeft.setY(0);
+        }
+        else if(upperLeft.getY() - yOffset > DRAWING_AREA_SIZE)
+        {
+            double offset = (DRAWING_AREA_SIZE - (upperLeft.getX() - xOffset));
+            upperLeft.addToY(-offset);
+        }
+
         GUIFunctions.setHScrollBarPosit((int) upperLeft.getX());
         GUIFunctions.setVScrollBarPosit((int) upperLeft.getY());
 
         WorldToScreen.getInstance().setViewportUpperLeftX((int) upperLeft.getX());
-        WorldToScreen.getInstance().setViewportUpperLeftY((int) upperLeft.getX());
+        WorldToScreen.getInstance().setViewportUpperLeftY((int) upperLeft.getY());
     }
 
     @Override
@@ -150,10 +173,10 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
         WorldToScreen.getInstance().setViewportUpperLeftX((double) value);
         GUIFunctions.refresh();
     }
-
     @Override
     public void vScrollbarChanged(int value) {
         WorldToScreen.getInstance().setViewportUpperLeftY((double) value);
+        System.out.println("Scroll change: " + Double.toString(value));
         GUIFunctions.refresh();
     }
 
