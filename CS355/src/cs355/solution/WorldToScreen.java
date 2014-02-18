@@ -131,4 +131,18 @@ public class WorldToScreen
         affineTransform.transform(screenCoord, transformedPt);
         return transformedPt;
     }
+
+    /**
+     * Gets the point in screen coords
+     */
+    public Vector2D getInScreenCoords(Vector2D worldCoord)
+    {
+        Vector2D screenCoords = new Vector2D(worldCoord);
+        Vector2D upperLeftCorner = getUpperLeftViewportCorner();
+        upperLeftCorner.scale(-1.0);
+        screenCoords.add(upperLeftCorner);
+        screenCoords.scale(_scaleFactor);
+
+        return screenCoords;
+    }
 }

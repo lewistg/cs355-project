@@ -64,16 +64,18 @@ public class DrawableSelectionOutline extends DrawableShape
     @Override
     public void draw(Graphics2D context)
     {
-        AffineTransform affineTransform = WorldToScreen.getInstance().getWorldToScreenTrans();
-        affineTransform.concatenate(_selectedShape.getObjToWorldTransform().getObjToWorldAffine());
-        context.setTransform(affineTransform);
+        AffineTransform objToScreen = WorldToScreen.getInstance().getWorldToScreenTrans();
+        objToScreen.concatenate(_selectedShape.getObjToWorldTransform().getObjToWorldAffine());
+        context.setTransform(objToScreen);
         context.setColor(Color.ORANGE);
 
-        // draw outline
+        // draw outline and corner handles
+        ObjToWorldTransform objToWorld = _selectedShape.getObjToWorldTransform();
         _corners = _selectedShape.getObjBoundingBox();
         double minY = Double.MAX_VALUE;
         for(int i = 0; i < _corners.size(); i++)
         {
+            context.setTransform(objToScreen);
             int x0 = (int) _corners.get((i + 1) % _corners.size()).getX();
             int y0 = (int) _corners.get((i + 1) % _corners.size()).getY();
             if(y0 < minY)
@@ -84,19 +86,28 @@ public class DrawableSelectionOutline extends DrawableShape
                 int y1 = (int) _corners.get(i).getY();
                 context.drawLine(x0, y0, x1, y1);
             }
-            context.draw(new Ellipse2D.Double(x0 - 3, y0 - 3, 7, 7));
+
+            // scale the handles to be a constant size on the screen
+            context.setTransform(new AffineTransform());
+            Vector2D resizeHandleWC = objToWorld.getWorldCoords(_corners.get(i));
+            Vector2D resizeHandleScrn = WorldToScreen.getInstance().getInScreenCoords(resizeHandleWC);
+            context.draw(new Ellipse2D.Double(resizeHandleScrn.getX() - 3, resizeHandleScrn.getY() - 3, 7, 7));
         }
 
         // draw the selection handle
-        //_rotHandle = _selectedShape.get
+        // get the screen coordinates of the handle
+
         if(_rotHandle != null)
         {
             double xRot = _selectedShape.getCenter().getX();
             double yRot = minY - 5;
             _rotHandle = new Vector2D(xRot, yRot);
 
-            context.draw(new Ellipse2D.Double(_rotHandle.getX() - 3, _rotHandle.getY() - 3, 7, 7));
-            //context.draw(new Ellipse2D.Double(xRot - 3, yRot - 3, 7, 7));
+            Vector2D rotHandleWC = objToWorld.getWorldCoords(_rotHandle);
+            Vector2D rotHandleScrn = WorldToScreen.getInstance().getInScreenCoords(rotHandleWC);
+
+            context.setTransform(new AffineTransform());
+            context.draw(new Ellipse2D.Double(rotHandleScrn.getX() - 3, rotHandleScrn.getY() - 3, 7, 7));
         }
     }
 
