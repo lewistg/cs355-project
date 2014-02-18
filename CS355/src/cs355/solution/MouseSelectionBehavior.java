@@ -31,15 +31,17 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
     /**The currently selected shape*/
     private Shape _selectedShape;
     /**The current selection */
-    DrawableSelectionOutline _drawableSelection;
+    private DrawableSelectionOutline _drawableSelection;
     /**The first click point*/
-    Point _p0;
+    private Point _p0;
     /**The initial angle*/
-    double _initAngle;
+    private double _initAngle;
     /**The selection mode*/
-    SelectionMode _selectionMode;
+    private SelectionMode _selectionMode;
     /**The selected corner*/
-    int _selectedCorner;
+    private int _selectedCorner;
+    /**Selection tolerance*/
+    private final int SELECTION_TOLERANCE = 4;
 
 
     @Override
@@ -68,7 +70,7 @@ public class MouseSelectionBehavior extends MouseShapeBuilderStrategy
         }
 
         Canvas canvas = Canvas.getInstance();
-        _selectedShape = canvas.selectShape(new Vector2D(_p0), 4);
+        _selectedShape = canvas.selectShape(new Vector2D(_p0), SELECTION_TOLERANCE / WorldToScreen.getInstance().getScaleFactor());
         _drawableSelection = null;
         if(_selectedShape != null)
         {
