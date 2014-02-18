@@ -21,7 +21,8 @@ public class MouseLineBuilderStrategy extends MouseShapeBuilderStrategy {
     @Override
     public void mousePressed(MouseEvent mouseEvent)
     {
-        Point p0 = mouseEvent.getPoint();
+        Point p0 = WorldToScreen.getInstance().getInWorldCoords(mouseEvent.getPoint());
+        System.out.println(p0.toString());
         Point p1 = p0;
         _line = new Line(p1, p0, cs355.model.Context.getInstance().getCurrentColor());
         Canvas.getInstance().addShape(_line);
@@ -30,7 +31,8 @@ public class MouseLineBuilderStrategy extends MouseShapeBuilderStrategy {
     @Override
     public void mouseDragged(MouseEvent mouseEvent)
     {
-        Point p1 = mouseEvent.getPoint();
+        Point p1 = WorldToScreen.getInstance().getInWorldCoords(mouseEvent.getPoint());
+        System.out.println(p1.toString());
         _line.setEndPoint(p1);
         cs355.model.Canvas.getInstance().setLastShapeAdded(_line);
     }

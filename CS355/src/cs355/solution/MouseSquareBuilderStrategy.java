@@ -23,8 +23,8 @@ public class MouseSquareBuilderStrategy extends MouseShapeBuilderStrategy
     @Override
     public void mousePressed(MouseEvent mouseEvent)
     {
-         _p0 = mouseEvent.getPoint();
-         _p1 = _p0;
+        _p0 = WorldToScreen.getInstance().getInWorldCoords(mouseEvent.getPoint());
+        _p1 = _p0;
         Square square = new Square(_p0, 0, cs355.model.Context.getInstance().getCurrentColor());
         Canvas.getInstance().addShape(square);
     }
@@ -32,7 +32,7 @@ public class MouseSquareBuilderStrategy extends MouseShapeBuilderStrategy
     @Override
     public void mouseDragged(MouseEvent mouseEvent)
     {
-        _p1 = mouseEvent.getPoint();
+        _p1 = WorldToScreen.getInstance().getInWorldCoords(mouseEvent.getPoint());
         double width = _p1.getX() - _p0.getX();
         double height = _p1.getY() - _p0.getY();
 
