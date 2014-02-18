@@ -26,6 +26,8 @@ public class DrawableSelectionOutline extends DrawableShape
     private Vector2D _rotHandle;
     /**Flag for drawing the outline*/
     private boolean _drawOutline;
+    /**The radius of the handle*/
+    private final int HANDLE_SIZE = 7;
 
 
     /**
@@ -118,11 +120,15 @@ public class DrawableSelectionOutline extends DrawableShape
 
         // test whether or not the rotation handle was selected
         ObjToWorldTransform objToWorld = _selectedShape.getObjToWorldTransform();
-        Vector2D objCoords = objToWorld.getObjectCoords(worldCoords);
-        double xDelta = objCoords.getX() - _rotHandle.getX();
-        double yDelta = objCoords.getY() - _rotHandle.getY();
+        Vector2D selectedPtSC = WorldToScreen.getInstance().getInScreenCoords(worldCoords);
 
-        return ((xDelta * xDelta) + (yDelta * yDelta)) < (7 * 7);
+        Vector2D rotHandleWC = objToWorld.getWorldCoords(_rotHandle);
+        Vector2D rotHandleSC = WorldToScreen.getInstance().getInScreenCoords(rotHandleWC);
+
+        double xDelta = selectedPtSC.getX() - rotHandleSC.getX();
+        double yDelta = selectedPtSC.getY() - rotHandleSC.getY();
+
+        return ((xDelta * xDelta) + (yDelta * yDelta)) < (HANDLE_SIZE * HANDLE_SIZE);
     }
 
     /**
@@ -134,12 +140,17 @@ public class DrawableSelectionOutline extends DrawableShape
     public int resizeHandleSelected(Vector2D worldCoords)
     {
         ObjToWorldTransform objToWorld = _selectedShape.getObjToWorldTransform();
+        Vector2D selectedPtSC = WorldToScreen.getInstance().getInScreenCoords(worldCoords);
+
         for(int i = 0; i < _corners.size(); i++)
         {
-            Vector2D objCoords = objToWorld.getObjectCoords(worldCoords);
-            double xDelta = objCoords.getX() - _corners.get(i).getX();
-            double yDelta = objCoords.getY() - _corners.get(i).getY();
-            if(((xDelta * xDelta) + (yDelta * yDelta)) < (7 * 7))
+            Vector2D cornerWC = objToWorld.getWorldCoords(_corners.get(i));
+            Vector2D cornerSC = WorldToScreen.getInstance().getInScreenCoords(cornerWC);
+
+
+            double xDelta = selectedPtSC.getX() - cornerSC.getX();
+            double yDelta = selectedPtSC.getY() - cornerSC.getY();
+            if(((xDelta * xDelta) + (yDelta * yDelta)) < (HANDLE_SIZE * HANDLE_SIZE))
                 return i;
         }
 
