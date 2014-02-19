@@ -56,9 +56,13 @@ public class ObjToWorldTransform
      */
     public AffineTransform getObjToWorldAffine()
     {
-        AffineTransform affineTransform = new AffineTransform();
-        affineTransform.translate(_objToWorldTrans.getX(), _objToWorldTrans.getY());
-        affineTransform.rotate(_objToWorldRot);
+        double m00 = Math.cos(_objToWorldRot);
+        double m10 = Math.sin(_objToWorldRot);
+        double m01 = -Math.sin(_objToWorldRot);
+        double m11 = Math.cos(_objToWorldRot);
+        double m02 = _objToWorldTrans.getX();
+        double m12 = _objToWorldTrans.getY();
+        AffineTransform affineTransform = new AffineTransform(m00, m10, m01, m11, m02, m12);
         return affineTransform;
     }
 
