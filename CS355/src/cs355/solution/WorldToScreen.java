@@ -1,5 +1,6 @@
 package cs355.solution;
 
+import cs355.model.AffineMatrix2D;
 import cs355.model.Vector2D;
 
 import java.awt.*;
@@ -94,17 +95,24 @@ public class WorldToScreen
     }
 
     /**
+     * Gets the matrix for screen to world
+     * @return
+     */
+    private AffineMatrix2D getScreenToWorldMatrix()
+    {
+        Vector2D upperLeft = getUpperLeftViewportCorner();
+        double [][] entries = {{1.0 / _scaleFactor, 0.0, upperLeft.getX()},
+                {0.0, 1.0 / _scaleFactor, upperLeft.getY()}};
+        AffineMatrix2D m = new AffineMatrix2D(entries);
+        return m;
+    }
+
+    /**
      * Gets the screen to world transform
      */
     public AffineTransform getScreenToWorldTrans()
     {
-        Vector2D upperLeft = getUpperLeftViewportCorner();
-        AffineTransform transform = new AffineTransform(1.0 / _scaleFactor, 0.0,
-                                                        0.0, 1.0 / _scaleFactor,
-                                                        upperLeft.getX(),
-                                                        upperLeft.getY());
-
-        return transform;
+        return getScreenToWorldMatrix().getAffineTransform();
     }
 
     /**
