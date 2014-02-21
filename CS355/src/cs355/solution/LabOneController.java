@@ -69,9 +69,9 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
         {
             upperLeft.setX(0);
         }
-        else if(upperLeft.getX() - xOffset > DRAWING_AREA_SIZE)
+        else if(upperLeft.getX() - (2 * xOffset) > DRAWING_AREA_SIZE)
         {
-             double offset = (DRAWING_AREA_SIZE - (upperLeft.getX() - xOffset));
+             double offset = ((upperLeft.getX() - (2 * xOffset)) - DRAWING_AREA_SIZE);
             upperLeft.addToX(-offset);
         }
 
@@ -79,9 +79,9 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
         {
             upperLeft.setY(0);
         }
-        else if(upperLeft.getY() - yOffset > DRAWING_AREA_SIZE)
+        else if(upperLeft.getY() - (2 * yOffset) > DRAWING_AREA_SIZE)
         {
-            double offset = (DRAWING_AREA_SIZE - (upperLeft.getX() - xOffset));
+            double offset = ((upperLeft.getY() - (2 * yOffset)) - DRAWING_AREA_SIZE);
             upperLeft.addToY(-offset);
         }
 
