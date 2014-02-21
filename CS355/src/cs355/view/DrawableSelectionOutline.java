@@ -86,6 +86,9 @@ public class DrawableSelectionOutline extends DrawableShape
             {
                 int x1 = (int) _corners.get(i).getX();
                 int y1 = (int) _corners.get(i).getY();
+                double oldWidth = ((BasicStroke) context.getStroke()).getLineWidth();
+                double scaledStroke = Math.min(oldWidth / WorldToScreen.getInstance().getScaleFactor(), 1.0);
+                context.setStroke(new BasicStroke((float) scaledStroke));
                 context.drawLine(x0, y0, x1, y1);
             }
 
