@@ -1,5 +1,7 @@
 package cs355.model;
 
+import java.awt.geom.AffineTransform;
+
 /**
  * Created with IntelliJ IDEA.
  * User: ty
@@ -42,20 +44,35 @@ public class AffineMatrix2D
             for(int j = 0; j < 3; j++)
                 _entries[i][j] = topEntries[i][j];
 
-        _entries[3][0] = 0;
-        _entries[3][1] = 0;
-        _entries[3][2] = 1;
+        _entries[2][0] = 0;
+        _entries[2][1] = 0;
+        _entries[2][2] = 1;
     }
 
     /**
      * Transforms a given vector
      */
-    public void transform(Vector2D v)
+    public Vector2D transform(Vector2D v)
     {
+        Vector2D vPrime = new Vector2D(0, 0);
         double[] homogV = {v.getX(), v.getY(), 1.0};
-        double xPrime = _entries[0][0] * homogV[0] + _entries[0][1] * homogV[1];
-        double yPrime = _entries[1][0] * homogV[0] + _entries[1][1] * homogV[1];
-        v.setX(xPrime);
-        v.setY(yPrime);
+        double xPrime = _entries[0][0] * homogV[0] + _entries[0][1] * homogV[1] + _entries[0][2];
+        double yPrime = _entries[1][0] * homogV[0] + _entries[1][1] * homogV[1] + _entries[1][2];
+        vPrime.setX(xPrime);
+        vPrime.setY(yPrime);
+
+        return vPrime;
+    }
+
+    /**
+     * Gets the affine transform version
+     */
+    public AffineTransform getAffineTransform()
+    {
+        AffineTransform t = new AffineTransform(_entries[0][0], _entries[1][0],
+                _entries[0][1], _entries[1][1],
+                _entries[0][2], _entries[1][2]);
+
+        return t;
     }
 }

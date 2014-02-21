@@ -38,17 +38,43 @@ public class ObjToWorldTransform
      */
     public Vector2D getObjectCoords(Vector2D worldCoords)
     {
-        // do inverse transformation
-        Vector2D objCoords = Vector2D.sub(worldCoords, _objToWorldTrans);
-        objCoords = Vector2D.rot(objCoords, -_objToWorldRot);
+        AffineMatrix2D m = getWorldToObjMatrix();
+        Vector2D objCoords = m.transform(worldCoords);
         return objCoords;
     }
 
     public Vector2D getWorldCoords(Vector2D objCoords)
     {
-        Vector2D worldCoords = Vector2D.rot(objCoords, _objToWorldRot);
-        worldCoords = Vector2D.add(worldCoords, _objToWorldTrans);
-        return worldCoords;
+        AffineMatrix2D m = getObjToWorldMatrix();
+        return m.transform(objCoords);
+    }
+
+    /**
+     * Constructs the object to world matrix
+     * @return
+     */
+    private AffineMatrix2D getObjToWorldMatrix()
+    {
+        double[][] entries = {{Math.cos(_objToWorldRot), Math.sin(_objToWorldRot),  _objToWorldTrans.getX()},
+                {-Math.sin(_objToWorldRot), Math.cos(_objToWorldRot), _objToWorldTrans.getY()}};
+
+        AffineMatrix2D t = new AffineMatrix2D(entries);
+        return t;
+    }
+
+    /**
+     * Constructs the world object  matrix
+     */
+    private AffineMatrix2D getWorldToObjMatrix()
+    {
+        double c = Math.cos(-_objToWorldRot);
+        double s = Math.sin(-_objToWorldRot);
+        double tx = -_objToWorldTrans.getX();
+        double ty = -_objToWorldTrans.getY();
+        double[][] entries = {{c, s,  (c * tx) + (s * ty)},
+                {-s, c, (-s * tx) + (c * ty)}};
+        AffineMatrix2D t = new AffineMatrix2D(entries);
+        return t;
     }
 
     /**
@@ -56,14 +82,7 @@ public class ObjToWorldTransform
      */
     public AffineTransform getObjToWorldAffine()
     {
-        double m00 = Math.cos(_objToWorldRot);
-        double m10 = Math.sin(_objToWorldRot);
-        double m01 = -Math.sin(_objToWorldRot);
-        double m11 = Math.cos(_objToWorldRot);
-        double m02 = _objToWorldTrans.getX();
-        double m12 = _objToWorldTrans.getY();
-        AffineTransform affineTransform = new AffineTransform(m00, m10, m01, m11, m02, m12);
-        return affineTransform;
+        return getObjToWorldMatrix().getAffineTransform();
     }
 
     /**
