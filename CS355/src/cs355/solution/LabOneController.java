@@ -22,7 +22,7 @@ import java.util.Iterator;
  */
 public class LabOneController implements CS355Controller, MouseListener, MouseMotionListener
 {
-    static final int DRAWING_AREA_SIZE = 2047;
+    static final int DRAWING_AREA_SIZE = 2048;
 
     /**
      * Controls how shapes are built from mouse-click events.
@@ -39,8 +39,8 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
 
     public void init()
     {
-        GUIFunctions.setHScrollBarMax(DRAWING_AREA_SIZE);
-        GUIFunctions.setVScrollBarMax(DRAWING_AREA_SIZE);
+        GUIFunctions.setHScrollBarMax(DRAWING_AREA_SIZE - 1);
+        GUIFunctions.setVScrollBarMax(DRAWING_AREA_SIZE - 1);
 
         WorldToScreen.getInstance().setViewportCenter(new Vector2D(DRAWING_AREA_SIZE / 2, DRAWING_AREA_SIZE / 2));
         updateScrollBars();
