@@ -108,6 +108,18 @@ public class WorldToScreen
     }
 
     /**
+     * Gets the world to screen matrix
+     */
+    private AffineMatrix2D getWorldToScreenMatrix()
+    {
+        Vector2D upperLeft = getUpperLeftViewportCorner();
+        double [][] entries = {{_scaleFactor, 0.0, _scaleFactor * -upperLeft.getX()},
+                {0.0, _scaleFactor, _scaleFactor * -upperLeft.getY()}};
+        AffineMatrix2D m = new AffineMatrix2D(entries);
+        return m;
+    }
+
+    /**
      * Gets the screen to world transform
      */
     public AffineTransform getScreenToWorldTrans()
@@ -121,12 +133,7 @@ public class WorldToScreen
      */
     public AffineTransform getWorldToScreenTrans()
     {
-        Vector2D upperLeft = getUpperLeftViewportCorner();
-        AffineTransform transform = new AffineTransform(_scaleFactor, 0.0,
-                0.0, _scaleFactor,
-                -upperLeft.getX() * _scaleFactor, -upperLeft.getY() * _scaleFactor);
-
-        return transform;
+        return getWorldToScreenMatrix().getAffineTransform();
     }
 
     /**
