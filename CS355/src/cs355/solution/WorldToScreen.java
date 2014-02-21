@@ -152,12 +152,8 @@ public class WorldToScreen
      */
     public Vector2D getInScreenCoords(Vector2D worldCoord)
     {
-        Vector2D screenCoords = new Vector2D(worldCoord);
-        Vector2D upperLeftCorner = getUpperLeftViewportCorner();
-        upperLeftCorner.scale(-1.0);
-        screenCoords.add(upperLeftCorner);
-        screenCoords.scale(_scaleFactor);
-
+        AffineMatrix2D m = getWorldToScreenMatrix();
+        Vector2D screenCoords = m.transform(worldCoord);
         return screenCoords;
     }
 }
