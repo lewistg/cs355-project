@@ -28,6 +28,8 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
      * Controls how shapes are built from mouse-click events.
      */
     MouseShapeBuilderStrategy _shapeBuilderStrategy;
+    /**Locks scroll bars*/
+    boolean _lockScrollBars;
 
     /**
      * Constructor
@@ -35,6 +37,7 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
     public LabOneController()
     {
         _shapeBuilderStrategy = new MouseLineBuilderStrategy();
+        _lockScrollBars = false;
     }
 
     public void init()
@@ -48,6 +51,7 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
 
     private void updateScrollBars()
     {
+        _lockScrollBars = true;
         // the knob size is proportional to the viewport size
         int knobSize = (int) (512 / WorldToScreen.getInstance().getScaleFactor());
         System.out.println("Knob size: " + Integer.toString(knobSize));
@@ -90,6 +94,8 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
 
         WorldToScreen.getInstance().setViewportUpperLeftX((int) upperLeft.getX());
         WorldToScreen.getInstance().setViewportUpperLeftY((int) upperLeft.getY());
+
+        _lockScrollBars = false;
     }
 
     @Override
@@ -173,11 +179,17 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
 
     @Override
     public void hScrollbarChanged(int value) {
+        if(_lockScrollBars)
+            return;
+
         WorldToScreen.getInstance().setViewportUpperLeftX((double) value);
         GUIFunctions.refresh();
     }
     @Override
     public void vScrollbarChanged(int value) {
+        if(_lockScrollBars)
+            return;
+
         WorldToScreen.getInstance().setViewportUpperLeftY((double) value);
         System.out.println("Scroll change: " + Double.toString(value));
         GUIFunctions.refresh();

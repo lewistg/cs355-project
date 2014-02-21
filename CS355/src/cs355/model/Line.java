@@ -102,10 +102,13 @@ public class Line extends Shape
     public int moveBoundingBoxCorner(int boundingBoxCornerIndex, Vector2D newCornerPosWC)
     {
         assert(boundingBoxCornerIndex >= 0 && boundingBoxCornerIndex < 2);
+
+        Vector2D newEndPoint = getObjToWorldTransform().getObjectCoords(newCornerPosWC);
+
         if(boundingBoxCornerIndex == 0)
-            _p0 = newCornerPosWC;
+            _p0 = newEndPoint;
         else
-            _p1 = newCornerPosWC;
+            _p1 = newEndPoint;
 
         return boundingBoxCornerIndex;
     }
