@@ -10,22 +10,11 @@ package CS355.LWJGL;
 //If it doesn't appear in this list, you probably don't.
 //Of course, your milage may vary. Don't feel restricted by this list of imports.
 import org.lwjgl.input.Keyboard;
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_LINES;
-import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
-import static org.lwjgl.opengl.GL11.GL_PROJECTION;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11.glColor3f;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glLoadIdentity;
-import static org.lwjgl.opengl.GL11.glMatrixMode;
-import static org.lwjgl.opengl.GL11.glPushMatrix;
-import static org.lwjgl.opengl.GL11.glRotatef;
-import static org.lwjgl.opengl.GL11.glTranslatef;
-import static org.lwjgl.opengl.GL11.glVertex3d;
-import static org.lwjgl.opengl.GL11.glViewport;
-import static org.lwjgl.opengl.GL11.glOrtho;
+
+import java.util.Iterator;
+import java.lang.Math;
+
+import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.gluPerspective;
 
 /**
@@ -34,7 +23,13 @@ import static org.lwjgl.util.glu.GLU.gluPerspective;
  */
 public class StudentLWJGLController implements CS355LWJGLController
 {
-  
+    /** My position */
+    private Point3D myPos = new Point3D(0.0, 0.0, 10.0);
+    /**My angle */
+    private float myAngle = 0.0f;
+    /**Projection mode*/
+    private boolean projMode = false;
+
   //This is a model of a house.
   //It has a single method that returns an iterator full of Line3Ds.
   //A "Line3D" is a wrapper class around two Point2Ds.
@@ -47,7 +42,7 @@ public class StudentLWJGLController implements CS355LWJGLController
   @Override
   public void resizeGL() 
   {
-
+      glViewport(0, 0, LWJGLSandbox.DISPLAY_WIDTH, LWJGLSandbox.DISPLAY_HEIGHT);
   }
 
     @Override
@@ -65,7 +60,52 @@ public class StudentLWJGLController implements CS355LWJGLController
     {
         if(Keyboard.isKeyDown(Keyboard.KEY_W)) 
         {
-            System.out.println("You are pressing W!");
+            myPos.z -= 1;
+        }
+
+        if(Keyboard.isKeyDown(Keyboard.KEY_S))
+        {
+            myPos.z += 1;
+        }
+
+        if(Keyboard.isKeyDown(Keyboard.KEY_A))
+        {
+            myPos.x -= 1;
+        }
+
+        if(Keyboard.isKeyDown(Keyboard.KEY_D))
+        {
+            myPos.x += 1;
+        }
+
+        if(Keyboard.isKeyDown(Keyboard.KEY_R))
+        {
+            myPos.y += 1;
+        }
+
+        if(Keyboard.isKeyDown(Keyboard.KEY_F))
+        {
+            myPos.y -= 1;
+        }
+
+        if(Keyboard.isKeyDown(Keyboard.KEY_Q))
+        {
+            myAngle += 1;
+        }
+
+        if(Keyboard.isKeyDown(Keyboard.KEY_E))
+        {
+            myAngle -= 1;
+        }
+
+        if(Keyboard.isKeyDown(Keyboard.KEY_O))
+        {
+            projMode = false;
+        }
+
+        if(Keyboard.isKeyDown(Keyboard.KEY_P))
+        {
+            projMode = true;
         }
     }
 
@@ -73,10 +113,35 @@ public class StudentLWJGLController implements CS355LWJGLController
     @Override
     public void render() 
     {
-        //This clears the screen.
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+
+        //System.out.println("Proj mode: " + projMode);
+        if(projMode)
+            gluPerspective(60, 1, 0, 100);
+        else
+            glOrtho(-20, 20, -20, 20, -20, 20);
+
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+        glRotatef(-myAngle, 0.0f, 1.0f, 0.0f);
+        glTranslatef((float) -myPos.x, (float) -myPos.y, (float) -myPos.z);
+
         glClear(GL_COLOR_BUFFER_BIT);
         
         //Do your drawing here.
+        glColor3f(1.0f, 1.0f, 1.0f);
+        Iterator<Line3D> lineItr = model.getLines();
+        while(lineItr.hasNext())
+        {
+            Line3D line = lineItr.next();
+            glBegin(GL_LINES);
+                glVertex3d(line.start.x, line.start.y, line.start.z);
+                glVertex3d(line.end.x, line.end.y, line.end.z);
+            glEnd();
+        }
+
+        glFlush();
     }
     
 }
