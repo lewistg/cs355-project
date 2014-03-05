@@ -27,6 +27,10 @@ public class StudentLWJGLController implements CS355LWJGLController
     private Point3D myPos = new Point3D(0.0, 0.0, 10.0);
     /**My angle */
     private float myAngle = 0.0f;
+    /**Forward vector*/
+    private Point3D myDir = new Point3D(0.0, 0.0, -1.0);
+    /**Right vector*/
+    private Point3D myRight = new Point3D(1.0, 0.0, 0.0);
     /**Projection mode*/
     private boolean projMode = false;
 
@@ -60,22 +64,27 @@ public class StudentLWJGLController implements CS355LWJGLController
     {
         if(Keyboard.isKeyDown(Keyboard.KEY_W)) 
         {
-            myPos.z -= 1;
+            System.out.println("My dir dir: " + myDir);
+            myPos = new Point3D(myPos.x + myDir.x, myPos.y + myDir.y, myPos.z + myDir.z);
+            //myPos.z -= 1;
         }
 
         if(Keyboard.isKeyDown(Keyboard.KEY_S))
         {
-            myPos.z += 1;
+            myPos = new Point3D(myPos.x - myDir.x, myPos.y - myDir.y, myPos.z - myDir.z);
+            //myPos.z += 1;
         }
 
         if(Keyboard.isKeyDown(Keyboard.KEY_A))
         {
-            myPos.x -= 1;
+            myPos = new Point3D(myPos.x - myRight.x, myPos.y - myRight.y, myPos.z - myRight.z);
+            //myPos.x -= 1;
         }
 
         if(Keyboard.isKeyDown(Keyboard.KEY_D))
         {
-            myPos.x += 1;
+            myPos = new Point3D(myPos.x + myRight.x, myPos.y + myRight.y, myPos.z + myRight.z);
+            //myPos.x += 1;
         }
 
         if(Keyboard.isKeyDown(Keyboard.KEY_R))
@@ -90,12 +99,39 @@ public class StudentLWJGLController implements CS355LWJGLController
 
         if(Keyboard.isKeyDown(Keyboard.KEY_Q))
         {
-            myAngle += 1;
+            myAngle -= 1;
+            double oneRad = (1.0 / 180.0) * Math.PI;
+            double newDirX = Math.cos(-oneRad) * myDir.x - Math.sin(-oneRad) * myDir.z;
+            double newDirZ = Math.sin(-oneRad) * myDir.x + Math.cos(-oneRad) * myDir.z;
+
+            myDir.x = newDirX;
+            myDir.z = newDirZ;
+
+            double newRightX = Math.cos(-oneRad) * myRight.x - Math.sin(-oneRad) * myRight.z;
+            double newRightZ = Math.sin(-oneRad) * myRight.x + Math.cos(-oneRad) * myRight.z;
+
+            myRight.x = newRightX;
+            myRight.z = newRightZ;
+            System.out.println("New dir: " + myDir);
         }
 
         if(Keyboard.isKeyDown(Keyboard.KEY_E))
         {
-            myAngle -= 1;
+            myAngle += 1;
+            double oneRad = (1.0 / 180.0) * Math.PI;
+            double newDirX = Math.cos(oneRad) * myDir.x - Math.sin(oneRad) * myDir.z;
+            double newDirZ = Math.sin(oneRad) * myDir.x + Math.cos(oneRad) * myDir.z;
+
+            myDir.x = newDirX;
+            myDir.z = newDirZ;
+
+            double newRightX = Math.cos(oneRad) * myRight.x - Math.sin(oneRad) * myRight.z;
+            double newRightZ = Math.sin(oneRad) * myRight.x + Math.cos(oneRad) * myRight.z;
+
+            myRight.x = newRightX;
+            myRight.z = newRightZ;
+
+            System.out.println("New dir: " + myDir);
         }
 
         if(Keyboard.isKeyDown(Keyboard.KEY_O))
@@ -117,14 +153,20 @@ public class StudentLWJGLController implements CS355LWJGLController
         glLoadIdentity();
 
         //System.out.println("Proj mode: " + projMode);
+
         if(projMode)
+        {
+            double aspectRatio = (double) LWJGLSandbox.DISPLAY_WIDTH / (double) LWJGLSandbox.DISPLAY_HEIGHT;
             gluPerspective(60, 1, 0, 100);
+        }
         else
+        {
             glOrtho(-20, 20, -20, 20, -20, 20);
+        }
 
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
-        glRotatef(-myAngle, 0.0f, 1.0f, 0.0f);
+        glRotatef(myAngle, 0.0f, 1.0f, 0.0f);
         glTranslatef((float) -myPos.x, (float) -myPos.y, (float) -myPos.z);
 
         glClear(GL_COLOR_BUFFER_BIT);
