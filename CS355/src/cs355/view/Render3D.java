@@ -21,6 +21,9 @@ import java.util.Iterator;
  */
 public class Render3D
 {
+    /**The screen size*/
+    static final double SCREEN_SIZE = 2048;
+
     /**
      * Utility function for loading the identity into a matrix.
      */
@@ -81,6 +84,22 @@ public class Render3D
         return transformedVec;
     }
 
+    boolean clipLine(double[] startClipCoords, double[] endClipCoords)
+    {
+        for(int i = 0; i < 4; i++)
+        {
+            if(Math.abs(startClipCoords[i]) > 1.0 || Math.abs(endClipCoords[i]) > 1.0)
+                return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Utility function for converting a point to a homogneous point
+     * @param point
+     * @return
+     */
     private double[] getHomog(Point3D point)
     {
         double[] homogPoint = new double[4];
@@ -90,6 +109,21 @@ public class Render3D
         homogPoint[3] = 1.0;
 
         return homogPoint;
+    }
+
+    /**
+     * Utility function for converting a clip coordinate to a
+     * NDC.
+     * @param clipCoord
+     * @return
+     */
+    private double[] getNdc(double[] clipCoord)
+    {
+        double[] ndc = new double[4];
+        for(int i = 0; i < 4; i++)
+            ndc[i] = clipCoord[i] / clipCoord[3];
+
+        return ndc;
     }
 
     /**
@@ -140,6 +174,27 @@ public class Render3D
         clipMat[2][3] = (-2 * near * far) / (far - near);
         clipMat[3][2] = 1;
         clipMat[3][3] = 0;
+
+        return clipMat;
+    }
+
+    /**
+     * Gets the matrix that maps to screen coordinates
+     */
+    double[][] getNdcToScreenMat()
+    {
+        double[][] toScreenMat = new double[3][3];
+        for(int i = 0; i < 3; i++)
+            for(int j = 0; j < 3; j++)
+                toScreenMat[i][j] = 0;
+
+        toScreenMat[0][0] = SCREEN_SIZE / 2.0;
+        toScreenMat[0][2] = SCREEN_SIZE / 2.0;
+        toScreenMat[1][1] = -SCREEN_SIZE / 2.0;
+        toScreenMat[1][2] = SCREEN_SIZE / 2.0;
+        toScreenMat[2][2] = 1;
+
+        return toScreenMat;
     }
 
     /**
@@ -160,10 +215,14 @@ public class Render3D
             double[] endCamCoord = multVecByMat(worldToCamera, endHomog);
 
             double[][] cameraToClip = getClipMat();
-            double[] startNdc = multVecByMat(cameraToClip, startCamCoord);
-            double[] endNdc = multVecByMat(cameraToClip, endCamCoord);
+            double[] startClipCoords = multVecByMat(cameraToClip, startCamCoord);
+            double[] endClipCoords= multVecByMat(cameraToClip, endCamCoord);
 
-            // test the clipping matrix
+            if(clipLine(startClipCoords, endClipCoords))
+                continue;
+
+            double[] startNdc = getNdc(startClipCoords);
+            double[] endNdc = getNdc(endClipCoords);
         }
 
     }
