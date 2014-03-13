@@ -37,6 +37,15 @@ public class Camera3D
     }
 
     /**
+     * Moves the camera forward one unit
+     */
+    void moveForward()
+    {
+        _pos[0] += Math.sin(_rot);
+        _pos[2] += -Math.cos(_rot);
+    }
+
+    /**
      * Gets the camera's rotation angle
      */
     public double getRotAngle()

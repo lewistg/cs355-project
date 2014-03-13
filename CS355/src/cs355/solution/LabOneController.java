@@ -7,6 +7,7 @@ import cs355.model.Shape;
 import cs355.view.LabOneViewRefresher;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -223,7 +224,88 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
 
     @Override
     public void keyPressed(Iterator<Integer> iterator) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        while(iterator.hasNext())
+        {
+           if(iterator.next() == KeyEvent.VK_W)
+           {
+                _camera.moveForward();
+           }
+        }
+
+        GUIFunctions.refresh();
+
+
+        /*if(Keyboard.isKeyDown(Keyboard.KEY_W))
+        {
+            System.out.println("My dir dir: " + myDir);
+            myPos = new Point3D(myPos.x + myDir.x, myPos.y + myDir.y, myPos.z + myDir.z);
+            //myPos.z -= 1;
+        }
+
+        if(Keyboard.isKeyDown(Keyboard.KEY_S))
+        {
+            myPos = new Point3D(myPos.x - myDir.x, myPos.y - myDir.y, myPos.z - myDir.z);
+            //myPos.z += 1;
+        }
+
+        if(Keyboard.isKeyDown(Keyboard.KEY_A))
+        {
+            myPos = new Point3D(myPos.x - myRight.x, myPos.y - myRight.y, myPos.z - myRight.z);
+            //myPos.x -= 1;
+        }
+
+        if(Keyboard.isKeyDown(Keyboard.KEY_D))
+        {
+            myPos = new Point3D(myPos.x + myRight.x, myPos.y + myRight.y, myPos.z + myRight.z);
+            //myPos.x += 1;
+        }
+
+        if(Keyboard.isKeyDown(Keyboard.KEY_R))
+        {
+            myPos.y += 1;
+        }
+
+        if(Keyboard.isKeyDown(Keyboard.KEY_F))
+        {
+            myPos.y -= 1;
+        }
+
+        if(Keyboard.isKeyDown(Keyboard.KEY_Q))
+        {
+            myAngle -= 1;
+            double oneRad = (1.0 / 180.0) * Math.PI;
+            double newDirX = Math.cos(-oneRad) * myDir.x - Math.sin(-oneRad) * myDir.z;
+            double newDirZ = Math.sin(-oneRad) * myDir.x + Math.cos(-oneRad) * myDir.z;
+
+            myDir.x = newDirX;
+            myDir.z = newDirZ;
+
+            double newRightX = Math.cos(-oneRad) * myRight.x - Math.sin(-oneRad) * myRight.z;
+            double newRightZ = Math.sin(-oneRad) * myRight.x + Math.cos(-oneRad) * myRight.z;
+
+            myRight.x = newRightX;
+            myRight.z = newRightZ;
+            System.out.println("New dir: " + myDir);
+        }
+
+        if(Keyboard.isKeyDown(Keyboard.KEY_E))
+        {
+            myAngle += 1;
+            double oneRad = (1.0 / 180.0) * Math.PI;
+            double newDirX = Math.cos(oneRad) * myDir.x - Math.sin(oneRad) * myDir.z;
+            double newDirZ = Math.sin(oneRad) * myDir.x + Math.cos(oneRad) * myDir.z;
+
+            myDir.x = newDirX;
+            myDir.z = newDirZ;
+
+            double newRightX = Math.cos(oneRad) * myRight.x - Math.sin(oneRad) * myRight.z;
+            double newRightZ = Math.sin(oneRad) * myRight.x + Math.cos(oneRad) * myRight.z;
+
+            myRight.x = newRightX;
+            myRight.z = newRightZ;
+
+            System.out.println("New dir: " + myDir);
+        }*/
     }
 
     @Override
