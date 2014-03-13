@@ -61,6 +61,26 @@ public class Render3D
         return  result;
     }
 
+    /**
+     * Multiplies a vector by a matrix on the left
+     * @param point
+     * @return
+     */
+    double[] multVecByMat(double[][] mat, double[] vec)
+    {
+        double[] transformedVec = new double[4];
+        transformedVec[3] = 1.0;
+        for(int i = 0; i < 4; i++)
+        {
+            for(int j = 0; j < 4; j++)
+            {
+                transformedVec[i] += mat[i][j] * vec[j];
+            }
+        }
+
+        return transformedVec;
+    }
+
     private double[] getHomog(Point3D point)
     {
         double[] homogPoint = new double[4];
@@ -105,6 +125,22 @@ public class Render3D
     /**
      * Gets the clip matrix
      */
+    private double[][] getClipMat()
+    {
+        double near = 1;
+        double far = 1000;
+        double zoomx = 1 / Math.tan(Math.PI / 6);
+        double zoomy = zoomx;
+
+        double[][] clipMat = new double[4][4];
+        loadIdentity(clipMat);
+        clipMat[0][0] = zoomx;
+        clipMat[1][1] = zoomy;
+        clipMat[2][2] = (far + near) / (far - near);
+        clipMat[2][3] = (-2 * near * far) / (far - near);
+        clipMat[3][2] = 1;
+        clipMat[3][3] = 0;
+    }
 
     /**
      * Actually renders the house
@@ -116,7 +152,18 @@ public class Render3D
         while(lines.hasNext())
         {
             Line3D line = lines.next();
-            line.start
+            double[] startHomog = getHomog(line.start);
+            double[] endHomog = getHomog(line.end);
+
+            double[][] worldToCamera = getWorldToCameraMat();
+            double[] startCamCoord = multVecByMat(worldToCamera, startHomog);
+            double[] endCamCoord = multVecByMat(worldToCamera, endHomog);
+
+            double[][] cameraToClip = getClipMat();
+            double[] startNdc = multVecByMat(cameraToClip, startCamCoord);
+            double[] endNdc = multVecByMat(cameraToClip, endCamCoord);
+
+            // test the clipping matrix
         }
 
     }
