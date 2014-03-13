@@ -24,20 +24,41 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
 {
     static final int DRAWING_AREA_SIZE = 2048;
 
-    /**
-     * Controls how shapes are built from mouse-click events.
-     */
-    MouseShapeBuilderStrategy _shapeBuilderStrategy;
+    /**Singleton instance*/
+    private static LabOneController _instance;
+
+    /** Controls how shapes are built from mouse-click events. */
+    private MouseShapeBuilderStrategy _shapeBuilderStrategy;
     /**Locks scroll bars*/
-    boolean _lockScrollBars;
+    private boolean _lockScrollBars;
+    /**3D Camera*/
+    Camera3D _camera;
+
+    /**
+     * Gets the singleton instance
+     * @return
+     */
+    public static LabOneController getInstance()
+    {
+        if(_instance == null)
+            _instance = new LabOneController();
+
+        return _instance;
+    }
 
     /**
      * Constructor
      */
-    public LabOneController()
+    private LabOneController()
     {
         _shapeBuilderStrategy = new MouseLineBuilderStrategy();
         _lockScrollBars = false;
+        _camera = new Camera3D();
+    }
+
+    public Camera3D getCamera()
+    {
+        return _camera;
     }
 
     public void init()

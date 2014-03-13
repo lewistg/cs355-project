@@ -24,7 +24,7 @@ import static org.lwjgl.util.glu.GLU.gluPerspective;
 public class StudentLWJGLController implements CS355LWJGLController
 {
     /** My position */
-    private Point3D myPos = new Point3D(0.0, 0.0, 10.0);
+    private Point3D myPos = new Point3D(0.0, 0.0, 30.0);
     /**My angle */
     private float myAngle = 0.0f;
     /**Forward vector*/
@@ -156,13 +156,16 @@ public class StudentLWJGLController implements CS355LWJGLController
 
         if(projMode)
         {
-            double aspectRatio = (double) LWJGLSandbox.DISPLAY_WIDTH / (double) LWJGLSandbox.DISPLAY_HEIGHT;
-            gluPerspective(60, 1, 0, 100);
+            float aspectRatio = (float) LWJGLSandbox.DISPLAY_WIDTH / (float) LWJGLSandbox.DISPLAY_HEIGHT;
+            gluPerspective(60, aspectRatio, 1, 1000);
         }
         else
         {
-            glOrtho(-20, 20, -20, 20, -20, 20);
+            //glOrtho(-20, 20, -20, 20, -20, 20);
+            glOrtho(-20, 20, -20, 20, 0, 1000);
         }
+
+        //glOrtho(-20, 20, -20, 20, -20, 20);
 
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
