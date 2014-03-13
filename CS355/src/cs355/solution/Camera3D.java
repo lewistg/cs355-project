@@ -22,6 +22,9 @@ public class Camera3D
     Camera3D()
     {
         _pos = new double[3];
+        _pos[0] = 0.0;
+        _pos[1] = 0.0;
+        _pos[2] = 30.0;
         _rot = 0.0;
     }
 

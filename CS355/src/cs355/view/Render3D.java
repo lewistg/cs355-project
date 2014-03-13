@@ -13,7 +13,10 @@ import cs355.Line3D;
 import cs355.Point3D;
 import cs355.solution.Camera3D;
 import cs355.solution.LabOneController;
+import cs355.solution.WorldToScreen;
 
+import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.util.Iterator;
 
 /**
@@ -66,13 +69,11 @@ public class Render3D
 
     /**
      * Multiplies a vector by a matrix on the left
-     * @param point
      * @return
      */
     double[] multVecByMat(double[][] mat, double[] vec)
     {
         double[] transformedVec = new double[4];
-        transformedVec[3] = 1.0;
         for(int i = 0; i < 4; i++)
         {
             for(int j = 0; j < 4; j++)
@@ -161,8 +162,8 @@ public class Render3D
      */
     private double[][] getClipMat()
     {
-        double near = 1;
-        double far = 1000;
+        double near = -1;
+        double far = -1000;
         double zoomx = 1 / Math.tan(Math.PI / 6);
         double zoomy = zoomx;
 
@@ -200,21 +201,22 @@ public class Render3D
     /**
      * Actually renders the house
      */
-    void renderHouseModel()
+    public void renderHouseModel(Graphics2D context)
     {
         HouseModel house = new HouseModel();
         Iterator<Line3D> lines = house.getLines();
+
+        double[][] worldToCamera = getWorldToCameraMat();
+        double[][] cameraToClip = getClipMat();
         while(lines.hasNext())
         {
             Line3D line = lines.next();
             double[] startHomog = getHomog(line.start);
             double[] endHomog = getHomog(line.end);
 
-            double[][] worldToCamera = getWorldToCameraMat();
             double[] startCamCoord = multVecByMat(worldToCamera, startHomog);
             double[] endCamCoord = multVecByMat(worldToCamera, endHomog);
 
-            double[][] cameraToClip = getClipMat();
             double[] startClipCoords = multVecByMat(cameraToClip, startCamCoord);
             double[] endClipCoords= multVecByMat(cameraToClip, endCamCoord);
 
@@ -231,6 +233,10 @@ public class Render3D
 
             double endX = toScreenMat[0][0] * endNdc[0] + toScreenMat[0][1] * endNdc[1] + toScreenMat[0][2];
             double endY = toScreenMat[1][0] * endNdc[0] + toScreenMat[1][1] * endNdc[1] + toScreenMat[1][2];
+
+            AffineTransform affineTransform = WorldToScreen.getInstance().getWorldToScreenTrans();
+            context.setTransform(affineTransform);
+            context.drawLine((int) startX, (int) startY, (int) endX, (int) endY);
         }
 
     }

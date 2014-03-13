@@ -61,6 +61,9 @@ public class LabOneViewRefresher implements ViewRefresher, Observer
 
         if(_selection != null)
             _selection.draw(g2d);
+
+        Render3D render3D = new Render3D();
+        render3D.renderHouseModel(g2d);
     }
 
     @Override
