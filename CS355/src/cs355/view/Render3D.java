@@ -223,6 +223,14 @@ public class Render3D
 
             double[] startNdc = getNdc(startClipCoords);
             double[] endNdc = getNdc(endClipCoords);
+
+            double[][] toScreenMat = getNdcToScreenMat();
+
+            double startX = toScreenMat[0][0] * startNdc[0] + toScreenMat[0][1] * startNdc[1] + toScreenMat[0][2];
+            double startY = toScreenMat[1][0] * startNdc[0] + toScreenMat[1][1] * startNdc[1] + toScreenMat[1][2];
+
+            double endX = toScreenMat[0][0] * endNdc[0] + toScreenMat[0][1] * endNdc[1] + toScreenMat[0][2];
+            double endY = toScreenMat[1][0] * endNdc[0] + toScreenMat[1][1] * endNdc[1] + toScreenMat[1][2];
         }
 
     }
