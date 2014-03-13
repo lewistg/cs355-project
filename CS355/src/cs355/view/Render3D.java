@@ -192,7 +192,7 @@ public class Render3D
 
         toScreenMat[0][0] = SCREEN_SIZE / 2.0;
         toScreenMat[0][2] = SCREEN_SIZE / 2.0;
-        toScreenMat[1][1] = -SCREEN_SIZE / 2.0;
+        toScreenMat[1][1] = SCREEN_SIZE / 2.0;
         toScreenMat[1][2] = SCREEN_SIZE / 2.0;
         toScreenMat[2][2] = 1;
 
