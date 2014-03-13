@@ -89,7 +89,8 @@ public class Render3D
     {
         for(int i = 0; i < 4; i++)
         {
-            if(Math.abs(startClipCoords[i]) > 1.0 || Math.abs(endClipCoords[i]) > 1.0)
+            if(Math.abs(startClipCoords[i]) > Math.abs(startClipCoords[3]) ||
+                    Math.abs(endClipCoords[i]) > Math.abs(endClipCoords[3]))
                 return true;
         }
 
