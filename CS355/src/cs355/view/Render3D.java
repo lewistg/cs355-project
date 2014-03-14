@@ -174,7 +174,7 @@ public class Render3D
         clipMat[1][1] = zoomy;
         clipMat[2][2] = (far + near) / (far - near);
         clipMat[2][3] = (-2 * near * far) / (far - near);
-        clipMat[3][2] = 1;
+        clipMat[3][2] = -1;
         clipMat[3][3] = 0;
 
         return clipMat;
@@ -192,7 +192,7 @@ public class Render3D
 
         toScreenMat[0][0] = SCREEN_SIZE / 2.0;
         toScreenMat[0][2] = SCREEN_SIZE / 2.0;
-        toScreenMat[1][1] = SCREEN_SIZE / 2.0;
+        toScreenMat[1][1] = -SCREEN_SIZE / 2.0;
         toScreenMat[1][2] = SCREEN_SIZE / 2.0;
         toScreenMat[2][2] = 1;
 
@@ -217,15 +217,18 @@ public class Render3D
 
             double[] startCamCoord = multVecByMat(worldToCamera, startHomog);
             double[] endCamCoord = multVecByMat(worldToCamera, endHomog);
+            System.out.println("Camera start: " + startCamCoord[0] + ", " + startCamCoord[1] + ", " + startCamCoord[2] + ", " + startCamCoord[3]);
 
             double[] startClipCoords = multVecByMat(cameraToClip, startCamCoord);
             double[] endClipCoords= multVecByMat(cameraToClip, endCamCoord);
+            System.out.println("Clip start: " + startClipCoords[0] + ", " + startClipCoords[1] + ", " + startClipCoords[2] + ", " + startClipCoords[3]);
 
             if(clipLine(startClipCoords, endClipCoords))
                 continue;
 
             double[] startNdc = getNdc(startClipCoords);
             double[] endNdc = getNdc(endClipCoords);
+            System.out.println("NDC start: " + startNdc[0] + ", " + startNdc[1] + ", " + startNdc[2] + ", " + startNdc[3]);
 
             double[][] toScreenMat = getNdcToScreenMat();
 

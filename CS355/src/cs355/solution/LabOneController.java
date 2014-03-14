@@ -226,10 +226,43 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
     public void keyPressed(Iterator<Integer> iterator) {
         while(iterator.hasNext())
         {
-           if(iterator.next() == KeyEvent.VK_W)
-           {
+            Integer key = iterator.next();
+            if(key == KeyEvent.VK_W)
+            {
                 _camera.moveForward();
-           }
+            }
+            else if(key == KeyEvent.VK_S)
+            {
+                _camera.moveBackward();
+            }
+            else if(key == KeyEvent.VK_D)
+            {
+                _camera.moveRight();
+            }
+            else if(key == KeyEvent.VK_A)
+            {
+                _camera.moveLeft();
+            }
+            else if(key == KeyEvent.VK_E)
+            {
+               _camera.rotRight();
+            }
+            else if(key == KeyEvent.VK_Q)
+            {
+                _camera.rotLeft();
+            }
+            else if(key == KeyEvent.VK_R)
+            {
+                _camera.moveUp();
+            }
+            else if(key == KeyEvent.VK_F)
+            {
+                _camera.moveDown();
+            }
+            else if(key == KeyEvent.VK_H)
+            {
+                _camera.goHome();
+            }
         }
 
         GUIFunctions.refresh();
