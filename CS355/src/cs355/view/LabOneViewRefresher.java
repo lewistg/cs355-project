@@ -5,6 +5,7 @@ import cs355.ViewRefresher;
 import cs355.model.*;
 import cs355.model.Canvas;
 import cs355.model.Shape;
+import cs355.solution.LabOneController;
 
 import java.awt.*;
 import java.util.*;
@@ -62,8 +63,11 @@ public class LabOneViewRefresher implements ViewRefresher, Observer
         if(_selection != null)
             _selection.draw(g2d);
 
-        Render3D render3D = new Render3D();
-        render3D.renderHouseModel(g2d);
+        if(LabOneController.getInstance().getRender3d())
+        {
+            Render3D render3D = new Render3D();
+            render3D.renderHouseModel(g2d);
+        }
     }
 
     @Override

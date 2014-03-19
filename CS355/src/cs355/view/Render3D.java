@@ -87,14 +87,50 @@ public class Render3D
 
     boolean clipLine(double[] startClipCoords, double[] endClipCoords)
     {
-        for(int i = 0; i < 4; i++)
+        // left
+        if(startClipCoords[0] < -startClipCoords[3] &&
+                endClipCoords[0] < -endClipCoords[3])
         {
-            if(Math.abs(startClipCoords[i]) > Math.abs(startClipCoords[3]) ||
+            return true;
+        }
+
+        // right
+        if(startClipCoords[0] > startClipCoords[3] &&
+                endClipCoords[0] > endClipCoords[3])
+        {
+            return true;
+        }
+
+        // bottom
+        if(startClipCoords[1] < -startClipCoords[3] &&
+                endClipCoords[1] < -endClipCoords[3])
+        {
+            return true;
+        }
+
+        // top
+        if(startClipCoords[1] > startClipCoords[3] &&
+                endClipCoords[1] > endClipCoords[3])
+        {
+            return true;
+        }
+
+        if(startClipCoords[2] > startClipCoords[3] ||
+                endClipCoords[2] > endClipCoords[3])
+        {
+            return true;
+        }
+
+        return false;
+
+        /*for(int i = 0; i < 4; i++)
+        {
+            if(Math.abs(startClipCoords[i]) > Math.abs(startClipCoords[3]) &&
                     Math.abs(endClipCoords[i]) > Math.abs(endClipCoords[3]))
                 return true;
         }
 
-        return false;
+        return false;*/
     }
 
     /**

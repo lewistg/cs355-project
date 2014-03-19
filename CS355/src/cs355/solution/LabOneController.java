@@ -34,6 +34,7 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
     private boolean _lockScrollBars;
     /**3D Camera*/
     Camera3D _camera;
+    boolean _render3d;
 
     /**
      * Gets the singleton instance
@@ -55,6 +56,7 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
         _shapeBuilderStrategy = new MouseLineBuilderStrategy();
         _lockScrollBars = false;
         _camera = new Camera3D();
+        _render3d = false;
     }
 
     public Camera3D getCamera()
@@ -220,6 +222,13 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
     @Override
     public void toggle3DModelDisplay() {
         //To change body of implemented methods use File | Settings | File Templates.
+        _render3d = !_render3d;
+        GUIFunctions.refresh();
+    }
+
+    public boolean getRender3d()
+    {
+        return _render3d;
     }
 
     @Override
@@ -266,79 +275,6 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
         }
 
         GUIFunctions.refresh();
-
-
-        /*if(Keyboard.isKeyDown(Keyboard.KEY_W))
-        {
-            System.out.println("My dir dir: " + myDir);
-            myPos = new Point3D(myPos.x + myDir.x, myPos.y + myDir.y, myPos.z + myDir.z);
-            //myPos.z -= 1;
-        }
-
-        if(Keyboard.isKeyDown(Keyboard.KEY_S))
-        {
-            myPos = new Point3D(myPos.x - myDir.x, myPos.y - myDir.y, myPos.z - myDir.z);
-            //myPos.z += 1;
-        }
-
-        if(Keyboard.isKeyDown(Keyboard.KEY_A))
-        {
-            myPos = new Point3D(myPos.x - myRight.x, myPos.y - myRight.y, myPos.z - myRight.z);
-            //myPos.x -= 1;
-        }
-
-        if(Keyboard.isKeyDown(Keyboard.KEY_D))
-        {
-            myPos = new Point3D(myPos.x + myRight.x, myPos.y + myRight.y, myPos.z + myRight.z);
-            //myPos.x += 1;
-        }
-
-        if(Keyboard.isKeyDown(Keyboard.KEY_R))
-        {
-            myPos.y += 1;
-        }
-
-        if(Keyboard.isKeyDown(Keyboard.KEY_F))
-        {
-            myPos.y -= 1;
-        }
-
-        if(Keyboard.isKeyDown(Keyboard.KEY_Q))
-        {
-            myAngle -= 1;
-            double oneRad = (1.0 / 180.0) * Math.PI;
-            double newDirX = Math.cos(-oneRad) * myDir.x - Math.sin(-oneRad) * myDir.z;
-            double newDirZ = Math.sin(-oneRad) * myDir.x + Math.cos(-oneRad) * myDir.z;
-
-            myDir.x = newDirX;
-            myDir.z = newDirZ;
-
-            double newRightX = Math.cos(-oneRad) * myRight.x - Math.sin(-oneRad) * myRight.z;
-            double newRightZ = Math.sin(-oneRad) * myRight.x + Math.cos(-oneRad) * myRight.z;
-
-            myRight.x = newRightX;
-            myRight.z = newRightZ;
-            System.out.println("New dir: " + myDir);
-        }
-
-        if(Keyboard.isKeyDown(Keyboard.KEY_E))
-        {
-            myAngle += 1;
-            double oneRad = (1.0 / 180.0) * Math.PI;
-            double newDirX = Math.cos(oneRad) * myDir.x - Math.sin(oneRad) * myDir.z;
-            double newDirZ = Math.sin(oneRad) * myDir.x + Math.cos(oneRad) * myDir.z;
-
-            myDir.x = newDirX;
-            myDir.z = newDirZ;
-
-            double newRightX = Math.cos(oneRad) * myRight.x - Math.sin(oneRad) * myRight.z;
-            double newRightZ = Math.sin(oneRad) * myRight.x + Math.cos(oneRad) * myRight.z;
-
-            myRight.x = newRightX;
-            myRight.z = newRightZ;
-
-            System.out.println("New dir: " + myDir);
-        }*/
     }
 
     @Override
