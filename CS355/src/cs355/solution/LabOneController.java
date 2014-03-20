@@ -233,6 +233,9 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
 
     @Override
     public void keyPressed(Iterator<Integer> iterator) {
+        if(!_render3d)
+            return;
+
         while(iterator.hasNext())
         {
             Integer key = iterator.next();

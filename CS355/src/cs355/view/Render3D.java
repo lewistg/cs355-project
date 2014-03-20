@@ -275,6 +275,12 @@ public class Render3D
             double endY = toScreenMat[1][0] * endNdc[0] + toScreenMat[1][1] * endNdc[1] + toScreenMat[1][2];
 
             AffineTransform affineTransform = WorldToScreen.getInstance().getWorldToScreenTrans();
+            context.setColor(Color.ORANGE);
+
+            double oldWidth = ((BasicStroke) context.getStroke()).getLineWidth();
+            double scaledStroke = Math.min(oldWidth / WorldToScreen.getInstance().getScaleFactor(), 1.0);
+            context.setStroke(new BasicStroke((float) scaledStroke));
+
             context.setTransform(affineTransform);
             context.drawLine((int) startX, (int) startY, (int) endX, (int) endY);
         }
