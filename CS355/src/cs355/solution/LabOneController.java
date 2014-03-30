@@ -326,6 +326,7 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
     @Override
     public void toggleBackgroundDisplay() {
         _drawBackground = !_drawBackground;
+        GUIFunctions.refresh();
     }
 
     @Override

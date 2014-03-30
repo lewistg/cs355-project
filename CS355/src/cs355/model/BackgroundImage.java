@@ -32,10 +32,8 @@ public class BackgroundImage {
         BackgroundImage instance = getInstance();
         instance._width = img.getWidth();
         instance._height = img.getHeight();
-        //instance._pixelValues = new int[instance._width * instance._height];
         instance._pixelValues = new int[instance._width * instance._height * 3];
         img.getRaster().getPixels(0, 0, instance._width, instance._height, instance._pixelValues);
-        instance._origImg = img;
     }
 
     public static BackgroundImage getInstance()
@@ -48,11 +46,8 @@ public class BackgroundImage {
 
     public BufferedImage getBufferedImage()
     {
-        /*BufferedImage image = new BufferedImage(_width, _height, BufferedImage.TYPE_INT_RGB);
-        WritableRaster raster = (WritableRaster) image.getData();
-        raster.setPixels(0, 0, _width, _height, _pixelValues);
-
-        return image;*/
-        return _origImg;
+        BufferedImage image = new BufferedImage(_width, _height, BufferedImage.TYPE_INT_RGB);
+        image.getRaster().setPixels(0, 0, _width, _height, _pixelValues);
+        return image;
     }
 }
