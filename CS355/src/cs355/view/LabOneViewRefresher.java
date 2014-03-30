@@ -4,12 +4,12 @@ import cs355.GUIFunctions;
 import cs355.ViewRefresher;
 import cs355.model.*;
 import cs355.model.Canvas;
-import cs355.model.Shape;
 import cs355.solution.LabOneController;
 import cs355.solution.WorldToScreen;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
 
@@ -59,7 +59,9 @@ public class LabOneViewRefresher implements ViewRefresher, Observer
         if(LabOneController.getInstance().getDrawBackground())
         {
             AffineTransform worldToScreen = WorldToScreen.getInstance().getWorldToScreenTrans();
-            g2d.drawImage(cs355.model.DrawingFacade.getInstance().getBackgroundImage(), worldToScreen, null);
+            BufferedImage img = cs355.model.DrawingFacade.getInstance().getBackgroundBufferedImage();
+            if(img != null)
+                g2d.drawImage(img, worldToScreen, null);
         }
 
         // update the canvas here

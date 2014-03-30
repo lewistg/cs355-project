@@ -315,7 +315,8 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
 
     @Override
     public void doChangeBrightness(int brightnessAmountNum) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        DrawingFacade.getInstance().getBackgroundImage().adjustBrightness(brightnessAmountNum);
+        GUIFunctions.refresh();
     }
 
     @Override

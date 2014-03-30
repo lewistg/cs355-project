@@ -44,10 +44,57 @@ public class BackgroundImage {
         return _instance;
     }
 
+    private int[] getPixel(int row, int col)
+    {
+        assert(row < _height);
+        assert(col < _width);
+
+        int[] pixel = new int[3];
+        int offset = (row * _width + col) * 3;
+
+        pixel[0] = _pixelValues[offset + 0];
+        pixel[1] = _pixelValues[offset + 1];
+        pixel[2] = _pixelValues[offset + 2];
+
+        return pixel;
+    }
+
+    private void setPixel(int row, int col, int newValue)
+    {
+        assert(row < _height);
+        assert(col < _width);
+        assert(newValue >= 0 && newValue <= 255);
+
+        int offset = (row * _width + col) * 3;
+
+        _pixelValues[offset + 0] = newValue;
+        _pixelValues[offset + 1] = newValue;
+        _pixelValues[offset + 2] = newValue;
+    }
+
     public BufferedImage getBufferedImage()
     {
+        if(_width == 0 || _height == 0)
+            return null;
+
+        int[] clippedValues = new int[_width * _height * 3];
+        for(int i = 0; i < _width * _height * 3; i++)
+        {
+            clippedValues[i] = _pixelValues[i];
+            if(clippedValues[i] > 255)
+                clippedValues[i] = 255;
+            else if(clippedValues[i] < 0)
+                clippedValues[i] = 0;
+        }
+
         BufferedImage image = new BufferedImage(_width, _height, BufferedImage.TYPE_INT_RGB);
-        image.getRaster().setPixels(0, 0, _width, _height, _pixelValues);
+        image.getRaster().setPixels(0, 0, _width, _height, clippedValues);
         return image;
+    }
+
+    public void adjustBrightness(int b)
+    {
+        for(int i = 0; i < _width * _height * 3; i++)
+            _pixelValues[i] += b;
     }
 }
