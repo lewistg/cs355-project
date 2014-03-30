@@ -44,7 +44,7 @@ public class BackgroundImage {
         return _instance;
     }
 
-    private int[] getPixel(int row, int col)
+    private int getPixel(int row, int col)
     {
         assert(row < _height);
         assert(col < _width);
@@ -56,7 +56,7 @@ public class BackgroundImage {
         pixel[1] = _pixelValues[offset + 1];
         pixel[2] = _pixelValues[offset + 2];
 
-        return pixel;
+        return pixel[0];
     }
 
     private void setPixel(int row, int col, int newValue)
@@ -96,5 +96,41 @@ public class BackgroundImage {
     {
         for(int i = 0; i < _width * _height * 3; i++)
             _pixelValues[i] += b;
+    }
+
+    public void adjustContrast(int c)
+    {
+        for(int i = 0; i < _width * _height * 3; i++)
+            _pixelValues[i] = (int) (Math.pow((c + 100.0) / 100.0, 4) * (_pixelValues[i] - 128) + 128);
+    }
+
+    private void convolve(double[][] kernel3x3)
+    {
+        for(int i = 0; i < _height; i++)
+        {
+            for(int j = 0; j < _width; j++)
+            {
+                double sum = 0.0;
+                for(int k = -1; k < 2; k++)
+                {
+                    for(int l = -1; l < 2; l++)
+                    {
+                        if(i + k >= 0 && i + k < _height && j + l >= 0 && j + l < _width)
+                            sum += kernel3x3[k + 1][l + 1] * getPixel(i + k, j + l);
+                    }
+                }
+                setPixel(i, j, (int) sum);
+            }
+        }
+    }
+
+    public void blur()
+    {
+        double[][] avgKernel = new double[3][3];
+        for(int i = 0; i < 3; i++)
+            for(int j = 0; j < 3; j++)
+                avgKernel[i][j] =  1.0 / 9.0;
+
+        convolve(avgKernel);
     }
 }

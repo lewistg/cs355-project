@@ -305,12 +305,14 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
 
     @Override
     public void doUniformBlur() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        DrawingFacade.getInstance().getBackgroundImage().blur();
+        GUIFunctions.refresh();
     }
 
     @Override
     public void doChangeContrast(int contrastAmountNum) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        DrawingFacade.getInstance().getBackgroundImage().adjustContrast(contrastAmountNum);
+        GUIFunctions.refresh();
     }
 
     @Override
