@@ -11,8 +11,6 @@ import java.awt.*;
  */
 public class DrawableImage {
 
-    private
-
     /**
      * Draws the image to the screen
      * @param context

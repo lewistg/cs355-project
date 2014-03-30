@@ -1,6 +1,7 @@
 package cs355.model;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.Observable;
 
 /**
@@ -72,5 +73,21 @@ public class DrawingFacade extends Observable
         _instance.setChanged();
         _instance.notifyObservers();
         return newCornerIndex;
+    }
+
+    /**
+     * Gets the background image
+     */
+    public BufferedImage getBackgroundImage()
+    {
+        return BackgroundImage.getInstance().getBufferedImage();
+    }
+
+    /**
+     * Sets the background image
+     */
+    public void setBackgroundImage(BufferedImage image)
+    {
+        BackgroundImage.loadImage(image);
     }
 }

@@ -16,6 +16,7 @@ public class BackgroundImage {
     private int _height;
     private int[] _pixelValues;
     private static BackgroundImage _instance;
+    private BufferedImage _origImg;
 
     /**
      * Constructor
@@ -28,13 +29,16 @@ public class BackgroundImage {
 
     public static void loadImage(BufferedImage img)
     {
-        _instance._width = img.getWidth();
-        _instance._height = img.getHeight();
-        _instance._pixelValues = new int[_instance._width * _instance._height];
-        img.getRaster().getPixels(0, 0, _instance._width, _instance._height, _instance._pixelValues);
+        BackgroundImage instance = getInstance();
+        instance._width = img.getWidth();
+        instance._height = img.getHeight();
+        //instance._pixelValues = new int[instance._width * instance._height];
+        instance._pixelValues = new int[instance._width * instance._height * 3];
+        img.getRaster().getPixels(0, 0, instance._width, instance._height, instance._pixelValues);
+        instance._origImg = img;
     }
 
-    public BackgroundImage getInstance()
+    public static BackgroundImage getInstance()
     {
         if(_instance == null)
             _instance = new BackgroundImage();
@@ -44,10 +48,11 @@ public class BackgroundImage {
 
     public BufferedImage getBufferedImage()
     {
-        BufferedImage image = new BufferedImage(_width, _height, BufferedImage.TYPE_BYTE_GRAY);
+        /*BufferedImage image = new BufferedImage(_width, _height, BufferedImage.TYPE_INT_RGB);
         WritableRaster raster = (WritableRaster) image.getData();
         raster.setPixels(0, 0, _width, _height, _pixelValues);
 
-        return image;
+        return image;*/
+        return _origImg;
     }
 }

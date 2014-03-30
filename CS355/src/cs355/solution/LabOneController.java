@@ -35,6 +35,8 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
     /**3D Camera*/
     Camera3D _camera;
     boolean _render3d;
+    /**Controls drawing the background*/
+    boolean _drawBackground;
 
     /**
      * Gets the singleton instance
@@ -57,6 +59,7 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
         _lockScrollBars = false;
         _camera = new Camera3D();
         _render3d = false;
+        _drawBackground = false;
     }
 
     public Camera3D getCamera()
@@ -231,6 +234,11 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
         return _render3d;
     }
 
+    public boolean getDrawBackground()
+    {
+        return _drawBackground;
+    }
+
     @Override
     public void keyPressed(Iterator<Integer> iterator) {
         if(!_render3d)
@@ -312,13 +320,12 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
 
     @Override
     public void doLoadImage(BufferedImage openImage) {
-        //To change body of implemented methods use File | Settings | File Templates.
-        System.out.println("Loaded image!");
+        DrawingFacade.getInstance().setBackgroundImage(openImage);
     }
 
     @Override
     public void toggleBackgroundDisplay() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        _drawBackground = !_drawBackground;
     }
 
     @Override
