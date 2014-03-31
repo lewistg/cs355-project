@@ -18,7 +18,6 @@ public class BackgroundImage {
     private int _height;
     private int[] _pixelValues;
     private static BackgroundImage _instance;
-    private BufferedImage _origImg;
 
     /**
      * Constructor
@@ -34,8 +33,13 @@ public class BackgroundImage {
         BackgroundImage instance = getInstance();
         instance._width = img.getWidth();
         instance._height = img.getHeight();
-        instance._pixelValues = new int[instance._width * instance._height * 3];
-        img.getRaster().getPixels(0, 0, instance._width, instance._height, instance._pixelValues);
+
+        int numComps = instance._width * instance._height * 3;
+        int[] imgBuff = new int[numComps];
+        img.getRaster().getPixels(0, 0, instance._width, instance._height, imgBuff);
+        instance._pixelValues = new int[instance._width * instance._height];
+        for(int i = 0; i < numComps; i += 3)
+            instance._pixelValues[i / 3] = imgBuff[i];
     }
 
     public int getWidth()
@@ -61,14 +65,8 @@ public class BackgroundImage {
         assert(row < _height);
         assert(col < _width);
 
-        int[] pixel = new int[3];
-        int offset = (row * _width + col) * 3;
-
-        pixel[0] = imgBuff[offset + 0];
-        pixel[1] = imgBuff[offset + 1];
-        pixel[2] = imgBuff[offset + 2];
-
-        return pixel[0];
+        int index = (row * _width + col);
+        return imgBuff[index];
     }
 
     private void setPixel(int row, int col, int newValue, int[] imgBuff)
@@ -77,11 +75,8 @@ public class BackgroundImage {
         assert(col < _width);
         assert(newValue >= 0 && newValue <= 255);
 
-        int offset = (row * _width + col) * 3;
-
-        imgBuff[offset + 0] = newValue;
-        imgBuff[offset + 1] = newValue;
-        imgBuff[offset + 2] = newValue;
+        int index = (row * _width + col);
+        imgBuff[index] = newValue;
     }
 
     public BufferedImage getBufferedImage()
@@ -89,8 +84,8 @@ public class BackgroundImage {
         if(_width == 0 || _height == 0)
             return null;
 
-        int[] clippedValues = new int[_width * _height * 3];
-        for(int i = 0; i < _width * _height * 3; i++)
+        int[] clippedValues = new int[_width * _height];
+        for(int i = 0; i < _width * _height; i++)
         {
             clippedValues[i] = _pixelValues[i];
             if(clippedValues[i] > 255)
@@ -99,20 +94,20 @@ public class BackgroundImage {
                 clippedValues[i] = 0;
         }
 
-        BufferedImage image = new BufferedImage(_width, _height, BufferedImage.TYPE_INT_RGB);
+        BufferedImage image = new BufferedImage(_width, _height, BufferedImage.TYPE_BYTE_GRAY);
         image.getRaster().setPixels(0, 0, _width, _height, clippedValues);
         return image;
     }
 
     public void adjustBrightness(int b)
     {
-        for(int i = 0; i < _width * _height * 3; i++)
+        for(int i = 0; i < _width * _height; i++)
             _pixelValues[i] += b;
     }
 
     public void adjustContrast(int c)
     {
-        for(int i = 0; i < _width * _height * 3; i++)
+        for(int i = 0; i < _width * _height; i++)
             _pixelValues[i] = (int) (Math.pow((c + 100.0) / 100.0, 4) * (_pixelValues[i] - 128) + 128);
     }
 
@@ -136,7 +131,7 @@ public class BackgroundImage {
 
     private void convolve(double[][] kernel3x3)
     {
-        int[] newImg = new int[_width * _height * 3];
+        int[] newImg = new int[_width * _height];
         for(int i = 0; i < _height; i++)
         {
             for(int j = 0; j < _width; j++)
@@ -160,7 +155,7 @@ public class BackgroundImage {
 
     public void median()
     {
-        int[] newImg = new int[_width * _height * 3];
+        int[] newImg = new int[_width * _height];
         for(int i = 0; i < _height; i++)
         {
             for(int j = 0; j < _width; j++)
@@ -210,12 +205,11 @@ public class BackgroundImage {
         ySobel[2][1] = 2;
         ySobel[2][2] = 1;
 
-        int [] newImg = new int[_width * _height * 3];
+        int [] newImg = new int[_width * _height];
         for(int i = 0; i < _height; i++)
         {
             for(int j = 0; j < _width; j++)
             {
-                System.out.println("" + (Integer) i + ", " + (Integer) j);
                 double xGrad = convolveWithPixel(i, j, xSobel) / 8.0;
                 xGrad *= xGrad;
 
