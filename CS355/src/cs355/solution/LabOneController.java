@@ -290,7 +290,8 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
 
     @Override
     public void doEdgeDetection() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        DrawingFacade.getInstance().getBackgroundImage().detectEdges();
+        GUIFunctions.refresh();
     }
 
     @Override
@@ -300,7 +301,8 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
 
     @Override
     public void doMedianBlur() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        DrawingFacade.getInstance().getBackgroundImage().median();
+        GUIFunctions.refresh();
     }
 
     @Override
