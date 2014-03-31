@@ -23,7 +23,7 @@ import java.util.Iterator;
  */
 public class LabOneController implements CS355Controller, MouseListener, MouseMotionListener
 {
-    static final int DRAWING_AREA_SIZE = 2048;
+    public static final int DRAWING_AREA_SIZE = 2048;
 
     /**Singleton instance*/
     private static LabOneController _instance;

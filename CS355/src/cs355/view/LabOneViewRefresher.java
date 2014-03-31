@@ -58,8 +58,15 @@ public class LabOneViewRefresher implements ViewRefresher, Observer
     {
         if(LabOneController.getInstance().getDrawBackground())
         {
+            BackgroundImage backgroundImage = cs355.model.DrawingFacade.getInstance().getBackgroundImage();
+
+            AffineTransform objToWorld = new AffineTransform();
+            objToWorld.translate((LabOneController.DRAWING_AREA_SIZE - backgroundImage.getWidth()) / 2,
+                    (LabOneController.DRAWING_AREA_SIZE - backgroundImage.getHeight()) / 2);
             AffineTransform worldToScreen = WorldToScreen.getInstance().getWorldToScreenTrans();
             BufferedImage img = cs355.model.DrawingFacade.getInstance().getBackgroundBufferedImage();
+
+            worldToScreen.concatenate(objToWorld);
             if(img != null)
                 g2d.drawImage(img, worldToScreen, null);
         }

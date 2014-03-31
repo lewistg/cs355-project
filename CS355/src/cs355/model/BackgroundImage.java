@@ -38,6 +38,16 @@ public class BackgroundImage {
         img.getRaster().getPixels(0, 0, instance._width, instance._height, instance._pixelValues);
     }
 
+    public int getWidth()
+    {
+        return _width;
+    }
+
+    public int getHeight()
+    {
+        return _height;
+    }
+
     public static BackgroundImage getInstance()
     {
         if(_instance == null)
