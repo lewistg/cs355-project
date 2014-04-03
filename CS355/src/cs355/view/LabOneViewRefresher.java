@@ -64,7 +64,7 @@ public class LabOneViewRefresher implements ViewRefresher, Observer
             objToWorld.translate((LabOneController.DRAWING_AREA_SIZE - backgroundImage.getWidth()) / 2,
                     (LabOneController.DRAWING_AREA_SIZE - backgroundImage.getHeight()) / 2);
             AffineTransform worldToScreen = WorldToScreen.getInstance().getWorldToScreenTrans();
-            BufferedImage img = cs355.model.DrawingFacade.getInstance().getBackgroundBufferedImage();
+            BufferedImage img = getBackgroundImg();
 
             worldToScreen.concatenate(objToWorld);
             if(img != null)
@@ -90,5 +90,18 @@ public class LabOneViewRefresher implements ViewRefresher, Observer
     @Override
     public void update(Observable observable, Object o) {
         GUIFunctions.refresh();
+    }
+
+    private BufferedImage getBackgroundImg()
+    {
+        BackgroundImage backgroundImage = cs355.model.DrawingFacade.getInstance().getBackgroundImage();
+        int width = backgroundImage.getWidth();
+        int height = backgroundImage.getHeight();
+
+        int[] clippedValues = backgroundImage.getClippedPixelValues();
+
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
+        image.getRaster().setPixels(0, 0, width, height, clippedValues);
+        return image;
     }
 }

@@ -296,7 +296,8 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
 
     @Override
     public void doSharpen() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        DrawingFacade.getInstance().getBackgroundImage().sharpen();
+        GUIFunctions.refresh();
     }
 
     @Override

@@ -79,11 +79,8 @@ public class BackgroundImage {
         imgBuff[index] = newValue;
     }
 
-    public BufferedImage getBufferedImage()
+    public int[] getClippedPixelValues()
     {
-        if(_width == 0 || _height == 0)
-            return null;
-
         int[] clippedValues = new int[_width * _height];
         for(int i = 0; i < _width * _height; i++)
         {
@@ -94,9 +91,7 @@ public class BackgroundImage {
                 clippedValues[i] = 0;
         }
 
-        BufferedImage image = new BufferedImage(_width, _height, BufferedImage.TYPE_BYTE_GRAY);
-        image.getRaster().setPixels(0, 0, _width, _height, clippedValues);
-        return image;
+        return clippedValues;
     }
 
     public void adjustBrightness(int b)
@@ -151,6 +146,27 @@ public class BackgroundImage {
                 avgKernel[i][j] =  1.0 / 9.0;
 
         convolve(avgKernel);
+    }
+
+    public void sharpen()
+    {
+        double[][] sharpenKernel = new double[3][3];
+        sharpenKernel[0][1] = -1;
+        sharpenKernel[1][0] = -1;
+        sharpenKernel[1][2] = -1;
+        sharpenKernel[2][1] = -1;
+        sharpenKernel[1][1] = 6;
+
+        convolve(sharpenKernel);
+        for(int i = 0; i < _height; i++)
+        {
+            for(int j = 0; j < _width; j++)
+            {
+                int pixelValue = getPixel(i, j, _pixelValues);
+                pixelValue /= 2;
+                setPixel(i, j, pixelValue, _pixelValues);
+            }
+        }
     }
 
     public void median()
