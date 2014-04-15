@@ -290,43 +290,56 @@ public class LabOneController implements CS355Controller, MouseListener, MouseMo
 
     @Override
     public void doEdgeDetection() {
-        DrawingFacade.getInstance().getBackgroundImage().detectEdges();
-        GUIFunctions.refresh();
+        if(DrawingFacade.getInstance().backgroundImageLoaded() && _drawBackground) {
+            DrawingFacade.getInstance().getBackgroundImage().detectEdges();
+            GUIFunctions.refresh();
+        }
     }
 
     @Override
     public void doSharpen() {
-        DrawingFacade.getInstance().getBackgroundImage().sharpen();
-        GUIFunctions.refresh();
+        if(DrawingFacade.getInstance().backgroundImageLoaded() && _drawBackground) {
+            DrawingFacade.getInstance().getBackgroundImage().sharpen();
+            GUIFunctions.refresh();
+        }
     }
 
     @Override
     public void doMedianBlur() {
-        DrawingFacade.getInstance().getBackgroundImage().median();
-        GUIFunctions.refresh();
+        if(DrawingFacade.getInstance().backgroundImageLoaded() && _drawBackground) {
+            DrawingFacade.getInstance().getBackgroundImage().median();
+            GUIFunctions.refresh();
+        }
     }
 
     @Override
     public void doUniformBlur() {
-        DrawingFacade.getInstance().getBackgroundImage().blur();
-        GUIFunctions.refresh();
+        if(DrawingFacade.getInstance().backgroundImageLoaded() && _drawBackground) {
+            DrawingFacade.getInstance().getBackgroundImage().blur();
+            GUIFunctions.refresh();
+        }
     }
 
     @Override
     public void doChangeContrast(int contrastAmountNum) {
-        DrawingFacade.getInstance().getBackgroundImage().adjustContrast(contrastAmountNum);
-        GUIFunctions.refresh();
+        if(DrawingFacade.getInstance().backgroundImageLoaded() && _drawBackground) {
+            DrawingFacade.getInstance().getBackgroundImage().adjustContrast(contrastAmountNum);
+            GUIFunctions.refresh();
+        }
     }
 
     @Override
     public void doChangeBrightness(int brightnessAmountNum) {
-        DrawingFacade.getInstance().getBackgroundImage().adjustBrightness(brightnessAmountNum);
-        GUIFunctions.refresh();
+        if(DrawingFacade.getInstance().backgroundImageLoaded() && _drawBackground) {
+            DrawingFacade.getInstance().getBackgroundImage().adjustBrightness(brightnessAmountNum);
+            GUIFunctions.refresh();
+        }
     }
 
     @Override
     public void doLoadImage(BufferedImage openImage) {
         DrawingFacade.getInstance().setBackgroundImage(openImage);
+        GUIFunctions.refresh();
     }
 
     @Override

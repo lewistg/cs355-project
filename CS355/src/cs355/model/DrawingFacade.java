@@ -75,6 +75,11 @@ public class DrawingFacade extends Observable
         return newCornerIndex;
     }
 
+    public boolean backgroundImageLoaded()
+    {
+        return BackgroundImage.getInstance().imageLoaded();
+    }
+
     public BackgroundImage getBackgroundImage()
     {
         return BackgroundImage.getInstance();

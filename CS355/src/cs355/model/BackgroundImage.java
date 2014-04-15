@@ -42,6 +42,11 @@ public class BackgroundImage {
             instance._pixelValues[i / 3] = imgBuff[i];
     }
 
+    public boolean imageLoaded()
+    {
+        return (_width != 0 && _height != 0);
+    }
+
     public int getWidth()
     {
         return _width;
